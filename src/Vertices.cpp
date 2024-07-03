@@ -3,17 +3,14 @@
 
 Vertices Vertices::Rotate(int degX, int degY, int degZ) const
 {
-  const short scaleValue = 10;
-  
   Vertices rotatedVertices;
   VertexRotation rotate;
   
   for (const auto& vertex : *this)
   {
-    Vertex v = vertex * scaleValue;
-    v = rotate.rotateZ(rotate.rotateY(rotate.rotateX(v, degX), degY), degZ);
-    v = v / scaleValue;
-    
+    constexpr short scaleValue = 10;
+
+    const Vertex v = rotate.rotateZ(rotate.rotateY(rotate.rotateX(vertex * scaleValue, degX), degY), degZ) / scaleValue;
     rotatedVertices.push_back(v);
   }
 

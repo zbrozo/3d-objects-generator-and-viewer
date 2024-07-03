@@ -265,4 +265,46 @@ public:
 
 };
 
+class CylinderTriangles : public Object3D, public IGenerator
+{
+  int mCircleAmount = 3;
+  int mCircleRadius = 50;
+  int mHeight = 50;
+  
+public:
+
+  CylinderTriangles(
+    const std::optional<int>& circleAmount,
+    const std::optional<int>& circleRadius,
+    const std::optional<int>& height
+    ) :
+    Object3D("")
+  {
+    if (circleAmount.has_value())
+    {
+      mCircleAmount = circleAmount.value();
+    }
+    
+    if (circleRadius.has_value())
+    {
+      mCircleRadius = circleRadius.value();
+    }
+
+    if (height.has_value())
+    {
+      mHeight = height.value();
+    }
+  }
+
+  void Generate() override;
+  
+  virtual ~CylinderTriangles() = default;
+  
+  CylinderTriangles(const CylinderTriangles&) = delete;
+  CylinderTriangles(CylinderTriangles&&) = delete;
+  CylinderTriangles& operator=(const CylinderTriangles&) = delete;
+  CylinderTriangles& operator=(CylinderTriangles &&) = delete;
+
+};
+
 } // namespace Components

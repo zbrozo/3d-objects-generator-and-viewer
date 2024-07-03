@@ -41,20 +41,22 @@ auto CreateSideFaces(const std::vector<Vertices>& allVertices)
   return std::make_pair(faces, vertices);
 }
 
-Vertices CreateCircleVertices(int amount, int radius)
+Vertices CreateCircleVertices(int amount, int radius, int degree = 0)
 {
   Vertex vertex(0, radius, 0);
   VertexRotation rotation;
 
-  const int degStep = (360 << 8) / amount;
-  int degree = 0;
+  const int degStep = 360 / amount;
 
   Vertices circle;
 
   for (int i = 0; i < amount; i++)
   {
-    const int d = (degree >> 8);
-    circle.push_back(rotation.rotateZ(vertex, d));
+    constexpr int scaleValue = 10;
+    
+    const Vertex v  = rotation.rotateZ(vertex * scaleValue, degree) / scaleValue;
+    circle.push_back(v);
+    
     degree += degStep;
   }
 
@@ -275,6 +277,58 @@ void Cylinder::Generate()
       static_cast<unsigned short>(nr + size),
       static_cast<unsigned short>(size),
       static_cast<unsigned short>(0)
+    });
+  
+}
+
+void CylinderTriangles::Generate()
+{
+  Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  Vertices vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
+
+  std::transform(vertices2.cbegin(), vertices2.cend(), vertices2.begin(),
+    [&](const Vertex& vertex)
+    {
+      return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
+    });
+  
+  mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
+  mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
+
+  const auto size = vertices.size();
+
+  unsigned short nr = 0;
+  
+  for (; nr < size - 1; ++nr)
+  {
+    mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + 1),
+        static_cast<unsigned short>(nr),
+        static_cast<unsigned short>(nr + size),
+      });
+
+    mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + size),
+        static_cast<unsigned short>(nr + size + 1),
+        static_cast<unsigned short>(nr + 1),
+      });
+
+  }
+
+  mFaces.push_back(
+    {
+      static_cast<unsigned short>(0),
+      static_cast<unsigned short>(nr),
+      static_cast<unsigned short>(nr + size),
+    });
+
+  mFaces.push_back(
+    {
+      static_cast<unsigned short>(nr + size),
+      static_cast<unsigned short>(size),
+      static_cast<unsigned short>(0),
     });
   
 }
