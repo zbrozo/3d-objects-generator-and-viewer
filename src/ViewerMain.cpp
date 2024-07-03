@@ -219,7 +219,7 @@ int main(int argc, char* argv[])
 
   SDL_Color colors[maxColorNumber];
 
-  PrepareColors(colors);
+  PrepareColors("default.pal", colors);
 
   std::weak_ptr<Object3D> selectedObject;
   

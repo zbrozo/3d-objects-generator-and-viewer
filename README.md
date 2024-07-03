@@ -19,4 +19,6 @@ Needed to build these libraries (in the brackets there are minimal versions I've
 - cmake (3.16)
 - g++ (C++17)
 
+TODO: describe parameters for objects generating
+
 ![](example.png)

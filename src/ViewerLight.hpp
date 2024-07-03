@@ -7,7 +7,7 @@ constexpr int maxLightValue = 64;
 
 struct SDL_Color;
 
-void PrepareColors(SDL_Color* colors);
+void PrepareColors(const char* paletteName, SDL_Color* colors);
 
 void CalculateLight(
   int light,
