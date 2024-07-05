@@ -203,20 +203,17 @@ int main(int argc, char* argv[])
   
   bool help = false;
   
-  unsigned short lineMode = 0;
-  unsigned short filledMode = 0;
+  unsigned short lineMode = DrawLineMode::DrawLineMode_None;
+  DrawFilledMode filledMode = DrawFilledMode::DrawFilledMode_FlatShading;
   
   auto SwitchDrawLineMode = [&](DrawLineMode mode){
     lineMode = (lineMode & mode) ? (lineMode ^ mode) : (lineMode | mode);
   };
 
   auto SwitchDrawFilledMode = [&](DrawFilledMode mode){
-    filledMode = 0;
-    filledMode = (filledMode & mode) ? (filledMode ^ mode) : (filledMode | mode);
+    filledMode = mode;
   };
   
-  SwitchDrawLineMode(DrawLineMode_LineVectors);
-
   SDL_Color colors[maxColorNumber];
 
   PrepareColors("default.pal", colors);
