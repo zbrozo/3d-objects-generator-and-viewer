@@ -19,6 +19,12 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 - cmake (3.16)
 - g++ (C++17)
 
+## Documentation
+
+Objects can be created by defining main object type (using --t option) and additional component objects. Please look below for details.
+
+Please look into run.sh file to see how they are defined.
+
 ### Main object types that can be created:
 
 1. Cube
@@ -61,7 +67,5 @@ _Value in f and p can be negative_
 --p circle-amount cirlce-radius height (default: 3 50 50)
 8. Cylinder made of triangles (cylindertriangles)
 --p circle-amount cirlce-radius height (default: 3 50 50)
-
-**Please look into run.sh file to see how examples are defined.**
 
 ![](example.png)
