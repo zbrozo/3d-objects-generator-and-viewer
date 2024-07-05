@@ -24,12 +24,12 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 1. Cube
 - params (--a): size (default 50)
 
+_--a option can be avoided and values can written immediately after type name_
+
 2. CubeExt - cube made of component objects located on each face 
 - component name used on each face (--c)
 - component params (--p): _depends on used component_
 - face params (--f): translation-x translation-y translation-z (default 0 0 0)
-
-_--a option can be avoided and values can written immediately after type name_
 
 3. Thorus 
 - params (--a): circle-amount ring-amount circle-radius circle-offset
@@ -44,7 +44,7 @@ _--s contains value of double type_
 
 _Value in f and p can be negative_
 
-### Components which can be used (CubeExt or Composite):
+### Components which can be used in CubeExt and Composite:
 1. Square
 --p size (default: 50)
 2. Rectangle
