@@ -19,7 +19,7 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 - cmake (3.16)
 - g++ (C++17)
 
-## Documentation
+## Generator usage manual
 
 Objects can be created by defining main object type (using --t option) and additional component objects. Please look below for details.
 
@@ -45,8 +45,8 @@ _--s contains value of double type_
 
 4. Composite - currently the most flexible object that can be made of 6 different components, moved and rotated
 - component name (--c0, --c1, --c2, --c3, --c4, --c5)
-- component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on used component_
-- translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z
+- component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on used components_
+- translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
 _Value in f and p can be negative_
 
