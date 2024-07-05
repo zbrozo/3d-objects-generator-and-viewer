@@ -19,6 +19,44 @@ Needed to build these libraries (in the brackets there are minimal versions I've
 - cmake (3.16)
 - g++ (C++17)
 
-TODO: describe parameters for objects generating
+Main objects that can be created:
+
+1. Cube
+
+- params (--a): size (default 50)
+
+2. CubeExt - cube made of component objects located on each face 
+
+- params (--a): size (default 50), rest of params depends on used components
+
+(attention: --a option can be avoided and values can written immediately after type name)
+
+3. Thorus 
+
+- params (--a): circle amount, ring amount, circle radius, circle offset
+
+- sinus params (--s): circle step x, circle amp x, circle step y, circle amp y, circle step z, circle amp z, ring step x, ring amp x, ring step y, ring amp y, ring step z, ring amp z
+
+4. Composite - currently the most flexible object that can be made of 6 different components, moved and rotated
+
+- component name (--c0, --c1, --c2, --c3, --c4, --c5)
+
+- component params (--p0, --p1, --p2, --p3, --p4, --p5)
+
+- translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5)
+
+Components are to be used to build main object (CubeExt or Composite):
+1. Square
+2. Rectangle
+3. Square with hole part1 (squareholepart1)
+4. Square with hole part2 (squareholepart2)
+5. Pyramid
+6. Taper
+7. Cylinder made of squares (cylinder)
+8. Cylinder made of triangles (cylindertriangles)
+
+Please look into run.sh file to see how examples are defined.
+
+
 
 ![](example.png)
