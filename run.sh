@@ -23,7 +23,7 @@ cd ..
 cd ./objects
 
 # normal objects
-../generator --v --o cube1 --t cube 100
+../generator --v --o cube1 --t cube --a 100
 ../generator --v --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 100 --f 0 0 100
 ../generator --v --o cube3 --t cube-ext --c Pyramid --p 100 --f 0 0 100
 ../generator --v --o thorus1 --t thorus 20 40 30 100

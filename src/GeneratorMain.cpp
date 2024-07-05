@@ -30,13 +30,6 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"composite", ObjectId::Composite},
 };
 
-std::map<ObjectId, std::string> ParamsHelp {
-  {ObjectId::Cube, "additional-params: size"},
-  {ObjectId::CubeExt, "component-list and component-params must be defined"},
-  {ObjectId::Thorus, "additional-params: circleAmount ringAmount circleSize circleOffset"},
-  {ObjectId::Composite, ""}
-};
-
 using ObjectFactoryPair = std::pair<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
 std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>> ObjectFactoryMap;
 
@@ -87,9 +80,10 @@ void PrintParamsHelp()
   std::for_each(ObjectIdMap.begin(), ObjectIdMap.end(),
     [](std::pair<std::string, ObjectId> item)
       {
-        std::cout << "  name: " << item.first << ", params: " << ParamsHelp[item.second];
-        std::cout << std::endl;
+        std::cout << item.first;
       });
+
+  std::cout << std::endl;
 }
 
 auto ReadGeneratorParams(int argc, char *argv[], po::options_description& desc)
@@ -125,14 +119,14 @@ int main(int argc, char* argv[])
   optionsDesc.add_options()
     ("help", "produce help message")
     ("v", "debug")
-    ("o", po::value<std::string>(), "output name")
-    ("t", po::value<std::string>(), "object3d type")
-    ("f", po::value<ParamsVector>()->multitoken(), "")
-    ("s", po::value<SinusParamsVector>()->multitoken(), "")
+    ("o", po::value<std::string>(), "output file name")
+    ("t", po::value<std::string>(), "object type")
+    ("f", po::value<ParamsVector>()->multitoken(), "translation and rotation params")
+    ("s", po::value<SinusParamsVector>()->multitoken(), "sinus params")
     ("c", po::value<ComponentNamesVector>()->multitoken(),
-      "Possible components: Square, SquareHolePart1, SquareHolePart2, Pyramid, Taper")
-    ("p", po::value<ParamsVector>()->multitoken(), "params for component")
-    ("a", po::value<ParamsVector>(), "additional params")
+      "component name: Square, SquareHolePart1, SquareHolePart2, Pyramid, Taper, Cylinder, CylinderTriangles")
+    ("p", po::value<ParamsVector>()->multitoken(), "component params")
+    ("a", po::value<ParamsVector>(), "object params")
     ("c0", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c1", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c2", po::value<ComponentNamesVector>()->multitoken(), "") 
@@ -158,7 +152,6 @@ int main(int argc, char* argv[])
   if (options.count("help"))
   {
     std::cout << optionsDesc << std::endl;
-    PrintParamsHelp();
     return 1;
   }
 
@@ -172,7 +165,6 @@ int main(int argc, char* argv[])
   else
   {
     std::cout << optionsDesc << std::endl;
-    PrintParamsHelp();
     return 1;
   }
 
@@ -229,11 +221,9 @@ int main(int argc, char* argv[])
     
   } catch (const std::out_of_range& ex) {
     BOOST_LOG_TRIVIAL(error) << ex.what();
-    PrintParamsHelp();
     return 1;
   } catch (const std::bad_cast& ex) {
     BOOST_LOG_TRIVIAL(error) << ex.what();
-    PrintParamsHelp();
     return 1;
   }
   
