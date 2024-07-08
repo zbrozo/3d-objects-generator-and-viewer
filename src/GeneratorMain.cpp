@@ -5,6 +5,7 @@
 #include "CubeExt.hpp"
 #include "Thorus.hpp"
 #include "ObjectFactories.hpp"
+#include "ComponentFactories.hpp"
 #include "AmigaFile.hpp"
 #include "Params.hpp"
 
@@ -30,29 +31,38 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"composite", ObjectId::Composite},
 };
 
-using ObjectFactoryPair = std::pair<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
-std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>> ObjectFactoryMap;
+using ObjectFactoryMap = std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
 
-void InitObjectFactoryMap()
+void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
 {
-  ObjectFactoryMap.insert(ObjectFactoryPair(ObjectId::Cube, std::make_unique<CubeFactory>()));
-  ObjectFactoryMap.insert(ObjectFactoryPair(ObjectId::CubeExt, std::make_unique<CubeExtFactory>()));
-  ObjectFactoryMap.insert(ObjectFactoryPair(ObjectId::Thorus, std::make_unique<ThorusFactory>()));
-  ObjectFactoryMap.insert(ObjectFactoryPair(ObjectId::Composite, std::make_unique<CompositeFactory>()));
+  objectFactoryMap[ObjectId::Cube] = std::make_unique<CubeFactory>();
+  objectFactoryMap[ObjectId::CubeExt] = std::make_unique<CubeExtFactory>();
+  objectFactoryMap[ObjectId::Thorus] = std::make_unique<ThorusFactory>();
+  objectFactoryMap[ObjectId::Composite] = std::make_unique<CompositeFactory>();
 }
 
-const auto& GetFactory(const std::string& name)
+void InitComponentFactoriesVector(ComponentFactories& componentFactories)
 {
-  InitObjectFactoryMap();
+  componentFactories[ObjectId::Square] = std::make_unique<Components::SquareFactory>();
+  componentFactories[ObjectId::Rectangle] = std::make_unique<Components::RectangleFactory>();
+  componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
+  componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
+  componentFactories[ObjectId::Pyramid] = std::make_unique<Components::PyramidFactory>();
+  componentFactories[ObjectId::Taper] = std::make_unique<Components::TaperFactory>();
+  componentFactories[ObjectId::Cylinder] = std::make_unique<Components::CylinderFactory>();
+  componentFactories[ObjectId::CylinderTriangles] = std::make_unique<Components::CylinderTrianglesFactory>();
+}
 
+const auto& GetFactory(const std::string& name, const ObjectFactoryMap& objectFactoryMap)
+{
   const auto it = ObjectIdMap.find(name);
   if (it == ObjectIdMap.end())
   {
       throw std::out_of_range("3d object id not found");
   }
   
-  const auto creatorIt = ObjectFactoryMap.find(it->second);
-  if (creatorIt == ObjectFactoryMap.end())
+  const auto creatorIt = objectFactoryMap.find(it->second);
+  if (creatorIt == objectFactoryMap.end())
   {
     throw std::out_of_range("3d object factory not found");
   }
@@ -205,7 +215,17 @@ int main(int argc, char* argv[])
   
   try {
     BOOST_LOG_TRIVIAL(debug) << "Creating: " << name;
-    const auto& factory = GetFactory(name);
+
+    ObjectFactoryMap objectFactoryMap;
+    InitObjectFactoryMap(objectFactoryMap);
+
+    ComponentFactories componentFactoryMap;
+    InitComponentFactoriesVector(componentFactoryMap);
+
+    const auto& factory = GetFactory(name, objectFactoryMap);
+
+    factory->Init(componentFactoryMap);
+    
     const auto object3d = factory->Create(name, paramsMap);
 
     if (!outputName.empty())

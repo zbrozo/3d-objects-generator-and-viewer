@@ -1,4 +1,7 @@
+#include "Components.hpp"
+#include "ObjectFactoryBase.hpp"
 #include "Vertex3D.hpp"
+#include <memory>
 #define BOOST_TEST_MODULE tests
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
@@ -6,18 +9,23 @@
 
 #include "IGenerator.hpp"
 #include "ObjectFactories.hpp"
+#include "ComponentFactories.hpp"
 #include "Object3D.hpp"
 #include "Params.hpp"
 
 BOOST_AUTO_TEST_SUITE(Basic_Suite)
 
-BOOST_AUTO_TEST_CASE(vertex_add_operations_test)
+BOOST_AUTO_TEST_CASE(vertex_add_operation_test)
 {
   Vertex3D<int> vertex1 {0, 1, 2};
   Vertex3D<int> vertex2 {1, 1, 1};
+
   vertex1 += vertex2;
+
   BOOST_CHECK_EQUAL(vertex1, Vertex3D<int>(1,2,3));
+  
   vertex1 = vertex1 + vertex2;
+
   BOOST_CHECK_EQUAL(vertex1, Vertex3D<int>(2,3,4));
 }
 
@@ -57,12 +65,88 @@ BOOST_AUTO_TEST_CASE(vector_compare_test)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(ComponentGeneration_Suite)
+
+BOOST_AUTO_TEST_CASE(square_generation_test)
+{
+  Components::Square object(50);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(4, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(1, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(rectangle_generation_test)
+{
+  Components::Rectangle object(50,30);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(4, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(1, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(squarewithhole1_generation_test)
+{
+  Components::SquareWithHolePart1 object(50,30,20);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(8, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(squarewithhole2_generation_test)
+{
+  Components::SquareWithHolePart2 object(50,30);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(8, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(pyramid_generation_test)
+{
+  Components::Pyramid object(50,30);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(5, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(taper_generation_test)
+{
+  Components::Taper object(10,50,50);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(11, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(10, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(cylinder_generation_test)
+{
+  Components::Cylinder object(10,50,50);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(20, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(10, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(cylindertriangles_generation_test)
+{
+  Components::CylinderTriangles object(10,50,50);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL(20, object.GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(20, object.GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE(ObjectFactory_Suite)
 
 BOOST_AUTO_TEST_CASE(cube_factory_test)
 {
-  CubeFactory factory;
   ParamsMap paramsMap;
+  CubeFactory factory;
 
   const auto object = factory.Create("cube", paramsMap);
   
@@ -73,12 +157,16 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
 
 BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
 {
-  CubeExtFactory factory;
   ParamsMap paramsMap;
-
+  CubeExtFactory factory;
+  ComponentFactories componentFactories;
+  componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
+  componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
+  
   paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
-  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // x, y, z translation
+  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translaction x, y, z
 
+  factory.Init(componentFactories);
   const auto object = factory.Create("cube-ext", paramsMap);
   
   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->mName);
@@ -88,13 +176,17 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
 
 BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
 {
-  CubeExtFactory factory;
   ParamsMap paramsMap;
-
+  CubeExtFactory factory;
+  ComponentFactories componentFactories;
+  componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
+  componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
+ 
   paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
   paramsMap[ParamsId::ComponentsParams] = ParamsVector{50, 20, 20};
-  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // x, y, z translation
-  
+  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translation x, y, z
+
+  factory.Init(componentFactories);
   const auto object = factory.Create("cube-ext", paramsMap);
   
   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->mName);
@@ -104,11 +196,13 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
 
 BOOST_AUTO_TEST_CASE(thorus_factory_test)
 {
-  ThorusFactory factory;
   ParamsMap paramsMap;
+  ThorusFactory factory;
+  ComponentFactories componentFactories;
 
   paramsMap[ParamsId::AdditionalParams] = ParamsVector{6, 8};
 
+  factory.Init(componentFactories);
   auto object = factory.Create("thorus", paramsMap);
 
   BOOST_CHECK_EQUAL("thorus_6_8", object->mName);
@@ -116,16 +210,19 @@ BOOST_AUTO_TEST_CASE(thorus_factory_test)
   BOOST_CHECK_EQUAL(48, object->GetFacesQuantity());
 }
 
-BOOST_AUTO_TEST_CASE(taper_factory_test)
+BOOST_AUTO_TEST_CASE(composite_factory_test)
 {
-  CompositeFactory factory;
   ParamsMap paramsMap;
-
+  CompositeFactory factory;
+  ComponentFactories componentFactories;
+  componentFactories[ObjectId::Taper] = std::make_unique<Components::TaperFactory>();
+ 
   paramsMap[ParamsId::ComponentsList0] = ComponentNamesVector{"Taper"};
   paramsMap[ParamsId::ComponentsList1] = ComponentNamesVector{"Taper"};
   paramsMap[ParamsId::ComponentsParams0] = ParamsVector{3,50,50};
   paramsMap[ParamsId::ComponentsParams1] = ParamsVector{3,50,-50};
 
+  factory.Init(componentFactories);
   auto object = factory.Create("composite", paramsMap);
 
   BOOST_CHECK_EQUAL("composite_Taper_Taper_3_50_50_3_50_-50", object->mName);

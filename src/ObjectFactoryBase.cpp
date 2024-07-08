@@ -19,18 +19,6 @@ auto findParamsVector = [](const ParamsPair& params, ParamsId id) {
   return params.first == id;
 };
 
-void InitAllComponentFactoriesVector(ComponentFactories& allComponentFactories)
-{
-  allComponentFactories[ObjectId::Square] = std::make_unique<Components::SquareFactory>();
-  allComponentFactories[ObjectId::Rectangle] = std::make_unique<Components::RectangleFactory>();
-  allComponentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
-  allComponentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
-  allComponentFactories[ObjectId::Pyramid] = std::make_unique<Components::PyramidFactory>();
-  allComponentFactories[ObjectId::Taper] = std::make_unique<Components::TaperFactory>();
-  allComponentFactories[ObjectId::Cylinder] = std::make_unique<Components::CylinderFactory>();
-  allComponentFactories[ObjectId::CylinderTriangles] = std::make_unique<Components::CylinderTrianglesFactory>();
-}
-
 template<typename T>
 void appendParams (std::string& result, const T& params) {
   for (auto value : params)
@@ -52,7 +40,6 @@ void appendParams (std::string& result, const T& params) {
 
 ObjectFactoryBase::ObjectFactoryBase()
 {
-  InitAllComponentFactoriesVector(mAllComponentFactories);
 }
 
 std::unique_ptr<Object3D> ObjectFactoryBase::Create(

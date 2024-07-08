@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <vector>
 #include <map>
 #include <string>
@@ -15,7 +16,7 @@ using ComponentFactories = std::map<ObjectId, std::unique_ptr<ComponentFactoryBa
 
 class ObjectFactoryBase
 {
-  ComponentFactories mAllComponentFactories;
+  const ComponentFactories* mComponentFactories = nullptr;
   
 public:
 
@@ -26,14 +27,19 @@ public:
   ObjectFactoryBase(ObjectFactoryBase&&) = delete;
   ObjectFactoryBase& operator=(const ObjectFactoryBase&) = delete;
   ObjectFactoryBase& operator=(ObjectFactoryBase&&) = delete;
+
+  void Init(const ComponentFactories& componentFactories)
+  {
+    mComponentFactories = &componentFactories;
+  }
   
   std::unique_ptr<Object3D> Create(
     const std::string& name,
     const ParamsMap& params) const;
 
-  const ComponentFactories& GetAllComponentFactories() const
+  const ComponentFactories& GetComponentFactories() const
   {
-    return mAllComponentFactories;
+    return *mComponentFactories;
   }
   
 protected:

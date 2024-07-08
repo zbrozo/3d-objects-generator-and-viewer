@@ -101,7 +101,7 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
     boost::algorithm::to_lower(name);
     const auto id = ComponentIdMap[name];
     BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
-    components->push_back(std::move(GetAllComponentFactories().at(id)->Create(name, componentParamsVector)));
+    components->push_back(std::move(GetComponentFactories().at(id)->Create(name, componentParamsVector)));
   }
 
   componentsWithParamsVector->push_back(
@@ -189,7 +189,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
         BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
 
         components->push_back(
-          std::move(GetAllComponentFactories().at(id)->Create(name, paramsVector)));
+          std::move(GetComponentFactories().at(id)->Create(name, paramsVector)));
       }
     }
 
