@@ -141,6 +141,82 @@ BOOST_AUTO_TEST_CASE(cylindertriangles_generation_test)
 
 BOOST_AUTO_TEST_SUITE_END()
 
+BOOST_AUTO_TEST_SUITE(ComponentFactories_Suite)
+
+BOOST_AUTO_TEST_CASE(square_factory_test)
+{
+  ParamsVector params;
+  Components::SquareFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(1, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(rectangle_factory_test)
+{
+  ParamsVector params;
+  Components::RectangleFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(1, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(squarewithhole1_factory_test)
+{
+  ParamsVector params;
+  Components::SquareWithHolePart1Factory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(8, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(squarewithhole2_factory_test)
+{
+  ParamsVector params;
+  Components::SquareWithHolePart2Factory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(8, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(pyramid_factory_test)
+{
+  ParamsVector params;
+  Components::PyramidFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(5, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(taper_factory_test)
+{
+  ParamsVector params;
+  Components::TaperFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(3, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(cylinder_factory_test)
+{
+  ParamsVector params;
+  Components::CylinderFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(6, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(3, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_CASE(cylindertriangles_factory_test)
+{
+  ParamsVector params;
+  Components::CylinderTrianglesFactory factory;
+  const auto object = factory.Create("", params);
+  BOOST_CHECK_EQUAL(6, object->GetVerticesQuantity());
+  BOOST_CHECK_EQUAL(6, object->GetFacesQuantity());
+}
+
+BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE(ObjectFactory_Suite)
 
 BOOST_AUTO_TEST_CASE(cube_factory_test)
