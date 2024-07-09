@@ -139,8 +139,8 @@ BOOST_AUTO_TEST_CASE(square_generation_test)
   Components::Square object(50);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(4, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(1, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(4, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(1, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(rectangle_generation_test)
@@ -148,8 +148,8 @@ BOOST_AUTO_TEST_CASE(rectangle_generation_test)
   Components::Rectangle object(50,30);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(4, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(1, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(4, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(1, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(squarewithhole1_generation_test)
@@ -157,8 +157,8 @@ BOOST_AUTO_TEST_CASE(squarewithhole1_generation_test)
   Components::SquareWithHolePart1 object(50,30,20);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(8, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(8, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(squarewithhole2_generation_test)
@@ -166,8 +166,8 @@ BOOST_AUTO_TEST_CASE(squarewithhole2_generation_test)
   Components::SquareWithHolePart2 object(50,30);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(8, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(8, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(pyramid_generation_test)
@@ -175,8 +175,8 @@ BOOST_AUTO_TEST_CASE(pyramid_generation_test)
   Components::Pyramid object(50,30);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(5, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(5, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(taper_generation_test)
@@ -184,8 +184,8 @@ BOOST_AUTO_TEST_CASE(taper_generation_test)
   Components::Taper object(10,50,50);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(11, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(10, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(11, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cylinder_generation_test)
@@ -193,8 +193,8 @@ BOOST_AUTO_TEST_CASE(cylinder_generation_test)
   Components::Cylinder object(10,50,50);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(20, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(10, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cylindertriangles_generation_test)
@@ -202,8 +202,8 @@ BOOST_AUTO_TEST_CASE(cylindertriangles_generation_test)
   Components::CylinderTriangles object(10,50,50);
   object.Generate();
   
-  BOOST_CHECK_EQUAL(20, object.GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(20, object.GetFacesQuantity());
+  BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(20, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -215,8 +215,8 @@ BOOST_AUTO_TEST_CASE(square_factory_test)
   ParamsVector params;
   Components::SquareFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(1, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(1, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(rectangle_factory_test)
@@ -224,8 +224,8 @@ BOOST_AUTO_TEST_CASE(rectangle_factory_test)
   ParamsVector params;
   Components::RectangleFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(1, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(1, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(squarewithhole1_factory_test)
@@ -233,8 +233,8 @@ BOOST_AUTO_TEST_CASE(squarewithhole1_factory_test)
   ParamsVector params;
   Components::SquareWithHolePart1Factory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(8, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(8, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(squarewithhole2_factory_test)
@@ -242,8 +242,8 @@ BOOST_AUTO_TEST_CASE(squarewithhole2_factory_test)
   ParamsVector params;
   Components::SquareWithHolePart2Factory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(8, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(8, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(pyramid_factory_test)
@@ -251,8 +251,8 @@ BOOST_AUTO_TEST_CASE(pyramid_factory_test)
   ParamsVector params;
   Components::PyramidFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(5, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(4, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(5, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(taper_factory_test)
@@ -260,8 +260,8 @@ BOOST_AUTO_TEST_CASE(taper_factory_test)
   ParamsVector params;
   Components::TaperFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(4, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(3, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(4, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(3, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cylinder_factory_test)
@@ -269,8 +269,8 @@ BOOST_AUTO_TEST_CASE(cylinder_factory_test)
   ParamsVector params;
   Components::CylinderFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(6, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(3, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(6, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(3, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cylindertriangles_factory_test)
@@ -278,8 +278,8 @@ BOOST_AUTO_TEST_CASE(cylindertriangles_factory_test)
   ParamsVector params;
   Components::CylinderTrianglesFactory factory;
   const auto object = factory.Create("", params);
-  BOOST_CHECK_EQUAL(6, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(6, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(6, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -294,8 +294,8 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
   const auto object = factory.Create("cube", paramsMap);
   
   BOOST_CHECK_EQUAL("cube", object->mName);
-  BOOST_CHECK_EQUAL(8, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(6, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(8, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
@@ -313,8 +313,8 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
   const auto object = factory.Create("cube-ext", paramsMap);
   
   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->mName);
-  BOOST_CHECK_EQUAL(40, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(48, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
@@ -333,8 +333,8 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
   const auto object = factory.Create("cube-ext", paramsMap);
   
   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->mName);
-  BOOST_CHECK_EQUAL(40, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(48, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(thorus_factory_test)
@@ -349,8 +349,8 @@ BOOST_AUTO_TEST_CASE(thorus_factory_test)
   auto object = factory.Create("thorus", paramsMap);
 
   BOOST_CHECK_EQUAL("thorus_6_8", object->mName);
-  BOOST_CHECK_EQUAL(48, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(48, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(48, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(composite_factory_test)
@@ -369,8 +369,8 @@ BOOST_AUTO_TEST_CASE(composite_factory_test)
   auto object = factory.Create("composite", paramsMap);
 
   BOOST_CHECK_EQUAL("composite_Taper_Taper_3_50_50_3_50_-50", object->mName);
-  BOOST_CHECK_EQUAL(5, object->GetVerticesQuantity());
-  BOOST_CHECK_EQUAL(6, object->GetFacesQuantity());
+  BOOST_CHECK_EQUAL(5, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

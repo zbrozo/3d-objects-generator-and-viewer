@@ -1,3 +1,4 @@
+#include "Vertices.hpp"
 #include "Face.hpp"
 #include "Types.hpp"
 #include <cmath>
@@ -6,7 +7,7 @@
 
 #define MIN_FACES 3
 
-Vector Face::CalculateNormalVector(const std::vector<Vertex>& vertices) const
+Vector Face::CalculateNormalVector(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
@@ -30,7 +31,7 @@ Vector Face::CalculateNormalVector(const std::vector<Vertex>& vertices) const
   return v1.calculateCrossProduct(v2).normalize();
 }
 
-Vertex Face::GetCenter(const std::vector<Vertex>& vertices) const
+Vertex Face::GetCenter(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
@@ -58,7 +59,7 @@ Vertex Face::GetCenter(const std::vector<Vertex>& vertices) const
   return Vertex(x, y, z);
 }
 
-bool Face::IsVisible(const std::vector<Vertex>& vertices) const
+bool Face::IsVisible(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {

@@ -41,7 +41,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
   objectFactoryMap[ObjectId::Composite] = std::make_unique<CompositeFactory>();
 }
 
-void InitComponentFactoriesVector(ComponentFactories& componentFactories)
+void InitComponentFactoryMap(ComponentFactories& componentFactories)
 {
   componentFactories[ObjectId::Square] = std::make_unique<Components::SquareFactory>();
   componentFactories[ObjectId::Rectangle] = std::make_unique<Components::RectangleFactory>();
@@ -220,7 +220,7 @@ int main(int argc, char* argv[])
     InitObjectFactoryMap(objectFactoryMap);
 
     ComponentFactories componentFactoryMap;
-    InitComponentFactoriesVector(componentFactoryMap);
+    InitComponentFactoryMap(componentFactoryMap);
 
     const auto& factory = GetFactory(name, objectFactoryMap);
 

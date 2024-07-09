@@ -32,7 +32,7 @@ public:
   Vector3D(Vector3D &&) = default;
   Vector3D& operator=(const Vector3D&) = default;
   Vector3D& operator=(Vector3D &&) = default;
-
+  
   bool operator==(const Vector3D& v) const noexcept;
 
   constexpr Vertex3D<T> getBegin() const noexcept

@@ -5,11 +5,24 @@
 #include <ostream>
 #include "Types.hpp"
 
-class Face : public std::vector<unsigned short>
-{
+class Vertices;
 
+class Face : private std::vector<unsigned short>
+{
+  using vector = std::vector<unsigned short>;
+  
 public:
 
+  using vector::push_back;
+  using vector::operator[];
+  using vector::size;
+  using vector::at;
+  using vector::insert;
+  using vector::begin;
+  using vector::end;
+  using vector::cbegin;
+  using vector::cend;
+  
   Face() = default;
   
   Face(std::initializer_list<unsigned short> init)
@@ -24,9 +37,9 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Face& face);
   
-  Vector CalculateNormalVector(const std::vector<Vertex>& vertices) const;
-  Vertex GetCenter(const std::vector<Vertex>& vertices) const;
-  bool IsVisible(const std::vector<Vertex>& vertices) const;
+  Vector CalculateNormalVector(const Vertices& vertices) const;
+  Vertex GetCenter(const Vertices& vertices) const;
+  bool IsVisible(const Vertices& vertices) const;
 };
 
 

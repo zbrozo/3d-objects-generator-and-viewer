@@ -2,10 +2,21 @@
 #include <vector>
 #include "Face.hpp"
 
-class Faces : public std::vector<Face>
+class Faces : private std::vector<Face>
 {
+  using vector = std::vector<Face>;
+  
 public:
-
+  
+  using vector::push_back;
+  using vector::operator[];
+  using vector::size;
+  using vector::at;
+  using vector::begin;
+  using vector::end;
+  using vector::cbegin;
+  using vector::cend;
+  
   Faces()
   {
   }

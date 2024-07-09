@@ -5,6 +5,7 @@
 #include <boost/log/trivial.hpp>
 
 #include "Types.hpp"
+#include "Vectors.hpp"
 #include "Object3D.hpp"
 
 using FaceNumbers = std::vector<unsigned short>;
@@ -178,18 +179,10 @@ std::ostream& operator<<(std::ostream& os, const Object3D& object)
   os << object.mFaces;
 
   os << "Face normals:" << "\n";
-  for (auto v : object.mNormalVectorsInFaces)
-  {
-    os << v;
-  }
-  os << "\n";
+  os << object.mNormalVectorsInFaces;
   
   os << "Vertice normals:" << "\n";
-  for (auto v : object.mNormalVectorsInVertices)
-  {
-    os << v;
-  }
-  os << "\n";
+  os << object.mNormalVectorsInVertices;
 
   return os;
 }

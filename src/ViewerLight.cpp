@@ -1,11 +1,9 @@
-
-#include <SDL_stdinc.h>
 #include <vector>
 #include <fstream>
 #include <regex>
 
 #include "Types.hpp"
-
+#include "Vectors.hpp"
 #include "ViewerLight.hpp"
 
 #include <SDL2/SDL.h>

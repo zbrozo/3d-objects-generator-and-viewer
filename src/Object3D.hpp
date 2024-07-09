@@ -4,9 +4,10 @@
 #include <string>
 #include <utility>
 
+#include "Types.hpp"
 #include "Faces.hpp"
 #include "Vertices.hpp"
-#include "Types.hpp"
+#include "Vectors.hpp"
 
 class Object3D
 {
@@ -32,12 +33,12 @@ public:
   Vectors mNormalVectorsInFaces;
   Vectors mNormalVectorsInVertices;
 
-  int GetFacesQuantity() const
+  int GetFacesCount() const
   {
     return mFaces.size();
   }
 
-  int GetVerticesQuantity() const
+  int GetVerticesCount() const
   {
     return mVertices.size();
   }

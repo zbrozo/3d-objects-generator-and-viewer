@@ -7,6 +7,5 @@
 
 using Vertex = Vertex3D<int>;
 using Vector = Vector3D<int>;
-using Vectors = std::vector<Vector>;
 
 

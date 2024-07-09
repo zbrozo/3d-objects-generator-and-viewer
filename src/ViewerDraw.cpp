@@ -1,5 +1,6 @@
 #include "Types.hpp"
 #include "Vertices.hpp"
+#include "Vectors.hpp"
 #include "Faces.hpp"
 
 #include "ViewerSortingFaces.hpp"

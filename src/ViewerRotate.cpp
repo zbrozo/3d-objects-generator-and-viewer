@@ -1,5 +1,6 @@
 #include "Types.hpp"
 #include "Vertices.hpp"
+#include "Vectors.hpp"
 #include "Rotation.hpp"
 
 void RotateObject(int degx, int degy, int degz,
