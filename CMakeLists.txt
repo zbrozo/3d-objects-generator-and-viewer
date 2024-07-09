@@ -53,6 +53,10 @@ set(ViewerSRC
 
 set(TestsSRC
   src/UnitTests.cpp
+  src/VertexTests.cpp
+  src/VectorTests.cpp
+  src/ComponentsTests.cpp
+  src/ObjectFactoryTests.cpp
 )
 
 add_library(basicmath STATIC ${BasicMathSRC})
