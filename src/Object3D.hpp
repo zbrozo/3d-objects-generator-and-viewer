@@ -23,7 +23,7 @@ protected:
   
 public:
 
-  Object3D(const char* name) :
+  Object3D(const std::string& name) :
     mName(name)
   {
   }

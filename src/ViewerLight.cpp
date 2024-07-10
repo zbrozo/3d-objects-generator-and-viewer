@@ -1,6 +1,7 @@
 #include <vector>
 #include <fstream>
 #include <regex>
+#include <iostream>
 
 #include "Types.hpp"
 #include "Vectors.hpp"
@@ -28,7 +29,7 @@ unsigned int readColor(const std::string& line)
 
     if (nr == 0)
     {
-      color |= std::stoi(match_str);
+      color |= (std::stoi(match_str) << 16);
     }
    
     if (nr == 1)
@@ -38,7 +39,7 @@ unsigned int readColor(const std::string& line)
 
     if (nr == 2)
     {
-      color |= (std::stoi(match_str) << 16);
+      color |= (std::stoi(match_str));
     }
 
     ++nr;
@@ -51,6 +52,7 @@ auto readColors(const char* paletteName, int maxColors)
 {
   std::string line;
   std::vector<int> colors;
+  colors.reserve(maxColors);
   
   std::ifstream file(paletteName);
   
@@ -60,10 +62,23 @@ auto readColors(const char* paletteName, int maxColors)
   }
 
   int nr = 0;
+  const int headerLines = 3;
+  int maxLinesInFile = headerLines;
+  int maxLines = headerLines + maxColors;
   
-  while(std::getline(file, line) && nr < maxColors)
+  while(std::getline(file, line)
+    && nr < maxLinesInFile
+    && nr < maxLines)
   {
-    if (nr > 2)
+    if (nr == 0 && (line.find("JASC-PAL", 0) == std::string::npos))
+    {
+      return colors;
+    }
+    else if (nr == 2)
+    {
+      maxLinesInFile += std::stoi(line);
+    }
+    else if (nr > 2)
     {
       auto color = readColor(line);
       colors.push_back(color);
