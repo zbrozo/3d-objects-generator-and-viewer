@@ -17,7 +17,8 @@ auto getParam(const std::vector<int>& values, unsigned int index)
   return std::optional<int>();
 }
 
-void RotateSide(int degx, int degy, int degz,
+void RotateSide(
+  int degx, int degy, int degz,
   const Faces& faces,
   const Vertices& vertices,
   Faces& objectFaces,
@@ -26,11 +27,11 @@ void RotateSide(int degx, int degy, int degz,
   const auto rotatedVertices = vertices.Rotate(degx, degy, degz);
   
   for (const auto& face : faces)
-    {
-      const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, rotatedVertices);
-      objectVertices = resultVertices;
-      objectFaces.push_back(resultFace);
-    }
+  {
+    const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, rotatedVertices);
+    objectVertices = resultVertices;
+    objectFaces.push_back(resultFace);
+  }
 }
 
 } // namespace
@@ -63,19 +64,12 @@ void Composite::Generate()
     
     for (const auto& component : components)
     {
-      Vertices vertices{component->mVertices};
+      Vertices vertices{component->GetVertices()};
       vertices += Vertex(offX, offY, offZ);
-      RotateSide(degX, degY, degZ, component->mFaces, vertices, objectFaces, objectVertices);
+      RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
     }
-
-    for (auto face : objectFaces)
-    {
-      auto r = Object3D::Merge(mVertices,
-        face,
-        objectVertices);
-
-      mFaces.push_back(r.first);
-      mVertices = r.second;
-    }
+    
+    Merge(objectVertices, objectFaces);
+    
   }
 }

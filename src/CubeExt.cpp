@@ -1,6 +1,5 @@
 #include "CubeExt.hpp"
 #include "IGenerator.hpp"
-#include <algorithm>
 
 #include <boost/log/trivial.hpp>
 
@@ -33,31 +32,13 @@ void CubeExt::Generate()
         
     for (auto& object : *pair.second)
     {
-      std::transform(
-        object->mVertices.cbegin(),
-        object->mVertices.cend(),
-        object->mVertices.begin(),
-        [&](const Vertex& vertex){
-          return Vertex(
-            vertex.getX() + translationX,
-            vertex.getY() + translationY,
-            vertex.getZ() + translationZ
-            );
-        });
+      object->Translate(translationX, translationY, translationZ);
       
-      const auto result = CreateCube(
-        object->mFaces,
-        object->mVertices);
+      const auto [faces, vertices] = CreateCube(
+        object->GetFaces(),
+        object->GetVertices());
     
-      for (auto face : result.first)
-      {
-        auto r = Object3D::Merge(mVertices,
-          face,
-          result.second);
-
-        mFaces.push_back(r.first);
-        mVertices = r.second;
-      }
+      Merge(vertices, faces);
     }
   }
 }

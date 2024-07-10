@@ -56,25 +56,25 @@ short ReadWord(std::ifstream& file)
   
 }
 
-bool AmigaFile::Save(const Object3D& object3d)
+bool AmigaFile::Save(const std::string& name, const Object3D& object3d)
 {
   // UWAGA - współrzędne są zapisywane w odwrotnej kolejności
   // ponieważ funkcja obrotu (na amidze) zapisuje dane w odwrotnej kolejności (jak na stosie)
 
-  std::ofstream file(object3d.mName, std::ios::out | std::ios::binary);
+  std::ofstream file(name, std::ios::out | std::ios::binary);
   
   if (!file)
     {
-      BOOST_LOG_TRIVIAL(error) << "File is not opened (" << object3d.mName << ")" ;
+      BOOST_LOG_TRIVIAL(error) << "File is not opened (" << name << ")" ;
       return false;
     }
 
-  BOOST_LOG_TRIVIAL(debug) << "Save file: " << object3d.mName;
+  BOOST_LOG_TRIVIAL(debug) << "Save file: " << name;
 
-  WriteWord(file, object3d.mVertices.size());
-  WriteWord(file, object3d.mFaces.size());
+  WriteWord(file, object3d.GetVertices().size());
+  WriteWord(file, object3d.GetFaces().size());
 
-  for (auto it = object3d.mVertices.rbegin(); it != object3d.mVertices.rend(); ++it)
+  for (auto it = object3d.GetVertices().rbegin(); it != object3d.GetVertices().rend(); ++it)
     {
       auto value = *it;
       WriteWord(file, value.getX());
@@ -82,7 +82,7 @@ bool AmigaFile::Save(const Object3D& object3d)
       WriteWord(file, value.getZ());
     }
 
-  for (auto it = object3d.mNormalVectorsInVertices.rbegin(); it != object3d.mNormalVectorsInVertices.rend(); ++it)
+  for (auto it = object3d.GetNormalVectorsInVertices().rbegin(); it != object3d.GetNormalVectorsInVertices().rend(); ++it)
     {
       auto value = *it;
       WriteWord(file, value.getX());
@@ -90,7 +90,7 @@ bool AmigaFile::Save(const Object3D& object3d)
       WriteWord(file, value.getZ());
     }
   
-  for(auto face : object3d.mFaces)
+  for(auto face : object3d.GetFaces())
     {
       WriteWord(file, 0);
       WriteWord(file, face.size());
@@ -100,7 +100,7 @@ bool AmigaFile::Save(const Object3D& object3d)
         }
     }
 
-  for (auto it = object3d.mNormalVectorsInFaces.rbegin(); it != object3d.mNormalVectorsInFaces.rend(); ++it)
+  for (auto it = object3d.GetNormalVectorsInFaces().rbegin(); it != object3d.GetNormalVectorsInFaces().rend(); ++it)
     {
       auto face = *it;
       WriteWord(file, face.getX());
@@ -112,6 +112,37 @@ bool AmigaFile::Save(const Object3D& object3d)
 
   return true;
 }
+
+class ObjectLoaded : public Object3D
+{
+public:
+
+  ObjectLoaded() : Object3D("")
+  {
+  }
+
+  void SetVertices(const Vertices& vertices)
+  {
+    mVertices = vertices;
+  }
+
+  void SetFaces(const Faces& faces)
+  {
+    mFaces = faces;
+  }
+
+  void SetNormalVectorsInVertices(const Vectors& vectors)
+  {
+    mNormalVectorsInVertices = vectors;
+  }
+
+  void SetNormalVectorsInFaces(const Vectors& vectors)
+  {
+    mNormalVectorsInFaces = vectors;
+  }
+  
+};
+
 
 bool AmigaFile::Load(const std::string& name, Object3D& object3d)
 {
@@ -133,28 +164,32 @@ bool AmigaFile::Load(const std::string& name, Object3D& object3d)
 
   BOOST_LOG_TRIVIAL(debug) << "vertices = " + std::to_string(verticesCount);
 
+  Vertices vertices;
   for (int i = 0; i < verticesCount; i++)
     {
       const auto x = ReadWord(file);
       const auto y = ReadWord(file);
       const auto z = ReadWord(file);
       const Vertex vertex(x,y,z);
-      object3d.mVertices.push_back(vertex);
+      vertices.push_back(vertex);
     }
-  std::reverse(object3d.mVertices.begin(), object3d.mVertices.end());
   
+  std::reverse(vertices.begin(), vertices.end());
+  
+  Vectors normalVectorsInVertices;
   for (int i = 0; i < verticesCount; i++)
     {
       const auto x = ReadWord(file);
       const auto y = ReadWord(file);
       const auto z = ReadWord(file);
       const Vector vector({x,y,z});
-      object3d.mNormalVectorsInVertices.push_back(vector);
+      normalVectorsInVertices.push_back(vector);
     }
-  std::reverse(object3d.mNormalVectorsInVertices.begin(), object3d.mNormalVectorsInVertices.end());
+  std::reverse(normalVectorsInVertices.begin(), normalVectorsInVertices.end());
 
   BOOST_LOG_TRIVIAL(debug) << "faces = " + std::to_string(facesCount);
 
+  Faces faces;
   for (int i = 0; i < facesCount; i++)
     {
       ReadWord(file); // not used
@@ -166,20 +201,29 @@ bool AmigaFile::Load(const std::string& name, Object3D& object3d)
           const auto vertexNr = ReadWord(file) / 8;
           face.push_back(vertexNr);
         }
-      object3d.mFaces.push_back(face);
+      faces.push_back(face);
     }
 
+  Vectors normalVectorsInFaces;
   for (int i = 0; i < facesCount; i++)
     {
       const auto x = ReadWord(file);
       const auto y = ReadWord(file);
       const auto z = ReadWord(file);
       const Vector vector({x,y,z});
-      object3d.mNormalVectorsInFaces.push_back(vector);
+      normalVectorsInFaces.push_back(vector);
     }
-  std::reverse(object3d.mNormalVectorsInFaces.begin(), object3d.mNormalVectorsInFaces.end());
+  std::reverse(normalVectorsInFaces.begin(), normalVectorsInFaces.end());
   
   file.close();
 
+  ObjectLoaded loaded;
+  loaded.SetVertices(vertices);
+  loaded.SetFaces(faces);
+  loaded.SetNormalVectorsInVertices(normalVectorsInVertices);
+  loaded.SetNormalVectorsInFaces(normalVectorsInFaces);
+
+  object3d = loaded;
+    
   return true;
 }

@@ -337,9 +337,9 @@ int main(int argc, char* argv[])
     
     RotateObject(
       degx, degy, degz,
-      object->mVertices,
-      object->mNormalVectorsInFaces,
-      object->mNormalVectorsInVertices,
+      object->GetVertices(),
+      object->GetNormalVectorsInFaces(),
+      object->GetNormalVectorsInVertices(),
       vertices,
       normalVectorsInFaces,
       normalVectorsInVertices);
@@ -362,7 +362,7 @@ int main(int argc, char* argv[])
         CenterX, CenterY,
         colors,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         colorNumbersInFaces,
         renderFunction);
     }
@@ -373,7 +373,7 @@ int main(int argc, char* argv[])
         CenterX, CenterY,
         colors,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         colorNumbersInVertices,
         renderFunction);
     }
@@ -383,7 +383,7 @@ int main(int argc, char* argv[])
       DrawTextureMapping(
         CenterX, CenterY,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         texture,
         renderFunction);
     }
@@ -394,7 +394,7 @@ int main(int argc, char* argv[])
         CenterX, CenterY,
         vertices,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         normalVectorsInFaces,
         calculateVertexPerspectiveFunction,
         drawLineFunction);
@@ -406,7 +406,7 @@ int main(int argc, char* argv[])
         CenterX, CenterY,
         vertices,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         normalVectorsInVertices,
         calculateVectorPerspectiveFunction,
         drawLineFunction);
@@ -417,7 +417,7 @@ int main(int argc, char* argv[])
       DrawLines(
         CenterX, CenterY,
         vertices2d,
-        object->mFaces,
+        object->GetFaces(),
         drawLineFunction);
     }
 

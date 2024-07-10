@@ -228,13 +228,15 @@ int main(int argc, char* argv[])
     
     const auto object3d = factory->Create(name, paramsMap);
 
-    if (!outputName.empty())
-    {
-      object3d->mName = outputName;
-    }
-      
     AmigaFile file;
-    file.Save(*object3d);
+    if (outputName.empty())
+    {
+      file.Save(object3d->GetName(), *object3d);
+    }
+    else
+    {
+      file.Save(outputName, *object3d);
+    }
 
     BOOST_LOG_TRIVIAL(debug) << *object3d;
     

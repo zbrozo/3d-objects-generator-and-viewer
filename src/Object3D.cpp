@@ -109,7 +109,7 @@ auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices)
   return normalizedVectorsInVertices;
 }
 
-}
+} // namespace
 
 void Object3D::CreateNormalVectors()
 {
@@ -122,6 +122,35 @@ void Object3D::CreateNormalVectors()
   Vectors vectorsInVertices = CalculateVectorsInVertices(facesAssignedToVertex, mNormalVectorsInFaces);
 
   mNormalVectorsInVertices = NormalizeVectorsInVertices(vectorsInVertices);
+}
+
+void Object3D::Translate(int x, int y, int z)
+{
+  std::transform(
+    mVertices.cbegin(),
+    mVertices.cend(),
+    mVertices.begin(),
+    [&](const Vertex& vertex){
+      return Vertex(
+        vertex.getX() + x,
+        vertex.getY() + y,
+        vertex.getZ() + z
+        );
+    });
+}
+
+void Object3D::Merge(const Vertices& vertices, const Faces& faces)
+{
+  for (auto face : faces)
+  {
+    auto r = Object3D::Merge(
+      mVertices,
+      face,
+      vertices);
+
+    mFaces.push_back(r.first);
+    mVertices = r.second;
+  }
 }
 
 std::pair<Face, Vertices> Object3D::Merge(const Vertices& objectVertices,
@@ -177,12 +206,9 @@ std::ostream& operator<<(std::ostream& os, const Object3D& object)
   os << object.mVertices;
   os << "Faces:" << "\n";
   os << object.mFaces;
-
   os << "Face normals:" << "\n";
   os << object.mNormalVectorsInFaces;
-  
   os << "Vertice normals:" << "\n";
   os << object.mNormalVectorsInVertices;
-
   return os;
 }

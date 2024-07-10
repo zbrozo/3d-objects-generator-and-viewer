@@ -11,6 +11,16 @@
 
 class Object3D
 {
+
+  std::string mName;
+
+protected:
+  
+  Vertices mVertices;
+  Faces mFaces;
+  Vectors mNormalVectorsInFaces;
+  Vectors mNormalVectorsInVertices;
+  
 public:
 
   Object3D(const char* name) :
@@ -20,30 +30,53 @@ public:
 
   virtual ~Object3D() = default;
 
-  Object3D(Object3D const &) = delete;
-  Object3D(Object3D &&) = delete;
-  Object3D& operator=(Object3D const &) = delete;
-  Object3D& operator=(Object3D &&) = delete;
+  Object3D(Object3D const &) = default;
+  Object3D(Object3D &&) = default;
+  Object3D& operator=(Object3D const &) = default;
+  Object3D& operator=(Object3D &&) = default;
 
   friend std::ostream& operator<<(std::ostream& os, const Object3D& object);
-  
-  std::string mName;
-  Vertices mVertices;
-  Faces mFaces;
-  Vectors mNormalVectorsInFaces;
-  Vectors mNormalVectorsInVertices;
 
-  int GetFacesCount() const
+  const std::string& GetName() const noexcept(true)
+  {
+    return mName;
+  }
+
+  const Vertices& GetVertices() const noexcept(true)
+  {
+    return mVertices;
+  }
+
+  const Faces& GetFaces() const noexcept(true)
+  {
+    return mFaces;
+  }
+
+  const Vectors& GetNormalVectorsInFaces() const noexcept(true)
+  {
+    return mNormalVectorsInFaces;
+  }
+
+  const Vectors& GetNormalVectorsInVertices() const noexcept(true)
+  {
+    return mNormalVectorsInVertices;
+  }
+  
+  int GetFacesCount() const noexcept(true)
   {
     return mFaces.size();
   }
 
-  int GetVerticesCount() const
+  int GetVerticesCount() const noexcept(true)
   {
     return mVertices.size();
   }
   
   void CreateNormalVectors();
+
+  void Translate(int x, int y, int z);
+  
+  void Merge(const Vertices& vertices, const Faces& faces);
   
   static std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
                                          const Face& face,

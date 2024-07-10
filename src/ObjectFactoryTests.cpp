@@ -13,7 +13,7 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
 
   const auto object = factory.Create("cube", paramsMap);
   
-  BOOST_CHECK_EQUAL("cube", object->mName);
+  BOOST_CHECK_EQUAL("cube", object->GetName());
   BOOST_CHECK_EQUAL(8, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
   factory.Init(componentFactories);
   const auto object = factory.Create("cube-ext", paramsMap);
   
-  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->mName);
+  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->GetName());
   BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
   factory.Init(componentFactories);
   const auto object = factory.Create("cube-ext", paramsMap);
   
-  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->mName);
+  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->GetName());
   BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(thorus_factory_test)
   factory.Init(componentFactories);
   auto object = factory.Create("thorus", paramsMap);
 
-  BOOST_CHECK_EQUAL("thorus_6_8", object->mName);
+  BOOST_CHECK_EQUAL("thorus_6_8", object->GetName());
   BOOST_CHECK_EQUAL(48, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(composite_factory_test)
   factory.Init(componentFactories);
   auto object = factory.Create("composite", paramsMap);
 
-  BOOST_CHECK_EQUAL("composite_Taper_Taper_3_50_50_3_50_-50", object->mName);
+  BOOST_CHECK_EQUAL("composite_Taper_Taper_3_50_50_3_50_-50", object->GetName());
   BOOST_CHECK_EQUAL(5, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
