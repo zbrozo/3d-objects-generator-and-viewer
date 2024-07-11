@@ -75,6 +75,6 @@ public:
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Vector3D<T>& vector)
 {
-  os << "[" << vector.getX()  << ", " << vector.getY() << ", " << vector.getZ() << "]";
+  os << std::dec << "[" << vector.getX()  << ", " << vector.getY() << ", " << vector.getZ() << "]";
   return os;
 }

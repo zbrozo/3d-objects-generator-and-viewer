@@ -38,7 +38,8 @@ set(FactoriesSRC
 
 set(GeneratorSRC
   src/GeneratorMain.cpp
-  src/AmigaFile.cpp
+  src/ZbrFormatConverter.cpp
+  src/FileSaver.cpp
 )
 
 set(ViewerSRC
@@ -48,7 +49,8 @@ set(ViewerSRC
   src/ViewerLight.cpp
   src/ViewerRotate.cpp
   src/ViewerDraw.cpp
-  src/AmigaFile.cpp
+  src/ZbrFormatConverter.cpp
+  src/FileLoader.cpp
 )
 
 set(TestsSRC
@@ -57,6 +59,8 @@ set(TestsSRC
   src/VectorTests.cpp
   src/ComponentsTests.cpp
   src/ObjectFactoryTests.cpp
+  src/ZbrFormatConverter.cpp
+  src/ZbrFormatConverterTests.cpp
 )
 
 add_library(basicmath STATIC ${BasicMathSRC})

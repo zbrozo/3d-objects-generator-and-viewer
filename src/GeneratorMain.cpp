@@ -6,8 +6,9 @@
 #include "Thorus.hpp"
 #include "ObjectFactories.hpp"
 #include "ComponentFactories.hpp"
-#include "AmigaFile.hpp"
+#include "FileSaver.hpp"
 #include "Params.hpp"
+#include "ZbrFormatConverter.hpp"
 
 #include <algorithm>
 #include <cstddef>
@@ -227,17 +228,15 @@ int main(int argc, char* argv[])
     factory->Init(componentFactoryMap);
     
     const auto object3d = factory->Create(name, paramsMap);
+    
+    ZbrFormatConverter converter;
+    auto buffer = converter.ConvertFromObject(*object3d);
 
-    AmigaFile file;
-    if (outputName.empty())
-    {
-      file.Save(object3d->GetName(), *object3d);
-    }
-    else
-    {
-      file.Save(outputName, *object3d);
-    }
-
+    const std::string fileName = outputName.empty() ? object3d->GetName() : outputName;
+    
+    FileSaver file(fileName);
+    file.Save(buffer);
+    
     BOOST_LOG_TRIVIAL(debug) << *object3d;
     
   } catch (const std::out_of_range& ex) {

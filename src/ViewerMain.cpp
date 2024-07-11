@@ -12,7 +12,8 @@
 #include "Object3D.hpp"
 #include "Face.hpp"
 #include "Rotation.hpp"
-#include "AmigaFile.hpp"
+#include "ZbrFormatConverter.hpp"
+#include "FileLoader.hpp"
 
 #include "ViewerSortingFaces.hpp"
 #include "ViewerPerspective.hpp"
@@ -97,7 +98,6 @@ void DrawLine(SDL_Renderer* rend, int x1, int y1, int x2, int y2)
 
 void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>& objects)
 {
-  AmigaFile file;
   std::string path;
 
   if (argc > 1)
@@ -107,10 +107,15 @@ void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>&
   
   for (int i = 2; i < argc; i++)
   {
-    std::unique_ptr<Object3D> object = std::make_unique<Object3D>("aaaa");
     const char* name = argv[i];
-    file.Load(path + "/" +name, *object.get());
-    objects.push_back(std::move(object));
+
+    FileLoader loader(path + "/" + name);
+    auto buffer = loader.Load();
+
+    ZbrFormatConverter converter;
+    auto object = converter.ConvertToObject(buffer);
+    
+    objects.push_back(std::make_unique<Object3D>(object));
   }
 }
 

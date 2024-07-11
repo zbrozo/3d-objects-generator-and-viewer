@@ -46,6 +46,6 @@ public:
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Vertex3D<T>& vertex)
 {
-  os << "[" << vertex.getX()  << ", " << vertex.getY() << ", " << vertex.getZ() << "]";
+  os << std::dec << "[" << vertex.getX()  << ", " << vertex.getY() << ", " << vertex.getZ() << "]";
   return os;
 }
