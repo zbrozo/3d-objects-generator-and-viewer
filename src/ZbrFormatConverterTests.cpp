@@ -5,10 +5,11 @@
 #include "SwapByteOrder.hpp"
 
 #include <boost/test/unit_test.hpp>
+#include <cstdint>
 
 BOOST_AUTO_TEST_SUITE(ZbrFormatConverter_Suite)
 
-BOOST_AUTO_TEST_CASE(zbr_format_converter_test)
+BOOST_AUTO_TEST_CASE(zbr_format_convert_to_buffer_test)
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
   
@@ -49,6 +50,47 @@ BOOST_AUTO_TEST_CASE(zbr_format_converter_test)
   BOOST_CHECK_EQUAL(11, swapBytes(buffer.ReadWord(14)));
   BOOST_CHECK_EQUAL(12, swapBytes(buffer.ReadWord(15)));
   
+}
+
+BOOST_AUTO_TEST_CASE(zbr_format_convert_from_buffer_test)
+{
+  std::vector<uint16_t> data = {1, 1, 2, 3, 4, 10, 11, 12, 0, 3, 101*8, 102*8, 103*8, 10, 11, 12};
+
+  for (auto& value : data)
+  {
+    auto swapBytes = swapByteOrder<int, uint16_t>;
+    value = swapBytes(value);
+  }
+  
+  BinaryBuffer buffer(data);
+
+  ZbrFormatConverter converter;
+  auto object = converter.ConvertToObject(buffer);
+
+  auto vertices = object.GetVertices();
+  auto faces = object.GetFaces();
+  auto verticesNormals = object.GetNormalVectorsInVertices();
+  auto facesNormals = object.GetNormalVectorsInVertices();
+  
+  BOOST_CHECK_EQUAL(1, vertices.size());
+  BOOST_CHECK_EQUAL(1, faces.size());
+  
+  BOOST_CHECK_EQUAL(2, vertices[0].getX());
+  BOOST_CHECK_EQUAL(3, vertices[0].getY());
+  BOOST_CHECK_EQUAL(4, vertices[0].getZ());
+
+  BOOST_CHECK_EQUAL(10, verticesNormals[0].getX());
+  BOOST_CHECK_EQUAL(11, verticesNormals[0].getY());
+  BOOST_CHECK_EQUAL(12, verticesNormals[0].getZ());
+
+  BOOST_CHECK_EQUAL(3, faces[0].size());
+  BOOST_CHECK_EQUAL(101, faces[0][0]);
+  BOOST_CHECK_EQUAL(102, faces[0][1]);
+  BOOST_CHECK_EQUAL(103, faces[0][2]);
+  
+  BOOST_CHECK_EQUAL(10, facesNormals[0].getX());
+  BOOST_CHECK_EQUAL(11, facesNormals[0].getY());
+  BOOST_CHECK_EQUAL(12, facesNormals[0].getZ());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

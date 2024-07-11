@@ -11,7 +11,14 @@ class BinaryBuffer
   std::vector<T> buffer;
   
 public:
-    
+
+  BinaryBuffer() = default;
+
+  BinaryBuffer(const std::vector<T>& data)
+  {
+    buffer = data;
+  }
+  
   void Clear()
   {
     buffer.clear();
