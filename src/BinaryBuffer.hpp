@@ -63,12 +63,9 @@ public:
     return buffer.size() * sizeof(T);
   }
   
-  
-  /*
-  friend std::ostream& operator<<(std::ostream& os, const BinaryBuffer<type>&
-buffer)
+  friend std::ostream& operator<<(std::ostream& os, const BinaryBuffer<T>& buffer)
   {
-    const auto size = buffer.size();
+    const auto size = buffer.GetSize();
 
     os << "Binary buffer: ";
 
@@ -82,5 +79,5 @@ buffer)
 
     return os;
   }
-  */
+  
 };

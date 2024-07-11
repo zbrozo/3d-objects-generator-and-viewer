@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(zbr_format_convert_to_buffer_test)
 BOOST_AUTO_TEST_CASE(zbr_format_convert_from_buffer_test)
 {
   std::vector<uint16_t> data = {1, 1, 2, 3, 4, 10, 11, 12, 0, 3, 101*8, 102*8, 103*8, 10, 11, 12};
-
+  
   for (auto& value : data)
   {
     auto swapBytes = swapByteOrder<int, uint16_t>;
