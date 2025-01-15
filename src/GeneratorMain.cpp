@@ -61,7 +61,7 @@ const auto& GetFactory(const std::string& name, const ObjectFactoryMap& objectFa
   {
       throw std::out_of_range("3d object id not found");
   }
-  
+
   const auto creatorIt = objectFactoryMap.find(it->second);
   if (creatorIt == objectFactoryMap.end())
   {
@@ -103,7 +103,7 @@ auto ReadGeneratorParams(int argc, char *argv[], po::options_description& desc)
 
   po::positional_options_description p;
   p.add("a", -1);
-  
+
   po::store(po::command_line_parser(argc, argv)
     .style(po::command_line_style::unix_style ^ po::command_line_style::allow_short)
     .options(desc)
@@ -119,7 +119,7 @@ void SetLogging(bool verbose)
 {
   boost::log::trivial::severity_level logLevel = (verbose ?
     boost::log::trivial::debug : boost::log::trivial::error);
-  
+
   auto logFilter = boost::log::filter(boost::log::trivial::severity >= logLevel);
   boost::log::core::get()->set_filter(logFilter);
 }
@@ -139,19 +139,19 @@ int main(int argc, char* argv[])
     ("a", po::value<ParamsVector>(), "main object params")
     ("c0", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c1", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c2", po::value<ComponentNamesVector>()->multitoken(), "") 
+    ("c2", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c3", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c4", po::value<ComponentNamesVector>()->multitoken(), "")
     ("c5", po::value<ComponentNamesVector>()->multitoken(), "")
     ("p0", po::value<ParamsVector>()->multitoken(), "")
     ("p1", po::value<ParamsVector>()->multitoken(), "")
-    ("p2", po::value<ParamsVector>()->multitoken(), "") 
+    ("p2", po::value<ParamsVector>()->multitoken(), "")
     ("p3", po::value<ParamsVector>()->multitoken(), "")
     ("p4", po::value<ParamsVector>()->multitoken(), "")
     ("p5", po::value<ParamsVector>()->multitoken(), "")
     ("f0", po::value<ParamsVector>()->multitoken(), "")
     ("f1", po::value<ParamsVector>()->multitoken(), "")
-    ("f2", po::value<ParamsVector>()->multitoken(), "") 
+    ("f2", po::value<ParamsVector>()->multitoken(), "")
     ("f3", po::value<ParamsVector>()->multitoken(), "")
     ("f4", po::value<ParamsVector>()->multitoken(), "")
     ("f5", po::value<ParamsVector>()->multitoken(), "")
@@ -166,7 +166,7 @@ int main(int argc, char* argv[])
   }
 
   const auto verbose = options.count("v");
-  
+
   std::string name;
   if (options.count("t"))
   {
@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
   {
     outputName = options["o"].as<std::string>();
   }
-  
+
   ParamsMap paramsMap;
   AddParams<ComponentNamesVector>(options, "c", ParamsId::ComponentsList, paramsMap);
   AddParams<ParamsVector>(options, "p", ParamsId::ComponentsParams, paramsMap);
@@ -197,7 +197,7 @@ int main(int argc, char* argv[])
   AddParams<ComponentNamesVector>(options, "c3", ParamsId::ComponentsList3, paramsMap);
   AddParams<ComponentNamesVector>(options, "c4", ParamsId::ComponentsList4, paramsMap);
   AddParams<ComponentNamesVector>(options, "c5", ParamsId::ComponentsList5, paramsMap);
-  
+
   AddParams<ParamsVector>(options, "p0", ParamsId::ComponentsParams0, paramsMap);
   AddParams<ParamsVector>(options, "p1", ParamsId::ComponentsParams1, paramsMap);
   AddParams<ParamsVector>(options, "p2", ParamsId::ComponentsParams2, paramsMap);
@@ -211,9 +211,9 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "f3", ParamsId::Params3, paramsMap);
   AddParams<ParamsVector>(options, "f4", ParamsId::Params4, paramsMap);
   AddParams<ParamsVector>(options, "f5", ParamsId::Params5, paramsMap);
-  
+
   SetLogging(verbose);
-  
+
   try {
     BOOST_LOG_TRIVIAL(debug) << "Creating: " << name;
 
@@ -226,19 +226,19 @@ int main(int argc, char* argv[])
     const auto& factory = GetFactory(name, objectFactoryMap);
 
     factory->Init(componentFactoryMap);
-    
+
     const auto object3d = factory->Create(name, paramsMap);
-    
+
     ZbrFormatConverter converter;
     auto buffer = converter.ConvertFromObject(*object3d);
 
     const std::string fileName = outputName.empty() ? object3d->GetName() : outputName;
-    
+
     FileSaver file(fileName);
     file.Save(buffer);
-    
+
     BOOST_LOG_TRIVIAL(debug) << *object3d;
-    
+
   } catch (const std::out_of_range& ex) {
     BOOST_LOG_TRIVIAL(error) << ex.what();
     return 1;
@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
     BOOST_LOG_TRIVIAL(error) << ex.what();
     return 1;
   }
-  
+
   return 0;
-  
+
 }

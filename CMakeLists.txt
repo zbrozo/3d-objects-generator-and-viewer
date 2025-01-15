@@ -34,12 +34,14 @@ set(FactoriesSRC
   src/CubeExt.cpp
   src/Thorus.cpp
   src/Composite.cpp
+  src/FileLoader.cpp
 )
 
 set(GeneratorSRC
   src/GeneratorMain.cpp
-  src/ZbrFormatConverter.cpp
+  src/FileLoader.cpp
   src/FileSaver.cpp
+  src/ZbrFormatConverter.cpp
 )
 
 set(ViewerSRC
