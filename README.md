@@ -67,10 +67,11 @@ _Value in f and p can be negative_
 8. Cylinder made of triangles, name: cylindertriangles
 --p circle-amount cirlce-radius height (default: 3 50 50)
 
-### Build
-Install MSYS64, use ucrt64:
+### Build on MS Windows
+Install MSYS2, use MSYS2 UCRT64 shell:
 ```
-pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain
+pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain 
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-cmake
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_image
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_ttf
