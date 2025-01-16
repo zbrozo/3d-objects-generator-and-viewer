@@ -1,5 +1,4 @@
 # 3D objects generator
-_Still in progress_ 
 
 I started this project to have 3d objects for my Amiga 500 vector graphics renderer.
 
@@ -44,28 +43,42 @@ _--a option can be avoided and values can written immediately after type name_
 _--s contains value of double type_
 
 4. Composite - currently the most flexible object that can be made of 6 different components, moved and rotated
-- component name (--c0, --c1, --c2, --c3, --c4, --c5)
-- component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on used components_
+- component name (--c0, --c1, --c2, --c3, --c4, --c5): _if component is not defined in this app then an object file with given name is searched_
+- component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on created component, see below_
 - translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
 _Value in f and p can be negative_
 
 ### Components which can be used in CubeExt and Composite:
-1. Square
+1. Square, name: square
 --p size (default: 50)
-2. Rectangle
+2. Rectangle, name: rectangle
 --p size-x size-y (default: 50 50)
-3. Square with hole part1 (squareholepart1)
+3. Square with hole part1, name: squareholepart1
 --p size1 size2 (default: 50 20)
-4. Square with hole part2 (squareholepart2)
+4. Square with hole part2, name: squareholepart2
 --p size1 size2 (default: 50 20)
-5. Pyramid
+5. Pyramid, name: pyramid
 --p size height (default: 50 20)
-6. Taper
+6. Taper, name: taper
 --p circle-amount circle-radius height (default: 3 50 50)
-7. Cylinder made of squares (cylinder)
+7. Cylinder made of squares, name: cylinder
 --p circle-amount cirlce-radius height (default: 3 50 50)
-8. Cylinder made of triangles (cylindertriangles)
+8. Cylinder made of triangles, name: cylindertriangles
 --p circle-amount cirlce-radius height (default: 3 50 50)
+
+### Build
+Install MSYS64, use ucrt64:
+```
+pacman -S --needed base-devel mingw-w64-ucrt-x86_64-toolchain
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_image
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_ttf
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-boost
+
+Additional for use with Emacs LSP mode:
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-clang
+pacman -S ucrt64/mingw-w64-ucrt-x86_64-clang-tools-extra
+```
 
 ![](example.png)
