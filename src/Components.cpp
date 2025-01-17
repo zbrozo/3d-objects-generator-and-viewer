@@ -37,7 +37,7 @@ auto CreateSideFaces(const std::vector<Vertices>& allVertices)
     vertices = resultVertices;
     faces.push_back(resultFace);
   }
-  
+
   return std::make_pair(faces, vertices);
 }
 
@@ -53,10 +53,10 @@ Vertices CreateCircleVertices(int amount, int radius, int degree = 0)
   for (int i = 0; i < amount; i++)
   {
     constexpr int scaleValue = 10;
-    
+
     const Vertex v  = rotation.rotateZ(vertex * scaleValue, degree) / scaleValue;
     circle.push_back(v);
-    
+
     degree += degStep;
   }
 
@@ -82,7 +82,7 @@ void Square::Generate()
     {
       return vertex * mSize;
     });
-   
+
   mFaces.push_back({0,1,2,3});
   mVertices = vertices;
 }
@@ -104,7 +104,7 @@ void Rectangle::Generate()
         vertex.getY() * mSizeY,
         vertex.getZ());
     });
-   
+
   mFaces.push_back({0,1,2,3});
   mVertices = vertices;
 }
@@ -117,7 +117,7 @@ void SquareWithHolePart1::Generate()
     {-1, 1, 0},
     {1, 1, 0},
   };
-  
+
   Vertices verticesModify {
     {-1, -1, 0},
     {1, -1, 0},
@@ -139,10 +139,10 @@ void SquareWithHolePart1::Generate()
     const auto& v2 = verticesModify.at(i);
     v1 = v1 + v2;
   }
-  
+
   const auto allVertices = CreateSideVertices(vertices);
   const auto facesWithVertices = CreateSideFaces(allVertices);
-  
+
   mFaces = facesWithVertices.first;
   mVertices = facesWithVertices.second;
 }
@@ -177,10 +177,10 @@ void SquareWithHolePart2::Generate()
     const auto& v2 = verticesModify.at(i);
     v1 = v1 + v2;
   }
-  
+
   const auto allVertices = CreateSideVertices(vertices);
   const auto facesWithVertices = CreateSideFaces(allVertices);
-  
+
   mFaces = facesWithVertices.first;
   mVertices = facesWithVertices.second;
 }
@@ -200,13 +200,13 @@ void Pyramid::Generate()
     {
       return vertex * mSize1;
     });
-  
+
   vertices[4] = Vertex(
     vertices[4].getX(),
     vertices[4].getY(),
     vertices[4].getZ() + mSize2
     );
-  
+
   mVertices = vertices;
 
   mFaces.push_back({0,1,4});
@@ -217,10 +217,10 @@ void Pyramid::Generate()
 
 void Taper::Generate()
 {
-    
+
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
   vertices.push_back(Vertex(0, 0, mHeight));
-  
+
   mVertices = vertices;
 
   unsigned short last = vertices.size() - 1;
@@ -234,7 +234,8 @@ void Taper::Generate()
     }
     mFaces.push_back({nr, 0, last});
   }
-  else {
+  else
+  {
     for (;nr < vertices.size()-2; ++nr)
     {
       mFaces.push_back({static_cast<unsigned short>(nr + 1), nr, last});
@@ -253,7 +254,7 @@ void Cylinder::Generate()
     {
       return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
     });
-  
+
   mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
 
@@ -278,7 +279,7 @@ void Cylinder::Generate()
       static_cast<unsigned short>(size),
       static_cast<unsigned short>(0)
     });
-  
+
 }
 
 void CylinderTriangles::Generate()
@@ -291,14 +292,14 @@ void CylinderTriangles::Generate()
     {
       return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
     });
-  
+
   mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
 
   const auto size = vertices.size();
 
   unsigned short nr = 0;
-  
+
   for (; nr < size - 1; ++nr)
   {
     mFaces.push_back(
@@ -314,7 +315,6 @@ void CylinderTriangles::Generate()
         static_cast<unsigned short>(nr + size + 1),
         static_cast<unsigned short>(nr + 1),
       });
-
   }
 
   mFaces.push_back(
@@ -330,7 +330,55 @@ void CylinderTriangles::Generate()
       static_cast<unsigned short>(size),
       static_cast<unsigned short>(0),
     });
-  
+}
+
+void Arm::Generate()
+{
+  auto Translate = [](Vertices& vertices, int x, int y, int z){
+    std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
+      [&](const Vertex& vertex)
+      {
+        return Vertex(vertex.getX() + x, vertex.getY() + y, vertex.getZ() + z);
+      });
+  };
+
+  Vertices vertices1 = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  Vertices vertices2 = vertices1;
+  Vertices vertices3 = vertices1;
+  Vertices vertices4 = vertices1;
+
+  Translate(vertices1, 0, 0, 20);
+  Translate(vertices2, 0, 0, -20);
+  Translate(vertices3, -20, 0, 20);
+  Translate(vertices4, -20, 0, -20);
+
+  mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
+  mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
+  mVertices.insert(mVertices.end(), vertices3.cbegin(), vertices3.cend());
+  mVertices.insert(mVertices.end(), vertices4.cbegin(), vertices4.cend());
+
+  const auto size = vertices1.size();
+
+  unsigned short nr = 0;
+
+  for (; nr < size - 1; ++nr)
+  {
+      mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + 1),
+        static_cast<unsigned short>(nr),
+        static_cast<unsigned short>(nr + size),
+        static_cast<unsigned short>(nr + size + 1)
+      });
+
+      mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + 2*size ),
+        static_cast<unsigned short>(nr + 2*size + 1),
+        static_cast<unsigned short>(nr + 2*size + size + 1),
+        static_cast<unsigned short>(nr + 2*size + size)
+      });
+  }
 }
 
 } // namespace

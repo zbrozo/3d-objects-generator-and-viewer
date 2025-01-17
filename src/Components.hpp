@@ -12,7 +12,7 @@ namespace Components
 class Square : public Object3D, public IGenerator
 {
   int mSize = 50;
-  
+
 public:
 
   Square(std::optional<int> size) :
@@ -25,9 +25,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~Square() = default;
-  
+
   Square(Square const &) = delete;
   Square(Square &&) = delete;
   Square& operator=(const Square&) = delete;
@@ -39,7 +39,7 @@ class Rectangle : public Object3D, public IGenerator
 {
   int mSizeX = 50;
   int mSizeY = 50;
-  
+
 public:
 
   Rectangle(std::optional<int> sizeX, std::optional<int> sizeY) :
@@ -58,9 +58,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~Rectangle() = default;
-  
+
   Rectangle(Rectangle const &) = delete;
   Rectangle(Rectangle &&) = delete;
   Rectangle& operator=(const Rectangle&) = delete;
@@ -74,7 +74,7 @@ class SquareWithHolePart1 : public Object3D, public IGenerator
   int mSize1 = 50;
   int mSize2 = 20;
   int mSize3 = 20;
-  
+
 public:
 
   SquareWithHolePart1(
@@ -88,7 +88,7 @@ public:
     {
       mSize1 = size1.value();
     }
-    
+
     if (size2.has_value())
     {
       mSize2 = size2.value();
@@ -101,9 +101,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~SquareWithHolePart1() = default;
-  
+
   SquareWithHolePart1(SquareWithHolePart1 const &) = delete;
   SquareWithHolePart1(SquareWithHolePart1 &&) = delete;
   SquareWithHolePart1& operator=(const SquareWithHolePart1&) = delete;
@@ -115,7 +115,7 @@ class SquareWithHolePart2 : public Object3D, public IGenerator
 {
   int mSize1 = 50;
   int mSize2 = 20;
-  
+
 public:
 
   SquareWithHolePart2(
@@ -128,7 +128,7 @@ public:
     {
       mSize1 = size1.value();
     }
-    
+
     if (size2.has_value())
     {
       mSize2 = size2.value();
@@ -136,9 +136,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~SquareWithHolePart2() = default;
-  
+
   SquareWithHolePart2(SquareWithHolePart2 const &) = delete;
   SquareWithHolePart2(SquareWithHolePart2 &&) = delete;
   SquareWithHolePart2& operator=(const SquareWithHolePart2&) = delete;
@@ -150,7 +150,7 @@ class Pyramid : public Object3D, public IGenerator
 {
   int mSize1 = 50;
   int mSize2 = 20;
-  
+
 public:
 
   Pyramid(
@@ -163,7 +163,7 @@ public:
     {
       mSize1 = size1.value();
     }
-    
+
     if (size2.has_value())
     {
       mSize2 = size2.value();
@@ -171,9 +171,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~Pyramid() = default;
-  
+
   Pyramid(Pyramid const &) = delete;
   Pyramid(Pyramid &&) = delete;
   Pyramid& operator=(const Pyramid&) = delete;
@@ -186,7 +186,7 @@ class Taper : public Object3D, public IGenerator
   int mCircleAmount = 3;
   int mCircleRadius = 50;
   int mHeight = 50;
-  
+
 public:
 
   Taper(
@@ -200,7 +200,7 @@ public:
     {
       mCircleAmount = circleAmount.value();
     }
-    
+
     if (circleRadius.has_value())
     {
       mCircleRadius = circleRadius.value();
@@ -213,9 +213,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~Taper() = default;
-  
+
   Taper(Taper const &) = delete;
   Taper(Taper &&) = delete;
   Taper& operator=(const Taper&) = delete;
@@ -228,7 +228,7 @@ class Cylinder : public Object3D, public IGenerator
   int mCircleAmount = 3;
   int mCircleRadius = 50;
   int mHeight = 50;
-  
+
 public:
 
   Cylinder(
@@ -242,7 +242,7 @@ public:
     {
       mCircleAmount = circleAmount.value();
     }
-    
+
     if (circleRadius.has_value())
     {
       mCircleRadius = circleRadius.value();
@@ -255,9 +255,9 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~Cylinder() = default;
-  
+
   Cylinder(const Cylinder&) = delete;
   Cylinder(Cylinder&&) = delete;
   Cylinder& operator=(const Cylinder&) = delete;
@@ -270,7 +270,7 @@ class CylinderTriangles : public Object3D, public IGenerator
   int mCircleAmount = 3;
   int mCircleRadius = 50;
   int mHeight = 50;
-  
+
 public:
 
   CylinderTriangles(
@@ -284,7 +284,7 @@ public:
     {
       mCircleAmount = circleAmount.value();
     }
-    
+
     if (circleRadius.has_value())
     {
       mCircleRadius = circleRadius.value();
@@ -297,14 +297,54 @@ public:
   }
 
   void Generate() override;
-  
+
   virtual ~CylinderTriangles() = default;
-  
+
   CylinderTriangles(const CylinderTriangles&) = delete;
   CylinderTriangles(CylinderTriangles&&) = delete;
   CylinderTriangles& operator=(const CylinderTriangles&) = delete;
   CylinderTriangles& operator=(CylinderTriangles &&) = delete;
+};
 
+class Arm : public Object3D, public IGenerator
+{
+  int mCircleAmount = 3;
+  int mCircleRadius = 50;
+  int mHeight = 50;
+
+public:
+
+  Arm(
+    const std::optional<int>& circleAmount,
+    const std::optional<int>& circleRadius,
+    const std::optional<int>& height
+    ) :
+    Object3D("")
+  {
+    if (circleAmount.has_value())
+    {
+      mCircleAmount = circleAmount.value();
+    }
+
+    if (circleRadius.has_value())
+    {
+      mCircleRadius = circleRadius.value();
+    }
+
+    if (height.has_value())
+    {
+      mHeight = height.value();
+    }
+  }
+
+  void Generate() override;
+
+  virtual ~Arm() = default;
+
+  Arm(const Arm&) = delete;
+  Arm(Arm&&) = delete;
+  Arm& operator=(const Arm&) = delete;
+  Arm& operator=(Arm &&) = delete;
 };
 
 } // namespace Components

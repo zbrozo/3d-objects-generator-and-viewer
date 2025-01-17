@@ -110,4 +110,14 @@ std::unique_ptr<Object3D> CylinderTrianglesFactory::FactoryMethod(
   return std::make_unique<Components::CylinderTriangles>(param1, param2, param3);
 }
 
+std::unique_ptr<Object3D> ArmFactory::FactoryMethod(
+  const std::string& /*name*/,
+  const ParamsVector& params) const
+{
+  std::optional<int> param1 = getParam(params, 0);
+  std::optional<int> param2 = getParam(params, 1);
+  std::optional<int> param3 = getParam(params, 2);
+  return std::make_unique<Components::Arm>(param1, param2, param3);
+}
+
 } // namespace Components

@@ -13,7 +13,7 @@ auto getParam(const std::vector<int>& values, unsigned int index)
   {
     return std::optional<int>{values[index]};
   }
-    
+
   return std::optional<int>();
 }
 
@@ -25,7 +25,7 @@ void RotateSide(
   Vertices& objectVertices)
 {
   const auto rotatedVertices = vertices.Rotate(degx, degy, degz);
-  
+
   for (const auto& face : faces)
   {
     const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, rotatedVertices);
@@ -51,25 +51,33 @@ void Composite::Generate()
     auto param3 = getParam(params, 3);
     auto param4 = getParam(params, 4);
     auto param5 = getParam(params, 5);
-    
-    int offX = param0.has_value() ? param0.value() : 0;
-    int offY = param1.has_value() ? param1.value() : 0;
-    int offZ = param2.has_value() ? param2.value() : 0;
+    auto param6 = getParam(params, 6);
+    auto param7 = getParam(params, 7);
+    auto param8 = getParam(params, 8);
+
+    int beforeRotationTransitionX = param0.has_value() ? param0.value() : 0;
+    int beforeRotationTransitionY = param1.has_value() ? param1.value() : 0;
+    int beforeRotationTransitionZ = param2.has_value() ? param2.value() : 0;
+
     int degX = param3.has_value() ? param3.value() : 0;
     int degY = param4.has_value() ? param4.value() : 0;
     int degZ = param5.has_value() ? param5.value() : 0;
 
+    int afterRotationTransitionX = param6.has_value() ? param6.value() : 0;
+    int afterRotationTransitionY = param7.has_value() ? param7.value() : 0;
+    int afterRotationTransitionZ = param8.has_value() ? param8.value() : 0;
+
     Faces objectFaces;
     Vertices objectVertices;
-    
+
     for (const auto& component : components)
     {
       Vertices vertices{component->GetVertices()};
-      vertices += Vertex(offX, offY, offZ);
+      vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
       RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
+      objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
     }
-    
+
     Merge(objectVertices, objectFaces);
-    
   }
 }

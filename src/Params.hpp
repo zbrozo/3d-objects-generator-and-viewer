@@ -20,6 +20,7 @@ enum class ObjectId {
   Taper,
   Cylinder,
   CylinderTriangles,
+  Arm,
 };
 
 enum class ParamsId {
