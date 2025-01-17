@@ -349,8 +349,8 @@ void Arm::Generate()
 
   Translate(vertices1, 0, 0, 20);
   Translate(vertices2, 0, 0, -20);
-  Translate(vertices3, -20, 0, 20);
-  Translate(vertices4, -20, 0, -20);
+  Translate(vertices3, 50, 0, 20);
+  Translate(vertices4, 50, 0, -20);
 
   mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
@@ -373,10 +373,10 @@ void Arm::Generate()
 
       mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 2*size ),
-        static_cast<unsigned short>(nr + 2*size + 1),
-        static_cast<unsigned short>(nr + 2*size + size + 1),
-        static_cast<unsigned short>(nr + 2*size + size)
+        static_cast<unsigned short>(nr + 2*size + 1 ),
+        static_cast<unsigned short>(nr + 2*size),
+        static_cast<unsigned short>(nr + 2*size + size),
+        static_cast<unsigned short>(nr + 2*size + size + 1)
       });
   }
 }
