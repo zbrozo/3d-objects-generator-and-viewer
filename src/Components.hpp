@@ -306,7 +306,7 @@ public:
   CylinderTriangles& operator=(CylinderTriangles &&) = delete;
 };
 
-class Arm : public Object3D, public IGenerator
+class CSign : public Object3D, public IGenerator
 {
   int mCircleAmount = 3;
   int mCircleRadius = 50;
@@ -314,7 +314,7 @@ class Arm : public Object3D, public IGenerator
 
 public:
 
-  Arm(
+  CSign(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -339,12 +339,12 @@ public:
 
   void Generate() override;
 
-  virtual ~Arm() = default;
+  virtual ~CSign() = default;
 
-  Arm(const Arm&) = delete;
-  Arm(Arm&&) = delete;
-  Arm& operator=(const Arm&) = delete;
-  Arm& operator=(Arm &&) = delete;
+  CSign(const CSign&) = delete;
+  CSign(CSign&&) = delete;
+  CSign& operator=(const CSign&) = delete;
+  CSign& operator=(CSign &&) = delete;
 };
 
 } // namespace Components

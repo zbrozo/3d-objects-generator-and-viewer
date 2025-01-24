@@ -32,7 +32,7 @@ std::map<std::string, ObjectId> ComponentIdMap {
   {"taper", ObjectId::Taper},
   {"cylinder", ObjectId::Cylinder},
   {"cylindertriangles", ObjectId::CylinderTriangles},
-  {"arm", ObjectId::Arm},
+  {"csign", ObjectId::CSign},
 };
 
 auto findParamsVector = [](const ParamsPair& params,  ParamsId id)

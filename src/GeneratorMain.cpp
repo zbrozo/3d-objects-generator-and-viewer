@@ -52,7 +52,7 @@ void InitComponentFactoryMap(ComponentFactories& componentFactories)
   componentFactories[ObjectId::Taper] = std::make_unique<Components::TaperFactory>();
   componentFactories[ObjectId::Cylinder] = std::make_unique<Components::CylinderFactory>();
   componentFactories[ObjectId::CylinderTriangles] = std::make_unique<Components::CylinderTrianglesFactory>();
-  componentFactories[ObjectId::Arm] = std::make_unique<Components::ArmFactory>();
+  componentFactories[ObjectId::CSign] = std::make_unique<Components::CSignFactory>();
 }
 
 const auto& GetFactory(const std::string& name, const ObjectFactoryMap& objectFactoryMap)

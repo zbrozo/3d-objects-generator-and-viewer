@@ -1,8 +1,8 @@
 #include "Composite.hpp"
 #include "IGenerator.hpp"
 #include <optional>
-
 #include <boost/log/trivial.hpp>
+#include <iostream>
 
 namespace
 {
@@ -74,6 +74,9 @@ void Composite::Generate()
     {
       Vertices vertices{component->GetVertices()};
       vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
+
+      std::cout << "aaa " << vertices << std::endl;
+
       RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
       objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
     }

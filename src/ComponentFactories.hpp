@@ -70,7 +70,7 @@ public:
     const ParamsVector& params) const override;
 };
 
-class ArmFactory : public ComponentFactoryBase
+class CSignFactory : public ComponentFactoryBase
 {
 public:
   std::unique_ptr<Object3D> FactoryMethod(

@@ -17,7 +17,7 @@ using ComponentFactories = std::map<ObjectId, std::unique_ptr<ComponentFactoryBa
 class ObjectFactoryBase
 {
   const ComponentFactories* mComponentFactories = nullptr;
-  
+
 public:
 
   ObjectFactoryBase();
@@ -32,7 +32,7 @@ public:
   {
     mComponentFactories = &componentFactories;
   }
-  
+
   std::unique_ptr<Object3D> Create(
     const std::string& name,
     const ParamsMap& params) const;
@@ -41,9 +41,9 @@ public:
   {
     return *mComponentFactories;
   }
-  
+
 protected:
-  
+
   virtual std::unique_ptr<Object3D> FactoryMethod(
     const std::string& name,
     const ParamsMap& params) const = 0;

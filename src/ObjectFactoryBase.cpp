@@ -26,7 +26,7 @@ void appendParams (std::string& result, const T& params) {
     if constexpr (std::is_same_v<T, ParamsVector>) {
       result += "_" + std::to_string(value);
     }
-    else 
+    else
     if constexpr (std::is_same_v<T, SinusParamsVector>) {
       result += "_" + std::to_string(value);
     }
@@ -54,7 +54,7 @@ std::unique_ptr<Object3D> ObjectFactoryBase::Create(
 std::string ObjectFactoryBase::CreateFullName(const std::string& name, const ParamsMap &params) const
 {
   std::string result = name;
-  
+
   for (const auto& paramsVector : params)
   {
     std::visit(
@@ -63,7 +63,7 @@ std::string ObjectFactoryBase::CreateFullName(const std::string& name, const Par
       },
       paramsVector.second);
   }
-  
+
   return result;
 }
 
@@ -71,6 +71,6 @@ void ObjectFactoryBase::Generate(Object3D& object) const
 {
   auto& generator = dynamic_cast<IGenerator&>(object);
   generator.Generate();
-  
+
   object.CreateNormalVectors();
 }

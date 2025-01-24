@@ -41,7 +41,7 @@ auto CreateSideFaces(const std::vector<Vertices>& allVertices)
   return std::make_pair(faces, vertices);
 }
 
-Vertices CreateCircleVertices(int amount, int radius, int degree = 0)
+Vertices CreateCircleVerticesExt(int count, int amount, int radius, int degree = 0)
 {
   Vertex vertex(0, radius, 0);
   VertexRotation rotation;
@@ -50,7 +50,7 @@ Vertices CreateCircleVertices(int amount, int radius, int degree = 0)
 
   Vertices circle;
 
-  for (int i = 0; i < amount; i++)
+  for (int i = 0; i < count; i++)
   {
     constexpr int scaleValue = 10;
 
@@ -61,6 +61,10 @@ Vertices CreateCircleVertices(int amount, int radius, int degree = 0)
   }
 
   return circle;
+}
+
+Vertices CreateCircleVertices(int amount, int radius, int degree = 0) {
+  return CreateCircleVerticesExt(amount, amount , radius, degree);
 }
 
 } // namespace
@@ -332,7 +336,7 @@ void CylinderTriangles::Generate()
     });
 }
 
-void Arm::Generate()
+void CSign::Generate()
 {
   auto Translate = [](Vertices& vertices, int x, int y, int z){
     std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
@@ -342,15 +346,15 @@ void Arm::Generate()
       });
   };
 
-  Vertices vertices1 = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  Vertices vertices1 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircleRadius);
   Vertices vertices2 = vertices1;
   Vertices vertices3 = vertices1;
   Vertices vertices4 = vertices1;
 
   Translate(vertices1, 0, 0, 20);
   Translate(vertices2, 0, 0, -20);
-  Translate(vertices3, 50, 0, 20);
-  Translate(vertices4, 50, 0, -20);
+  Translate(vertices3, 20, 0, 20);
+  Translate(vertices4, 20, 0, -20);
 
   mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
@@ -363,22 +367,50 @@ void Arm::Generate()
 
   for (; nr < size - 1; ++nr)
   {
-      mFaces.push_back(
+    mFaces.push_back(
       {
         static_cast<unsigned short>(nr + 1),
         static_cast<unsigned short>(nr),
         static_cast<unsigned short>(nr + size),
         static_cast<unsigned short>(nr + size + 1)
       });
-
-      mFaces.push_back(
+    mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 2*size + 1 ),
         static_cast<unsigned short>(nr + 2*size),
-        static_cast<unsigned short>(nr + 2*size + size),
-        static_cast<unsigned short>(nr + 2*size + size + 1)
+        static_cast<unsigned short>(nr + 2*size + 1),
+        static_cast<unsigned short>(nr + 2*size + size + 1),
+        static_cast<unsigned short>(nr + 2*size + size)
+      });
+    mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + 2*size),
+        static_cast<unsigned short>(nr),
+        static_cast<unsigned short>(nr + 1),
+        static_cast<unsigned short>(nr + 2*size + 1)
+      });
+    mFaces.push_back(
+      {
+        static_cast<unsigned short>(nr + size),
+        static_cast<unsigned short>(nr + 3*size),
+        static_cast<unsigned short>(nr + 3*size + 1),
+        static_cast<unsigned short>(nr + size + 1)
       });
   }
+
+  mFaces.push_back(
+    {
+      static_cast<unsigned short>(size),
+      static_cast<unsigned short>(0),
+      static_cast<unsigned short>(2*size),
+      static_cast<unsigned short>(3*size)
+    });
+  mFaces.push_back(
+    {
+      static_cast<unsigned short>(size-1),
+      static_cast<unsigned short>(size + (size-1)),
+      static_cast<unsigned short>(3*size + (size-1)),
+      static_cast<unsigned short>(2*size + (size-1))
+    });
 }
 
 } // namespace

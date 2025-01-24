@@ -20,7 +20,7 @@ enum class ObjectId {
   Taper,
   Cylinder,
   CylinderTriangles,
-  Arm,
+  CSign,
 };
 
 enum class ParamsId {

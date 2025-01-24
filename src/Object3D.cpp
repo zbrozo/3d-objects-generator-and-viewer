@@ -13,7 +13,7 @@ using FaceNumbersInVertices = std::vector<FaceNumbers>;
 
 namespace
 {
-  
+
 auto PrepareFacesAssignedToVertices(
   const Vertices& vertices,
   const Faces& faces)
@@ -21,20 +21,20 @@ auto PrepareFacesAssignedToVertices(
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   FaceNumbersInVertices result;
-  
+
   for(unsigned int i = 0; i < vertices.size(); i++)
   {
     FaceNumbers foundFaceNumbers;
 
     unsigned short faceNr = 0;
-      
+
     for (auto face : faces)
     {
       if (std::find(face.begin(), face.end(), i) != face.end())
       {
         foundFaceNumbers.push_back(faceNr);
       }
-          
+
       ++faceNr;
     }
 
@@ -51,13 +51,13 @@ auto CalculateNormalVectorToFaces(const Vertices& vertices,
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   Vectors normalVectors;
-  
+
   for(auto face : faces)
   {
     const auto vector = face.CalculateNormalVector(vertices);
     normalVectors.push_back(vector);
   }
-  
+
   return normalVectors;
 }
 
@@ -66,14 +66,14 @@ auto CalculateVectorsInVertices(
   const Vectors& normalFaceVectors
   )
 {
-  BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;  
+  BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   Vectors vectorsInVertices;
-  
+
   for(auto faces : vertexInFaceDependency)
   {
     Vertex vertex;
-    
+
     for(auto faceNr : faces)
     {
       vertex += {normalFaceVectors[faceNr].getX(),
@@ -83,13 +83,13 @@ auto CalculateVectorsInVertices(
     }
 
     const short count = faces.size();
-      
+
     if (faces.size() != 0)
     {
       vertex = vertex / count;
     }
 
-    vectorsInVertices.push_back(Vector(vertex));      
+    vectorsInVertices.push_back(Vector(vertex));
   }
 
   return vectorsInVertices;
@@ -97,7 +97,7 @@ auto CalculateVectorsInVertices(
 
 auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices)
 {
-  BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;  
+  BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   Vectors normalizedVectorsInVertices;
 
@@ -116,7 +116,7 @@ void Object3D::CreateNormalVectors()
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   FaceNumbersInVertices facesAssignedToVertex = PrepareFacesAssignedToVertices(mVertices, mFaces);
-  
+
   mNormalVectorsInFaces = CalculateNormalVectorToFaces(mVertices, mFaces);
 
   Vectors vectorsInVertices = CalculateVectorsInVertices(facesAssignedToVertex, mNormalVectorsInFaces);
@@ -161,7 +161,7 @@ std::pair<Face, Vertices> Object3D::Merge(const Vertices& objectVertices,
 
   Face resultFace;
   Vertices resultVertices = objectVertices;
-  
+
   for (size_t i = 0; i < face.size(); ++i)
   {
     auto vertexNr = face[i];
@@ -178,7 +178,7 @@ std::pair<Face, Vertices> Object3D::Merge(const Vertices& objectVertices,
       {
         return true;
       }
-        
+
       ++foundNr;
       return false;
     });
@@ -190,12 +190,12 @@ std::pair<Face, Vertices> Object3D::Merge(const Vertices& objectVertices,
     else
     {
       const short nr = resultVertices.size();
-          
+
       resultFace.push_back(nr);
       resultVertices.push_back(vertex);
     }
   }
-  
+
   return std::make_pair(resultFace, resultVertices);
 }
 

@@ -15,12 +15,12 @@ class Object3D
   std::string mName;
 
 protected:
-  
+
   Vertices mVertices;
   Faces mFaces;
   Vectors mNormalVectorsInFaces;
   Vectors mNormalVectorsInVertices;
-  
+
 public:
 
   Object3D(const std::string& name) :
@@ -61,7 +61,7 @@ public:
   {
     return mNormalVectorsInVertices;
   }
-  
+
   int GetFacesCount() const noexcept(true)
   {
     return mFaces.size();
@@ -71,15 +71,14 @@ public:
   {
     return mVertices.size();
   }
-  
+
   void CreateNormalVectors();
 
   void Translate(int x, int y, int z);
-  
+
   void Merge(const Vertices& vertices, const Faces& faces);
-  
+
   static std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
                                          const Face& face,
                                          const Vertices& vertices);
 };
-
