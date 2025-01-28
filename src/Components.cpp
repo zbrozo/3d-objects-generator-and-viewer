@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <exception>
 
+#include <cstdint>
 #include <boost/log/trivial.hpp>
 #include <cmath>
 #include <stdexcept>
@@ -338,7 +339,7 @@ void CylinderTriangles::Generate()
 
 void CSign::Generate()
 {
-  auto Translate = [](Vertices& vertices, int x, int y, int z){
+  auto Translate = [](Vertices& vertices, int x, int y, int z) {
     std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
       [&](const Vertex& vertex)
       {
@@ -346,15 +347,15 @@ void CSign::Generate()
       });
   };
 
-  Vertices vertices1 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircleRadius);
+  Vertices vertices1 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircle1Radius);
   Vertices vertices2 = vertices1;
-  Vertices vertices3 = vertices1;
-  Vertices vertices4 = vertices1;
+  Vertices vertices3 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircle2Radius);
+  Vertices vertices4 = vertices3;
 
-  Translate(vertices1, 0, 0, 20);
-  Translate(vertices2, 0, 0, -20);
-  Translate(vertices3, 20, 0, 20);
-  Translate(vertices4, 20, 0, -20);
+  Translate(vertices1, mCircle1Offset, 0, mWidth);
+  Translate(vertices2, mCircle1Offset, 0, -mWidth);
+  Translate(vertices3, mCircle2Offset, 0, mWidth);
+  Translate(vertices4, mCircle2Offset, 0, -mWidth);
 
   mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
@@ -406,10 +407,10 @@ void CSign::Generate()
     });
   mFaces.push_back(
     {
-      static_cast<unsigned short>(size-1),
-      static_cast<unsigned short>(size + (size-1)),
-      static_cast<unsigned short>(3*size + (size-1)),
-      static_cast<unsigned short>(2*size + (size-1))
+      uint16_t(size-1),
+      uint16_t(2*size-1),
+      uint16_t(4*size-1),
+      uint16_t(3*size-1)
     });
 }
 

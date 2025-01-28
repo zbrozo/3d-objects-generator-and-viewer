@@ -309,15 +309,21 @@ public:
 class CSign : public Object3D, public IGenerator
 {
   int mCircleAmount = 3;
-  int mCircleRadius = 50;
-  int mHeight = 50;
+  int mCircle1Radius = 50;
+  int mCircle2Radius = 50;
+  int mCircle1Offset = 0;
+  int mCircle2Offset = 0;
+  int mWidth = 10;
 
 public:
 
   CSign(
     const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius,
-    const std::optional<int>& height
+    const std::optional<int>& circle1Radius,
+    const std::optional<int>& circle2Radius,
+    const std::optional<int>& circle1Offset,
+    const std::optional<int>& circle2Offset,
+    const std::optional<int>& width
     ) :
     Object3D("")
   {
@@ -326,14 +332,29 @@ public:
       mCircleAmount = circleAmount.value();
     }
 
-    if (circleRadius.has_value())
+    if (circle1Radius.has_value())
     {
-      mCircleRadius = circleRadius.value();
+      mCircle1Radius = circle1Radius.value();
     }
 
-    if (height.has_value())
+    if (circle2Radius.has_value())
     {
-      mHeight = height.value();
+      mCircle2Radius = circle2Radius.value();
+    }
+
+    if (circle1Offset.has_value())
+    {
+      mCircle1Offset = circle1Offset.value();
+    }
+
+    if (circle2Offset.has_value())
+    {
+      mCircle2Offset = circle2Offset.value();
+    }
+
+    if (width.has_value())
+    {
+      mWidth = width.value();
     }
   }
 

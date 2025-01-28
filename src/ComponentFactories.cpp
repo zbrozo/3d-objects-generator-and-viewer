@@ -117,7 +117,10 @@ std::unique_ptr<Object3D> CSignFactory::FactoryMethod(
   std::optional<int> param1 = getParam(params, 0);
   std::optional<int> param2 = getParam(params, 1);
   std::optional<int> param3 = getParam(params, 2);
-  return std::make_unique<Components::CSign>(param1, param2, param3);
+  std::optional<int> param4 = getParam(params, 3);
+  std::optional<int> param5 = getParam(params, 4);
+  std::optional<int> param6 = getParam(params, 5);
+  return std::make_unique<Components::CSign>(param1, param2, param3, param4, param5, param6);
 }
 
 } // namespace Components
