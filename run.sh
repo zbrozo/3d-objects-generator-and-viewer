@@ -21,7 +21,8 @@ cd ./objects_small
 ../generator --v --o composite4 --t composite --c0 Taper --p0 6 50 50 --f0 0 0 25 --c1 Taper --p1 6 50 -50 --f1 0 0 -25 0 0 30 --c2 CylinderTriangles --p2 6 50 50 --f2 0 0 25
 ../generator --v --o composite5 --t composite --c0 cube1 --f0 0 0 0 0 0 0 -100 0 0 --c1 cube1 --f1 0 0 0 0 0 0 100 0 0 --c2 cube1 --f2 0 0 0 0 0 0 0 -100 0 --c3 cube1 --f3 0 0 0 0 0 0 0 100 0
 ../generator --v --o tmp --t cube 20
-../generator --v --o composite6 --t composite --c0 csign --p0 8 50 30 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 8 50 30 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 8 50 30 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 8 50 30 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
+../generator --v --o composite6 --t composite --c0 csign --p0 4 50 30 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 50 30 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 50 30 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 50 30 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
+../generator --v --o composite7 --t composite --c0 csign --p0 5 50 30 0 0 15 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 50 30 0 0 15 --f1 0 0 0 90 180 0 -10 0 0
 
 cd ..
 cd ./objects
@@ -43,7 +44,7 @@ cd ./objects
 cd ..
 
 if [[ "$1" == "small" ]]; then
-    ./viewer objects_small cube4 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
+    ./viewer objects_small cube4 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite7
 else
     ./viewer objects cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite4
 fi

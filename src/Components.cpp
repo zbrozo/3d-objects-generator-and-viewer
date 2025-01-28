@@ -347,9 +347,9 @@ void CSign::Generate()
       });
   };
 
-  Vertices vertices1 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircle1Radius);
+  Vertices vertices1 = CreateCircleVerticesExt(mCircleAmount, mCircleAmount * 2 - 2, mCircle1Radius);
   Vertices vertices2 = vertices1;
-  Vertices vertices3 = CreateCircleVerticesExt(mCircleAmount/2 + 1, mCircleAmount, mCircle2Radius);
+  Vertices vertices3 = CreateCircleVerticesExt(mCircleAmount, mCircleAmount * 2 - 2, mCircle2Radius);
   Vertices vertices4 = vertices3;
 
   Translate(vertices1, mCircle1Offset, 0, mWidth);
