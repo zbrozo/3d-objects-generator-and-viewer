@@ -66,6 +66,8 @@ _Value in f and p can be negative_
 --p circle-amount cirlce-radius height (default: 3 50 50)
 8. Cylinder made of triangles, name: cylindertriangles
 --p circle-amount cirlce-radius height (default: 3 50 50)
+9. CSign made of half of a circle, name: csign
+--p number-of-points circle1-radius circle2-radius circle1-x-offset circle2-x-offset width (default: 3 50 50 0 0 10)
 
 ### Build on MS Windows
 Install MSYS2, use MSYS2 UCRT64 shell:
