@@ -9,11 +9,11 @@ cd ./objects_small
 ../generator --v --o cube1 --t cube 50
 ../generator --v --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 50 --f 0 0 50
 ../generator --v --o cube3 --t cube-ext --c Pyramid --p 50 --f 0 0 50
-../generator --v --o cube4 --t cube-ext --c Pyramid --p 20 50 --f 0 0 20
+../generator --v --o cube4 --t cube-ext --c Pyramid --p 30 60 --f 0 0 30
 ../generator --v --o thorus1 --t thorus 4 3 
 ../generator --v --o thorus2 --t thorus 4 4
 ../generator --v --o thorus3 --t thorus 6 8
-../generator --v --o thorus4 --t thorus 6 12 20 50 --s 0 0 3 15 2 10
+../generator --v --o thorus4 --t thorus 6 12 30 50 --s 0 0 3 15 2 10
 ../generator --v --o taper1 --t composite --c0 Taper --p0 3 50 50 --c1 Taper --p1 3 50 -50
 ../generator --v --o taper2 --t composite --c0 Taper --p0 6 50 50 --c1 Taper --p1 6 50 -50
 ../generator --v --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
@@ -21,8 +21,8 @@ cd ./objects_small
 ../generator --v --o composite3 --t composite --c0 Taper --p0 6 50 50 --f0 0 0 25 --c1 Taper --p1 6 50 -50 --f1 0 0 -25 --c2 Cylinder --p2 6 50 50 --f2 0 0 25
 ../generator --v --o composite4 --t composite --c0 Taper --p0 6 50 50 --f0 0 0 25 --c1 Taper --p1 6 50 -50 --f1 0 0 -25 0 0 30 --c2 CylinderTriangles --p2 6 50 50 --f2 0 0 25
 ../generator --v --o composite5 --t composite --c0 cube1 --f0 0 0 0 0 0 0 -100 0 0 --c1 cube1 --f1 0 0 0 0 0 0 100 0 0 --c2 cube1 --f2 0 0 0 0 0 0 0 -100 0 --c3 cube1 --f3 0 0 0 0 0 0 0 100 0
-../generator --v --o tmp --t cube 20
-../generator --v --o composite6 --t composite --c0 csign --p0 4 50 30 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 50 30 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 50 30 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 50 30 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
+../generator --v --o tmp --t cube 30
+../generator --v --o composite6 --t composite --c0 csign --p0 4 80 60 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 80 60 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 80 60 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 80 60 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
 ../generator --v --o composite7 --t composite --c0 csign --p0 5 50 30 0 0 15 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 50 30 0 0 15 --f1 0 0 0 90 180 0 -10 0 0
 
 cd ..
