@@ -55,13 +55,12 @@ void DrawGouraudShadedFaces(
   RenderFunction render
   )
 {
-  for (auto face : faces)
-  {
-    if (!face.IsVisible(vertices2d))
-    {
-      continue;
-    }
+  const auto sortedFaces = SortFaceNumbers(vertices2d, faces);
 
+  for (auto faceNr : sortedFaces)
+  {
+    const auto& face = faces[faceNr];
+    
     std::vector<SDL_Vertex> geometryVertices;
 
     SDL_Vertex vertex;

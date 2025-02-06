@@ -351,9 +351,12 @@ int main(int argc, char* argv[])
 
     std::vector<int> colorNumbersInFaces;
     std::vector<int> colorNumbersInVertices;
+
+    VectorRotation rotation;
+    Vector lightVector(Vertex{0,0,light}); 
     
     CalculateLight(
-      light,
+      rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
       normalVectorsInFaces,
       normalVectorsInVertices,
       colorNumbersInFaces,

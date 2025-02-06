@@ -6,6 +6,7 @@
 #include "Types.hpp"
 #include "Vectors.hpp"
 #include "ViewerLight.hpp"
+#include "Rotation.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -126,17 +127,42 @@ void PrepareColors(const char* paletteName, SDL_Color* colors)
   }
 }
 
+// void CalculateLight(
+//   int light,
+//   const Vectors& normalVectorsInFaces,
+//   const Vectors& normalVectorsInVertices,
+//   std::vector<int>& colorNumbersInFaces,
+//   std::vector<int>& colorNumbersInVertices)
+// {
+//   auto calcColorNumber = [light](const Vector& v){
+//     Vertex lightVector(0,0,light);
+//     const int z = (v.getZ() * lightVector.getZ()) + (maxLightValue * maxLightValue);
+//     const int id = (z * maxColorNumber) / (maxLightValue * 2 * maxLightValue);
+//     return id;
+//   };
+  
+//   for (auto v : normalVectorsInFaces)
+//   {
+//     colorNumbersInFaces.push_back(calcColorNumber(v));
+//   }
+  
+//   for (auto v : normalVectorsInVertices)
+//   {
+//     colorNumbersInVertices.push_back(calcColorNumber(v));
+//   }
+// }
+
 void CalculateLight(
-  int light,
+  Vector lightVector,
   const Vectors& normalVectorsInFaces,
   const Vectors& normalVectorsInVertices,
   std::vector<int>& colorNumbersInFaces,
   std::vector<int>& colorNumbersInVertices)
 {
-  auto calcColorNumber = [light](const Vector& v){
-    Vertex lightVector(0,0,light);
-    const int z = (v.getZ() * lightVector.getZ()) + (maxLightValue * maxLightValue);
-    const int id = (z * maxColorNumber) / (maxLightValue * 2 * maxLightValue);
+  auto calcColorNumber = [lightVector](const Vector& v){
+    const int range = maxLightValue * maxLightValue;
+    const int z = v.getX() * lightVector.getX() + v.getY() * lightVector.getY() + v.getZ() * lightVector.getZ();
+    const int id = ((range + z) * maxColorNumber) / (2 * range);
     return id;
   };
   
