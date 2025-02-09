@@ -14,6 +14,7 @@ cd ./objects_small
 ../generator --v --o thorus2 --t thorus 4 4
 ../generator --v --o thorus3 --t thorus 6 8
 ../generator --v --o thorus4 --t thorus 6 12 30 50 --s 0 0 3 15 2 10
+../generator --v --o thorus5 --t thorus 6 16 25 50 --s 0 0 4 15 4 10
 ../generator --v --o taper1 --t composite --c0 Taper --p0 3 50 50 --c1 Taper --p1 3 50 -50
 ../generator --v --o taper2 --t composite --c0 Taper --p0 6 50 50 --c1 Taper --p1 6 50 -50
 ../generator --v --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
@@ -45,7 +46,7 @@ cd ./objects
 cd ..
 
 if [[ "$1" == "small" ]]; then
-    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4
+    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5
 #    ./viewer objects_small cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
 else
     ./viewer objects cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite4
