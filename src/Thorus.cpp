@@ -12,6 +12,15 @@ template <typename T> constexpr auto pi = T(3.14159265);
 
 auto getRadian(double deg) { return deg * pi<double> / 180.0; }
 
+Face CreateFace(int face1, int face2, int face3)
+{
+  Face face;
+  face.push_back(face1);
+  face.push_back(face2);
+  face.push_back(face3);
+  return face;
+}
+
 Face CreateFace(int face1, int face2, int face3, int face4)
 {
   Face face;
@@ -61,7 +70,9 @@ Faces CreateFacesInCircle(int ringIndex,
       faceNr4 = next + rowIndex + 1;
     }
 
-    faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3, faceNr4));
+    faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3));
+    faces.push_back(CreateFace(faceNr1, faceNr3, faceNr4));
+    //    faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3, faceNr4));
   }
 
   return faces;
