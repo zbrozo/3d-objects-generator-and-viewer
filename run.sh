@@ -14,8 +14,11 @@ if [[ "$1" == "" ]]; then
     ../generator --o thorus1 --t thorus 4 3 
     ../generator --o thorus2 --t thorus 4 4
     ../generator --o thorus3 --t thorus 6 8
-    ../generator --3 --o thorus4 --t thorus 6 12 30 50 --s 0 0 3 15 2 10
-    ../generator --3 --o thorus5 --t thorus 6 16 25 50 --s 0 0 4 15 4 10
+    ../generator --o thorus4 --t thorus 6 12 30 50 --s 0 0 3 15 2 10
+    ../generator --o thorus5 --t thorus 6 16 25 50 --s 0 0 4 15 4 10
+    ../generator --3 --o thorus6 --t thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
+    ../generator --3 --o thorus7 --t thorus 6 12 30 80 --s 0 0 3 25 2 10
+    ../generator --3 --o thorus8 --t thorus 6 12 30 80 --s 0 0 4 25 4 10
     ../generator --o taper1 --t composite --c0 Taper --p0 3 50 50 --c1 Taper --p1 3 50 -50
     ../generator --o taper2 --t composite --c0 Taper --p0 6 50 50 --c1 Taper --p1 6 50 -50
     ../generator --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
@@ -29,7 +32,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 composite2
+    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8
 #    ./viewer objects_small cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
 else
     cd ./objects
