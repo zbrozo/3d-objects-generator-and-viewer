@@ -38,7 +38,8 @@ _--a option can be avoided and values can written immediately after type name_
 
 3. Thorus 
 - params (--a): circle-amount ring-amount circle-radius circle-offset
-- sinus params (--s): circle-step-x circle-amp-x circle-step-y circle-amp-y circle-step-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
+- sinus params (--s): circle-multiply-x circle-amp-x circle-multiply-y circle-amp-y circle-multiply-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
+- prefer triangle faces over rectanges or other kind (--3): no values
 
 _--s contains value of double type_
 

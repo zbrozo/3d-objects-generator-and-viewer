@@ -75,8 +75,6 @@ void Composite::Generate()
       Vertices vertices{component->GetVertices()};
       vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
 
-      std::cout << "aaa " << vertices << std::endl;
-
       RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
       objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
     }

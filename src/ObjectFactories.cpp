@@ -123,7 +123,8 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
 {
   ParamsVector foundParams;
   SinusParamsVector foundSinusParams;
-
+  bool preferTriangles = false;
+  
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {
@@ -134,6 +135,12 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
       std::bind(findParamsVector, _1,  ParamsId::SinusParams)); it != params.end())
   {
     foundSinusParams = std::get<SinusParamsVector>(params.at(ParamsId::SinusParams));
+  }
+
+  auto preferTrianglesIt = params.find(ParamsId::PreferTriangles);
+  if (preferTrianglesIt != params.end())
+  {
+    preferTriangles =  std::get<bool>(preferTrianglesIt->second);
   }
 
   return std::make_unique<Thorus>(
@@ -153,7 +160,8 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
     getParam(foundSinusParams, 8),
     getParam(foundSinusParams, 9),
     getParam(foundSinusParams, 10),
-    getParam(foundSinusParams, 11));
+    getParam(foundSinusParams, 11),
+    preferTriangles);
 }
 
 std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(

@@ -31,7 +31,9 @@ Face CreateFace(int face1, int face2, int face3, int face4)
   return face;
 }
 
-Faces CreateFacesInCircle(int ringIndex,
+Faces CreateFacesInCircle(
+  bool preferTriangles,
+  int ringIndex,
   int circleSize,
   int begin,
   int count,
@@ -70,15 +72,21 @@ Faces CreateFacesInCircle(int ringIndex,
       faceNr4 = next + rowIndex + 1;
     }
 
-    faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3));
-    faces.push_back(CreateFace(faceNr1, faceNr3, faceNr4));
-    //    faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3, faceNr4));
+    if (preferTriangles)
+    {
+      faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3));
+      faces.push_back(CreateFace(faceNr1, faceNr3, faceNr4));
+    }
+    else
+    {
+      faces.push_back(CreateFace(faceNr1, faceNr2, faceNr3, faceNr4));
+    }
   }
 
   return faces;
 }
 
-Faces CreateInternalFacesInRing(int circleSize, int ringSize)
+Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSize)
 {
   Faces facesInRing;
 
@@ -90,11 +98,11 @@ Faces CreateInternalFacesInRing(int circleSize, int ringSize)
 
     if (isLast)
     {
-      faces = CreateFacesInCircle(ringIndex, circleSize, 0, circleSize/2, true);
+      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2, true);
     }
     else
     {
-      faces = CreateFacesInCircle(ringIndex, circleSize, 0, circleSize/2);
+      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2);
     }
 
     for (auto face : faces)
@@ -106,7 +114,7 @@ Faces CreateInternalFacesInRing(int circleSize, int ringSize)
   return facesInRing;
 }
 
-Faces CreateExternalFacesInRing(int circleSize, int ringSize)
+Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSize)
 {
   Faces facesInRing;
 
@@ -118,11 +126,11 @@ Faces CreateExternalFacesInRing(int circleSize, int ringSize)
 
     if (isLast)
     {
-      faces = CreateFacesInCircle(ringIndex, circleSize, circleSize/2, circleSize/2, true);
+      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2, true);
     }
     else
     {
-      faces = CreateFacesInCircle(ringIndex, circleSize, circleSize/2, circleSize/2);
+      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2);
     }
 
     for (auto face : faces)
@@ -263,10 +271,13 @@ Thorus::Thorus(
   std::optional<double> ringSinusStepY,
   std::optional<double> ringSinusAmpY,
   std::optional<double> ringSinusStepZ,
-  std::optional<double> ringSinusAmpZ
+  std::optional<double> ringSinusAmpZ,
+  bool preferTriangles
   ) :
   Object3D(name)
 {
+  mPreferTriangles = preferTriangles;
+
   if (circleAmount.has_value())
   {
     if (circleAmount.value() < 3)
@@ -356,14 +367,14 @@ void Thorus::Generate()
 
   /// --- Faces ---
 
-  auto internalFaces = CreateInternalFacesInRing(mCircleAmount, mRingAmount);
+  auto internalFaces = CreateInternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount);
 
   for (auto face : internalFaces)
   {
     mFaces.push_back(face);
   }
 
-  auto externalFaces = CreateExternalFacesInRing(mCircleAmount, mRingAmount);
+  auto externalFaces = CreateExternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount);
 
   for (auto face : externalFaces)
   {

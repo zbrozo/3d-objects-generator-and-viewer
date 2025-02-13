@@ -22,7 +22,8 @@ class Thorus : public Object3D, public IGenerator
   double mRingSinusAmpY = 0;
   double mRingSinusStepZ = 0;
   double mRingSinusAmpZ = 0;
-  
+  bool mPreferTriangles = false;
+
 public:
 
   Thorus(
@@ -42,23 +43,24 @@ public:
     std::optional<double> ringSinusStepY,
     std::optional<double> ringSinusAmpY,
     std::optional<double> ringSinusStepZ,
-    std::optional<double> ringSinusAmpZ    
+    std::optional<double> ringSinusAmpZ,
+    bool preferTriangles
     );
 
   virtual ~Thorus() = default;
-  
+
   Thorus(Thorus const &) = delete;
   Thorus(Thorus &&) = delete;
   Thorus& operator=(const Thorus& v) = delete;
   Thorus& operator=(Thorus &&) = delete;
-  
+
   virtual void Generate() override;
 
 private:
 
   Vertices CreateCircleVertices();
   Vertices CreateRingVertices(Vertices circle);
-  
+
   Vertices ApplySinusToRing(const Vertices& vertices);
   Vertices ApplySinusToCircle(const Vertices& vertices, int index);
 

@@ -20,13 +20,13 @@ FaceNumbers PrepareFaceNumbers(const Vertices& vertices2d, const Faces &faces)
       ++faceNr;
       continue;
     }
-    
+
     auto centerVertex = face.GetCenter(vertices2d);
     faceNumbers.push_back(faceNr);
 
     ++faceNr;
   }
-  
+
   return faceNumbers;
 }
 

@@ -156,6 +156,7 @@ int main(int argc, char* argv[])
     ("f3", po::value<ParamsVector>()->multitoken(), "")
     ("f4", po::value<ParamsVector>()->multitoken(), "")
     ("f5", po::value<ParamsVector>()->multitoken(), "")
+    ("3", "prefer triangle faces over rectangles")
     ;
 
   const po::variables_map& options = ReadGeneratorParams(argc, argv, optionsDesc);
@@ -167,6 +168,7 @@ int main(int argc, char* argv[])
   }
 
   const auto verbose = options.count("v");
+  const auto preferTriangles = options.count("3");
 
   std::string name;
   if (options.count("t"))
@@ -212,6 +214,8 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "f3", ParamsId::Params3, paramsMap);
   AddParams<ParamsVector>(options, "f4", ParamsId::Params4, paramsMap);
   AddParams<ParamsVector>(options, "f5", ParamsId::Params5, paramsMap);
+
+  paramsMap[ParamsId::PreferTriangles] = preferTriangles ? true : false;
 
   SetLogging(verbose);
 
