@@ -49,9 +49,9 @@ BOOST_AUTO_TEST_CASE(pyramid_generation_test)
   BOOST_CHECK_EQUAL(4, object.GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(taper_generation_test)
+BOOST_AUTO_TEST_CASE(cone_generation_test)
 {
-  Components::Taper object(10,50,50);
+  Components::Cone object(10,50,50);
   object.Generate();
   
   BOOST_CHECK_EQUAL(11, object.GetVerticesCount());

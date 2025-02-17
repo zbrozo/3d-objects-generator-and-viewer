@@ -78,17 +78,17 @@ BOOST_AUTO_TEST_CASE(composite_factory_test)
   ParamsMap paramsMap;
   CompositeFactory factory;
   ComponentFactories componentFactories;
-  componentFactories[ObjectId::Taper] = std::make_unique<Components::TaperFactory>();
+  componentFactories[ObjectId::Cone] = std::make_unique<Components::ConeFactory>();
  
-  paramsMap[ParamsId::ComponentsList0] = ComponentNamesVector{"Taper"};
-  paramsMap[ParamsId::ComponentsList1] = ComponentNamesVector{"Taper"};
+  paramsMap[ParamsId::ComponentsList0] = ComponentNamesVector{"Cone"};
+  paramsMap[ParamsId::ComponentsList1] = ComponentNamesVector{"Cone"};
   paramsMap[ParamsId::ComponentsParams0] = ParamsVector{3,50,50};
   paramsMap[ParamsId::ComponentsParams1] = ParamsVector{3,50,-50};
 
   factory.Init(componentFactories);
   auto object = factory.Create("composite", paramsMap);
 
-  BOOST_CHECK_EQUAL("composite_Taper_Taper_3_50_50_3_50_-50", object->GetName());
+  BOOST_CHECK_EQUAL("composite_Cone_Cone_3_50_50_3_50_-50", object->GetName());
   BOOST_CHECK_EQUAL(5, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }

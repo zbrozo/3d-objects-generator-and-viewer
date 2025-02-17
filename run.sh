@@ -19,12 +19,14 @@ if [[ "$1" == "" ]]; then
     ../generator --3 --o thorus6 --t thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
     ../generator --3 --o thorus7 --t thorus 6 12 30 90 --s 0 0 3 25 2 10
     ../generator --3 --o thorus8 --t thorus 6 16 30 90 --s 0 0 4 25 4 10
-    ../generator --o taper1 --t composite --c0 Taper --p0 3 50 50 --c1 Taper --p1 3 50 -50
-    ../generator --o taper2 --t composite --c0 Taper --p0 6 50 50 --c1 Taper --p1 6 50 -50
+    ../generator --o taper1 --t composite --c0 Cone --p0 3 50 50 --c1 Cone --p1 3 50 -50
+    ../generator --o taper2 --t composite --c0 Cone --p0 6 50 50 --c1 Cone --p1 6 50 -50
+    ../generator --o taper3 --t composite --c0 Cone --p0 3 50 50 --f0 0 0 0 0 0 0 0 0 0 --c1 Cone --p1 3 50 50 --f1 0 0 0 0 0 0 100 0 0
+    
     ../generator --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
     ../generator --o composite2 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 20 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 20 0 180 0 --c2 Rectangle --p2 20 50 --f2 0 0 50 0 90 0 --c3 Rectangle --p3 20 50 --f3 0 0 50 0 270 0 --c4 Rectangle --p4 50 20 --f4 0 0 50 90 0 0 --c5 Rectangle --p5 50 20 --f5 0 0 50 270 0 0
-    ../generator --o composite3 --t composite --c0 Taper --p0 6 50 50 --f0 0 0 25 --c1 Taper --p1 6 50 -50 --f1 0 0 -25 --c2 Cylinder --p2 6 50 50 --f2 0 0 25
-    ../generator --o composite4 --t composite --c0 Taper --p0 6 50 50 --f0 0 0 25 --c1 Taper --p1 6 50 -50 --f1 0 0 -25 0 0 30 --c2 CylinderTriangles --p2 6 50 50 --f2 0 0 25
+    ../generator --o composite3 --t composite --c0 Cone --p0 6 50 50 --f0 0 0 25 --c1 Cone --p1 6 50 -50 --f1 0 0 -25 --c2 Cylinder --p2 6 50 50 --f2 0 0 25
+    ../generator --o composite4 --t composite --c0 Cone --p0 6 50 50 --f0 0 0 25 --c1 Cone --p1 6 50 -50 --f1 0 0 -25 0 0 30 --c2 CylinderTriangles --p2 6 50 50 --f2 0 0 25
     ../generator --o composite5 --t composite --c0 cube1 --f0 0 0 0 0 0 0 -100 0 0 --c1 cube1 --f1 0 0 0 0 0 0 100 0 0 --c2 cube1 --f2 0 0 0 0 0 0 0 -100 0 --c3 cube1 --f3 0 0 0 0 0 0 0 100 0
     ../generator --o tmp --t cube 30
     ../generator --o composite6 --t composite --c0 csign --p0 4 80 60 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 80 60 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 80 60 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 80 60 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
@@ -32,7 +34,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8
+    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8 composite4 taper3
 #    ./viewer objects_small cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
 else
     cd ./objects
@@ -44,12 +46,12 @@ else
     ../generator --v --o thorus1 --t thorus 20 40 30 100
     ../generator --v --o thorus2 --t thorus 20 40 30 100 --s 0 0 6 10 0 0
     ../generator --v --o thorus3 --t thorus 20 20 30 100 --s 0 0 1 5 0 0 0.2 10 1.5 20 0.2 10
-    ../generator --v --o taper1 --t composite --c0 Taper --p0 3 100 100 --c1 Taper --p1 3 100 -100
-    ../generator --v --o taper2 --t composite --c0 Taper --p0 6 100 100 --c1 Taper --p1 6 100 -100
+    ../generator --v --o taper1 --t composite --c0 Cone --p0 3 100 100 --c1 Cone --p1 3 100 -100
+    ../generator --v --o taper2 --t composite --c0 Cone --p0 6 100 100 --c1 Cone --p1 6 100 -100
     ../generator --v --o composite1 --t composite --c0 Pyramid --p0 100 100 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 100 100 --f1 0 0 0 0 180 0
     ../generator --v --o composite2 --t composite --c0 Pyramid --p0 100 100 --f0 0 0 20 0 0 0 --c1 Pyramid --p1 100 100 --f1 0 0 20 0 180 0 --c2 Rectangle --p2 20 100 --f2 0 0 100 0 90 0 --c3 Rectangle --p3 20 100 --f3 0 0 100 0 270 0 --c4 Rectangle --p4 100 20 --f4 0 0 100 90 0 0 --c5 Rectangle --p5 100 20 --f5 0 0 100 270 0 0
-    ../generator --v --o composite3 --t composite --c0 Taper --p0 6 100 100 --f0 0 0 50 --c1 Taper --p1 6 100 -100 --f1 0 0 -50 --c2 Cylinder --p2 6 100 100 --f2 0 0 50
-    ../generator --v --o composite4 --t composite --c0 Taper --p0 6 100 50 --f0 0 0 50 --c1 Taper --p1 6 100 -50 --f1 0 0 -50 0 0 30 --c2 CylinderTriangles --p2 6 100 100 --f2 0 0 50
+    ../generator --v --o composite3 --t composite --c0 Cone --p0 6 100 100 --f0 0 0 50 --c1 Cone --p1 6 100 -100 --f1 0 0 -50 --c2 Cylinder --p2 6 100 100 --f2 0 0 50
+    ../generator --v --o composite4 --t composite --c0 Cone --p0 6 100 50 --f0 0 0 50 --c1 Cone --p1 6 100 -50 --f1 0 0 -50 0 0 30 --c2 CylinderTriangles --p2 6 100 100 --f2 0 0 50
 
     cd ..
     echo "Start viewer"

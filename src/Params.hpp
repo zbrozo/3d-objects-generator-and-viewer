@@ -17,7 +17,7 @@ enum class ObjectId {
   SquareHolePart2,
   Pyramid,
   Rectangle,
-  Taper,
+  Cone,
   Cylinder,
   CylinderTriangles,
   CSign,

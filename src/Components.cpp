@@ -220,7 +220,7 @@ void Pyramid::Generate()
   mFaces.push_back({3,0,4});
 }
 
-void Taper::Generate()
+void Cone::Generate()
 {
 
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);

@@ -181,7 +181,7 @@ public:
 
 };
 
-class Taper : public Object3D, public IGenerator
+class Cone : public Object3D, public IGenerator
 {
   int mCircleAmount = 3;
   int mCircleRadius = 50;
@@ -189,7 +189,7 @@ class Taper : public Object3D, public IGenerator
 
 public:
 
-  Taper(
+  Cone(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -214,12 +214,12 @@ public:
 
   void Generate() override;
 
-  virtual ~Taper() = default;
+  virtual ~Cone() = default;
 
-  Taper(Taper const &) = delete;
-  Taper(Taper &&) = delete;
-  Taper& operator=(const Taper&) = delete;
-  Taper& operator=(Taper &&) = delete;
+  Cone(Cone const &) = delete;
+  Cone(Cone &&) = delete;
+  Cone& operator=(const Cone&) = delete;
+  Cone& operator=(Cone &&) = delete;
 
 };
 
