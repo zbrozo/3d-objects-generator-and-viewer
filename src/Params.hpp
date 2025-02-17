@@ -19,7 +19,7 @@ enum class ObjectId {
   Rectangle,
   Cone,
   Cylinder,
-  CylinderTriangles,
+  CylinderWithTriangularFaces,
   CSign,
 };
 

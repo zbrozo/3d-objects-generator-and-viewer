@@ -31,7 +31,7 @@ std::map<std::string, ObjectId> ComponentIdMap {
   {"pyramid", ObjectId::Pyramid},
   {"cone", ObjectId::Cone},
   {"cylinder", ObjectId::Cylinder},
-  {"cylindertriangles", ObjectId::CylinderTriangles},
+  {"cylindertriangles", ObjectId::CylinderWithTriangularFaces},
   {"csign", ObjectId::CSign},
 };
 

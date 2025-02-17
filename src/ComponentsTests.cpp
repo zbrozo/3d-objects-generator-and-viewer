@@ -67,9 +67,9 @@ BOOST_AUTO_TEST_CASE(cylinder_generation_test)
   BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(cylindertriangles_generation_test)
+BOOST_AUTO_TEST_CASE(cylinderwithtriangularfaces_generation_test)
 {
-  Components::CylinderTriangles object(10,50,50);
+  Components::CylinderWithTriangularFaces object(10,50,50);
   object.Generate();
   
   BOOST_CHECK_EQUAL(20, object.GetVerticesCount());

@@ -51,7 +51,7 @@ void InitComponentFactoryMap(ComponentFactories& componentFactories)
   componentFactories[ObjectId::Pyramid] = std::make_unique<Components::PyramidFactory>();
   componentFactories[ObjectId::Cone] = std::make_unique<Components::ConeFactory>();
   componentFactories[ObjectId::Cylinder] = std::make_unique<Components::CylinderFactory>();
-  componentFactories[ObjectId::CylinderTriangles] = std::make_unique<Components::CylinderTrianglesFactory>();
+  componentFactories[ObjectId::CylinderWithTriangularFaces] = std::make_unique<Components::CylinderWithTriangularFacesFactory>();
   componentFactories[ObjectId::CSign] = std::make_unique<Components::CSignFactory>();
 }
 

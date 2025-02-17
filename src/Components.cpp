@@ -235,7 +235,7 @@ void Cone::Generate()
   {
     for (;nr < vertices.size()-2; ++nr)
     {
-      mFaces.push_back({nr, static_cast<unsigned short>(nr + 1), last});
+      mFaces.push_back({nr, uint16_t(nr + 1), last});
     }
     mFaces.push_back({nr, 0, last});
   }
@@ -243,7 +243,7 @@ void Cone::Generate()
   {
     for (;nr < vertices.size()-2; ++nr)
     {
-      mFaces.push_back({static_cast<unsigned short>(nr + 1), nr, last});
+      mFaces.push_back({uint16_t(nr + 1), nr, last});
     }
     mFaces.push_back({0, nr, last});
   }
@@ -271,23 +271,23 @@ void Cylinder::Generate()
     mFaces.push_back(
       {
         nr,
-        static_cast<unsigned short>(nr + size),
-        static_cast<unsigned short>(nr + size + 1),
-        static_cast<unsigned short>(nr + 1)
+        uint16_t(nr + size),
+        uint16_t(nr + size + 1),
+        uint16_t(nr + 1)
       });
   }
 
   mFaces.push_back(
     {
       nr,
-      static_cast<unsigned short>(nr + size),
-      static_cast<unsigned short>(size),
-      static_cast<unsigned short>(0)
+      uint16_t(nr + size),
+      uint16_t(size),
+      uint16_t(0)
     });
 
 }
 
-void CylinderTriangles::Generate()
+void CylinderWithTriangularFaces::Generate()
 {
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
   Vertices vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
@@ -309,31 +309,31 @@ void CylinderTriangles::Generate()
   {
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 1),
-        static_cast<unsigned short>(nr),
-        static_cast<unsigned short>(nr + size),
+        uint16_t(nr + 1),
+        uint16_t(nr),
+        uint16_t(nr + size),
       });
 
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + size),
-        static_cast<unsigned short>(nr + size + 1),
-        static_cast<unsigned short>(nr + 1),
+        uint16_t(nr + size),
+        uint16_t(nr + size + 1),
+        uint16_t(nr + 1),
       });
   }
 
   mFaces.push_back(
     {
-      static_cast<unsigned short>(0),
-      static_cast<unsigned short>(nr),
-      static_cast<unsigned short>(nr + size),
+      uint16_t(0),
+      uint16_t(nr),
+      uint16_t(nr + size),
     });
 
   mFaces.push_back(
     {
-      static_cast<unsigned short>(nr + size),
-      static_cast<unsigned short>(size),
-      static_cast<unsigned short>(0),
+      uint16_t(nr + size),
+      uint16_t(size),
+      uint16_t(0),
     });
 }
 
@@ -370,40 +370,40 @@ void CSign::Generate()
   {
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 1),
-        static_cast<unsigned short>(nr),
-        static_cast<unsigned short>(nr + size),
-        static_cast<unsigned short>(nr + size + 1)
+        uint16_t(nr + 1),
+        uint16_t(nr),
+        uint16_t(nr + size),
+        uint16_t(nr + size + 1)
       });
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 2*size),
-        static_cast<unsigned short>(nr + 2*size + 1),
-        static_cast<unsigned short>(nr + 2*size + size + 1),
-        static_cast<unsigned short>(nr + 2*size + size)
+        uint16_t(nr + 2*size),
+        uint16_t(nr + 2*size + 1),
+        uint16_t(nr + 2*size + size + 1),
+        uint16_t(nr + 2*size + size)
       });
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + 2*size),
-        static_cast<unsigned short>(nr),
-        static_cast<unsigned short>(nr + 1),
-        static_cast<unsigned short>(nr + 2*size + 1)
+        uint16_t(nr + 2*size),
+        uint16_t(nr),
+        uint16_t(nr + 1),
+        uint16_t(nr + 2*size + 1)
       });
     mFaces.push_back(
       {
-        static_cast<unsigned short>(nr + size),
-        static_cast<unsigned short>(nr + 3*size),
-        static_cast<unsigned short>(nr + 3*size + 1),
-        static_cast<unsigned short>(nr + size + 1)
+        uint16_t(nr + size),
+        uint16_t(nr + 3*size),
+        uint16_t(nr + 3*size + 1),
+        uint16_t(nr + size + 1)
       });
   }
 
   mFaces.push_back(
     {
-      static_cast<unsigned short>(size),
-      static_cast<unsigned short>(0),
-      static_cast<unsigned short>(2*size),
-      static_cast<unsigned short>(3*size)
+      uint16_t(size),
+      uint16_t(0),
+      uint16_t(2*size),
+      uint16_t(3*size)
     });
   mFaces.push_back(
     {
