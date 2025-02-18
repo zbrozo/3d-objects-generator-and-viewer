@@ -34,6 +34,7 @@ set(FactoriesSRC
   src/CubeExt.cpp
   src/Thorus.cpp
   src/Composite.cpp
+  src/Tetrahedron.cpp
   src/FileLoader.cpp
 )
 

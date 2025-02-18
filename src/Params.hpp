@@ -11,6 +11,7 @@ enum class ObjectId {
   Cube,
   CubeExt,
   Thorus,
+  Tetrahedron,
   Composite,
   Square,
   SquareHolePart1,

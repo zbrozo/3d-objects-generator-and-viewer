@@ -222,18 +222,17 @@ void Pyramid::Generate()
 
 void Cone::Generate()
 {
-
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
-  vertices.push_back(Vertex(0, 0, mHeight));
-
   mVertices = vertices;
 
-  unsigned short last = vertices.size() - 1;
+  mVertices.push_back(Vertex(0, 0, mHeight));
+
+  unsigned short last = mVertices.size() - 1;
   unsigned short nr = 0;
 
   if (mHeight >= 0)
   {
-    for (;nr < vertices.size()-2; ++nr)
+    for (;nr < mVertices.size()-2; ++nr)
     {
       mFaces.push_back({nr, uint16_t(nr + 1), last});
     }
@@ -241,7 +240,7 @@ void Cone::Generate()
   }
   else
   {
-    for (;nr < vertices.size()-2; ++nr)
+    for (;nr < mVertices.size()-2; ++nr)
     {
       mFaces.push_back({uint16_t(nr + 1), nr, last});
     }

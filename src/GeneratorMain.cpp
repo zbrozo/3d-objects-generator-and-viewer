@@ -3,6 +3,7 @@
 #include "Object3D.hpp"
 #include "Cube.hpp"
 #include "CubeExt.hpp"
+#include "Tetrahedron.hpp"
 #include "Thorus.hpp"
 #include "ObjectFactories.hpp"
 #include "ComponentFactories.hpp"
@@ -30,6 +31,7 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"cube-ext", ObjectId::CubeExt},
   {"thorus", ObjectId::Thorus},
   {"composite", ObjectId::Composite},
+  {"tetrahedron", ObjectId::Tetrahedron},
 };
 
 using ObjectFactoryMap = std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
@@ -40,6 +42,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
   objectFactoryMap[ObjectId::CubeExt] = std::make_unique<CubeExtFactory>();
   objectFactoryMap[ObjectId::Thorus] = std::make_unique<ThorusFactory>();
   objectFactoryMap[ObjectId::Composite] = std::make_unique<CompositeFactory>();
+  objectFactoryMap[ObjectId::Tetrahedron] = std::make_unique<TetrahedronFactory>();
 }
 
 void InitComponentFactoryMap(ComponentFactories& componentFactories)

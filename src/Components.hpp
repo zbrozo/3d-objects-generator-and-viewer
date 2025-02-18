@@ -220,7 +220,6 @@ public:
   Cone(Cone &&) = delete;
   Cone& operator=(const Cone&) = delete;
   Cone& operator=(Cone &&) = delete;
-
 };
 
 class Cylinder : public Object3D, public IGenerator
