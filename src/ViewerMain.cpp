@@ -12,7 +12,7 @@
 #include "Object3D.hpp"
 #include "Face.hpp"
 #include "Rotation.hpp"
-#include "ZbrFormatConverter.hpp"
+#include "FileFormatConverter.hpp"
 #include "FileLoader.hpp"
 
 #include "ViewerSortingFaces.hpp"

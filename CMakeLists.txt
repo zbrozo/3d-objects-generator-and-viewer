@@ -43,7 +43,7 @@ set(GeneratorSRC
   src/GeneratorMain.cpp
   src/FileLoader.cpp
   src/FileSaver.cpp
-  src/ZbrFormatConverter.cpp
+  src/FileFormatConverter.cpp
 )
 
 set(ViewerSRC
@@ -53,7 +53,7 @@ set(ViewerSRC
   src/ViewerLight.cpp
   src/ViewerRotate.cpp
   src/ViewerDraw.cpp
-  src/ZbrFormatConverter.cpp
+  src/FileFormatConverter.cpp
   src/FileLoader.cpp
 )
 
@@ -63,8 +63,8 @@ set(TestsSRC
   src/VectorTests.cpp
   src/ComponentsTests.cpp
   src/ObjectFactoryTests.cpp
-  src/ZbrFormatConverter.cpp
-  src/ZbrFormatConverterTests.cpp
+  src/FileFormatConverter.cpp
+  src/FileFormatConverterTests.cpp
 )
 
 add_library(basicmath STATIC ${BasicMathSRC})

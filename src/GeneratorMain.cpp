@@ -9,7 +9,7 @@
 #include "ComponentFactories.hpp"
 #include "FileSaver.hpp"
 #include "Params.hpp"
-#include "ZbrFormatConverter.hpp"
+#include "FileFormatConverter.hpp"
 
 #include <algorithm>
 #include <cstddef>

@@ -1,6 +1,6 @@
 #include "Object3D.hpp"
 #include "Object3DBuilder.hpp"
-#include "ZbrFormatConverter.hpp"
+#include "FileFormatConverter.hpp"
 #include "BinaryBuffer.hpp"
 #include "SwapByteOrder.hpp"
 

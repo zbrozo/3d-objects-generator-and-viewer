@@ -10,7 +10,7 @@
 #include "Components.hpp"
 #include "Params.hpp"
 #include "FileLoader.hpp"
-#include "ZbrFormatConverter.hpp"
+#include "FileFormatConverter.hpp"
 
 #include <cctype>
 #include <memory>
