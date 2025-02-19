@@ -32,6 +32,7 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"thorus", ObjectId::Thorus},
   {"composite", ObjectId::Composite},
   {"tetrahedron", ObjectId::Tetrahedron},
+  {"fractaltetrahedron", ObjectId::FractalTetrahedron}
 };
 
 using ObjectFactoryMap = std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
@@ -43,6 +44,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
   objectFactoryMap[ObjectId::Thorus] = std::make_unique<ThorusFactory>();
   objectFactoryMap[ObjectId::Composite] = std::make_unique<CompositeFactory>();
   objectFactoryMap[ObjectId::Tetrahedron] = std::make_unique<TetrahedronFactory>();
+  objectFactoryMap[ObjectId::FractalTetrahedron] = std::make_unique<FractalTetrahedronFactory>();
 }
 
 void InitComponentFactoryMap(ComponentFactories& componentFactories)

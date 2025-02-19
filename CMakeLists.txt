@@ -35,6 +35,7 @@ set(FactoriesSRC
   src/Thorus.cpp
   src/Composite.cpp
   src/Tetrahedron.cpp
+  src/FractalTetrahedron.cpp
   src/FileLoader.cpp
 )
 

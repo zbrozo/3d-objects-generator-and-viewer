@@ -24,6 +24,7 @@ if [[ "$1" == "" ]]; then
     ../generator --o cone3 --t composite --c0 Cone --p0 3 50 50 --f0 0 0 0 0 0 0 0 0 0 --c1 Cone --p1 3 50 50 --f1 0 0 0 0 0 0 100 0 0
     ../generator --o tmp --t tetrahedron 80
     ../generator --o tetrahedron1 --t composite --c0 tmp --f0 0 0 -40
+    ../generator --v --o tetrahedron2 --t fractaltetrahedron 80
     
     ../generator --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
     ../generator --o composite2 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 20 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 20 0 180 0 --c2 Rectangle --p2 20 50 --f2 0 0 50 0 90 0 --c3 Rectangle --p3 20 50 --f3 0 0 50 0 270 0 --c4 Rectangle --p4 50 20 --f4 0 0 50 90 0 0 --c5 Rectangle --p5 50 20 --f5 0 0 50 270 0 0
@@ -36,7 +37,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8 composite4 tetrahedron1
+    ./viewer objects_small tetrahedron2 cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8 composite4 tetrahedron1 tetrahedron2
 #    ./viewer objects_small cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
 else
     cd ./objects

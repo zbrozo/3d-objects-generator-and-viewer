@@ -43,3 +43,11 @@ public:
     const std::string& name,
     const ParamsMap& params) const override;
 };
+
+class FractalTetrahedronFactory : public ObjectFactoryBase
+{
+public:
+  std::unique_ptr<Object3D> FactoryMethod(
+    const std::string& name,
+    const ParamsMap& params) const override;
+};

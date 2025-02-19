@@ -6,6 +6,7 @@
 #include "Thorus.hpp"
 #include "Composite.hpp"
 #include "Tetrahedron.hpp"
+#include "FractalTetrahedron.hpp"
 #include "Components.hpp"
 #include "Params.hpp"
 #include "FileLoader.hpp"
@@ -253,4 +254,19 @@ std::unique_ptr<Object3D> TetrahedronFactory::FactoryMethod(
   }
 
   return std::make_unique<Tetrahedron>(nameExt.c_str());
+}
+
+std::unique_ptr<Object3D> FractalTetrahedronFactory::FactoryMethod(
+  const std::string& name,
+  const ParamsMap& params) const
+{
+  const auto nameExt = CreateFullName(name, params);
+
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
+  {
+    return std::make_unique<FractalTetrahedron>(nameExt.c_str(), std::get<ParamsVector>(it->second).at(0));
+  }
+
+  return std::make_unique<FractalTetrahedron>(nameExt.c_str());
 }
