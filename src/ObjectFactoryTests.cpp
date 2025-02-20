@@ -93,4 +93,49 @@ BOOST_AUTO_TEST_CASE(composite_factory_test)
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
+BOOST_AUTO_TEST_CASE(tetrahedron_factory_test)
+{
+  ParamsMap paramsMap;
+  TetrahedronFactory factory;
+  ComponentFactories componentFactories;
+
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{50, 68};
+  
+  factory.Init(componentFactories);
+  auto object = factory.Create("tetrahedron", paramsMap);
+
+  BOOST_CHECK_EQUAL("tetrahedron_50_68", object->GetName());
+  BOOST_CHECK_EQUAL(4, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object->GetFacesCount());
+  BOOST_CHECK_EQUAL(68, object->GetVertices()[3].getZ());
+}
+
+BOOST_AUTO_TEST_CASE(regulartetrahedron_factory_test)
+{
+  ParamsMap paramsMap;
+  RegularTetrahedronFactory factory;
+  ComponentFactories componentFactories;
+    
+  factory.Init(componentFactories);
+  auto object = factory.Create("regulartetrahedron", paramsMap);
+
+  BOOST_CHECK_EQUAL("regulartetrahedron", object->GetName());
+  BOOST_CHECK_EQUAL(4, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(4, object->GetFacesCount());
+}
+
+BOOST_AUTO_TEST_CASE(fractaltetrahedron_factory_test)
+{
+  ParamsMap paramsMap;
+  FractalTetrahedronFactory factory;
+  ComponentFactories componentFactories;
+
+  factory.Init(componentFactories);
+  auto object = factory.Create("fractaltetrahedron", paramsMap);
+
+  BOOST_CHECK_EQUAL("fractaltetrahedron", object->GetName());
+  BOOST_CHECK_EQUAL(10, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(16, object->GetFacesCount());
+}
+
 BOOST_AUTO_TEST_SUITE_END()

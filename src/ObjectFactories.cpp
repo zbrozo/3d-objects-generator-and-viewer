@@ -6,6 +6,7 @@
 #include "Thorus.hpp"
 #include "Composite.hpp"
 #include "Tetrahedron.hpp"
+#include "RegularTetrahedron.hpp"
 #include "FractalTetrahedron.hpp"
 #include "Components.hpp"
 #include "Params.hpp"
@@ -250,10 +251,31 @@ std::unique_ptr<Object3D> TetrahedronFactory::FactoryMethod(
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {
-    return std::make_unique<Tetrahedron>(nameExt.c_str(), std::get<ParamsVector>(it->second).at(0));
+    return std::make_unique<Tetrahedron>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0),
+      std::get<ParamsVector>(it->second).at(1)
+      );
+  }
+  return std::make_unique<Tetrahedron>(nameExt.c_str());
+}
+
+std::unique_ptr<Object3D> RegularTetrahedronFactory::FactoryMethod(
+  const std::string& name,
+  const ParamsMap& params) const
+{
+  const auto nameExt = CreateFullName(name, params);
+
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
+  {
+    return std::make_unique<RegularTetrahedron>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0)
+      );
   }
 
-  return std::make_unique<Tetrahedron>(nameExt.c_str());
+  return std::make_unique<RegularTetrahedron>(nameExt.c_str());
 }
 
 std::unique_ptr<Object3D> FractalTetrahedronFactory::FactoryMethod(
@@ -265,7 +287,10 @@ std::unique_ptr<Object3D> FractalTetrahedronFactory::FactoryMethod(
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {
-    return std::make_unique<FractalTetrahedron>(nameExt.c_str(), std::get<ParamsVector>(it->second).at(0));
+    return std::make_unique<FractalTetrahedron>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0)
+      );
   }
 
   return std::make_unique<FractalTetrahedron>(nameExt.c_str());

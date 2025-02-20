@@ -7,11 +7,12 @@ class Tetrahedron : public Object3D, public IGenerator
 {
 
   int mRadius = 50;
-
+  int mHeight = 0;
+  
 public:
 
-  Tetrahedron(const char* name, int radius = 50) :
-    Object3D(name), mRadius(radius)
+  Tetrahedron(const char* name, int radius = 50, int height = 0) :
+    Object3D(name), mRadius(radius), mHeight(height)
   {
   }
 
