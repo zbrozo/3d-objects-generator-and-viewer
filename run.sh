@@ -14,15 +14,18 @@ if [[ "$1" == "" ]]; then
     ../generator --o thorus1 --t thorus 4 3 
     ../generator --o thorus2 --t thorus 4 4
     ../generator --o thorus3 --t thorus 6 8
-    ../generator --o thorus4 --t thorus 6 12 30 50 --s 0 0 3 15 2 10
-    ../generator --o thorus5 --t thorus 6 16 25 50 --s 0 0 4 15 4 10
-    ../generator --3 --o thorus6 --t thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
-    ../generator --3 --o thorus7 --t thorus 6 12 30 90 --s 0 0 3 25 2 10
-    ../generator --3 --o thorus8 --t thorus 6 16 30 90 --s 0 0 4 25 4 10
+
+    ../generator --o thorus4 --t thorus 6 12 30 70 --s 0 0 3 15 2 15
+    ../generator --o thorus5 --t thorus 6 16 30 70 --s 0 0 4 15 4 15
+    ../generator --3 --o thorus6 --t thorus 6 12 30 70 --s 0 0 3 10 2 10
+    ../generator --3 --o thorus7 --t thorus 6 16 30 70 --s 0 0 4 10 4 10
+    
+    ../generator --3 --o thorus8 --t thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
+    
     ../generator --o cone1 --t composite --c0 Cone --p0 3 50 50 --c1 Cone --p1 3 50 -50
     ../generator --o cone2 --t composite --c0 Cone --p0 6 50 50 --c1 Cone --p1 6 50 -50
     ../generator --o cone3 --t composite --c0 Cone --p0 3 50 50 --f0 0 0 0 0 0 0 0 0 0 --c1 Cone --p1 3 50 50 --f1 0 0 0 0 0 0 100 0 0
-    ../generator --o tmp --t tetrahedron 80
+    ../generator --o tmp --t tetrahedron 80 70
     ../generator --o tetrahedron1 --t composite --c0 tmp --f0 0 0 -40
     ../generator --v --o tetrahedron2 --t fractaltetrahedron 40
     
@@ -37,8 +40,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small tetrahedron2 cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 thorus8 composite4 tetrahedron1 tetrahedron2
-#    ./viewer objects_small cube1 cube2 cube3 thorus1 thorus2 thorus3 taper1 taper2 composite1 composite2 composite3 composite6
+    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
 else
     cd ./objects
 
