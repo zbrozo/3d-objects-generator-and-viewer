@@ -8,7 +8,7 @@ if [[ "$1" == "" ]]; then
 
     # small objects
     ../generator --o cube1 --t cube 70
-    ../generator --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 70 --f 0 0 70
+    ../generator --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 70 30 30 --f 0 0 70 30 30
     ../generator --o cube3 --t cube-ext --c Pyramid --p 50 --f 0 0 50
     ../generator --o cube4 --t cube-ext --c Pyramid --p 30 60 --f 0 0 30
     ../generator --o thorus1 --t thorus 4 3 
