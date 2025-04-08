@@ -46,6 +46,7 @@ enum DrawFilledMode {
   DrawFilledMode_FlatShading             = 0b0000'0001,
   DrawFilledMode_GouraudShading          = 0b0000'0010,
   DrawFilledMode_TextureMapping          = 0b0000'0100,
+  DrawFilledMode_FlatShadingSpaceCut     = 0b0000'1000,
 };
 
 const char *help = "press h for help";
@@ -58,6 +59,7 @@ const char *helpDetailed =
   "4 - flat shaded\n"
   "5 - gouraud shaded\n"
   "6 - textured\n"
+  "7 - flast shaded space cut\n"
   "space - rotate\n"
   "cursors - modify rotation\n"
   ", - zoom in\n"
@@ -104,7 +106,7 @@ void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>&
   {
     path = argv[1];
   }
-  
+
   for (int i = 2; i < argc; i++)
   {
     const char* name = argv[i];
@@ -114,7 +116,7 @@ void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>&
 
     ZbrFormatConverter converter;
     auto object = converter.ConvertToObject(buffer);
-    
+
     objects.push_back(std::make_unique<Object3D>(object));
   }
 }
@@ -149,7 +151,7 @@ int main(int argc, char* argv[])
               << "  viewer path file..." << std::endl;
     return 0;
   }
-  
+
   std::vector<std::shared_ptr<Object3D>> objects;
   LoadObjects(argc, argv, objects);
 
@@ -157,23 +159,23 @@ int main(int argc, char* argv[])
     printf("error initializing SDL: %s\n", SDL_GetError());
     return 1;
   }
-  
+
   TTF_Init();
   TTF_Font *font = TTF_OpenFont("Kode-Regular.ttf", 20);
   if (font == NULL) {
     fprintf(stderr, "error: font not found\n");
     exit(EXIT_FAILURE);
   }
-  
+
   SDL_Window* win = SDL_CreateWindow("3D Objects Generator And Demo",
     SDL_WINDOWPOS_CENTERED,
     SDL_WINDOWPOS_CENTERED,
     WindowW, WindowH, 0);
-  
+
   // triggers the program that controls
   // your graphics hardware and sets flags
   Uint32 render_flags = SDL_RENDERER_ACCELERATED;
-  
+
   // creates a renderer to render our images
   SDL_Renderer* rend = SDL_CreateRenderer(win, -1, render_flags);
 
@@ -181,20 +183,20 @@ int main(int argc, char* argv[])
   SDL_Rect helpDetailsRect;
   SDL_Texture *helpTexture = getMessage(rend, 0, 0, help, font, &helpRect);
   SDL_Texture *helpDetailsTexture = getMessage(rend, 0, 0, helpDetailed, font, &helpDetailsRect);
-  
+
   SDL_Surface* surface = IMG_Load("wood.png");
   if (surface == 0)
   {
     std::cerr << "No image file" << std::endl;
     return 1;
   }
- 
+
   SDL_Texture* texture = SDL_CreateTextureFromSurface(rend, surface);
   SDL_FreeSurface(surface);
- 
+
   // controls animation loop
   int close = 0;
-  
+
   int degx = 0;
   int degy = 0;
   int degz = 0;
@@ -202,15 +204,15 @@ int main(int argc, char* argv[])
   int speedx = 0;
   int speedy = 0;
   int speedz = 0;
-  
+
   int light = maxLightValue;
   int zoom = 400;
-  
+
   bool help = false;
-  
+
   unsigned short lineMode = DrawLineMode::DrawLineMode_None;
   DrawFilledMode filledMode = DrawFilledMode::DrawFilledMode_FlatShading;
-  
+
   auto SwitchDrawLineMode = [&](DrawLineMode mode){
     lineMode = (lineMode & mode) ? (lineMode ^ mode) : (lineMode | mode);
   };
@@ -218,13 +220,13 @@ int main(int argc, char* argv[])
   auto SwitchDrawFilledMode = [&](DrawFilledMode mode){
     filledMode = mode;
   };
-  
+
   SDL_Color colors[maxColorNumber];
 
   PrepareColors("default.pal", colors);
 
   std::weak_ptr<Object3D> selectedObject;
-  
+
   auto SelectObject = [&](unsigned int nr) {
     if (nr < objects.size())
     {
@@ -233,7 +235,7 @@ int main(int argc, char* argv[])
   };
 
   SelectObject(0);
-  
+
   std::map<int, std::function<void()>> keyActions{
     {SDL_SCANCODE_COMMA, [&](){ zoom -= 10; }},
     {SDL_SCANCODE_PERIOD, [&](){ zoom += 10; }},
@@ -245,6 +247,7 @@ int main(int argc, char* argv[])
     {SDL_SCANCODE_4, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatShading); }},
     {SDL_SCANCODE_5, [&](){ SwitchDrawFilledMode(DrawFilledMode_GouraudShading); }},
     {SDL_SCANCODE_6, [&](){ SwitchDrawFilledMode(DrawFilledMode_TextureMapping); }},
+    {SDL_SCANCODE_7, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatShadingSpaceCut); }},
     {SDL_SCANCODE_UP, [&](){ degx += 1; }},
     {SDL_SCANCODE_DOWN, [&](){ degx -= 1; }},
     {SDL_SCANCODE_LEFT, [&](){ degy += 1; }},
@@ -259,7 +262,7 @@ int main(int argc, char* argv[])
       if (light > -maxLightValue)
       {
         light -= 1;
-      }      
+      }
     }},
     {SDL_SCANCODE_SPACE, [&]() {
       if (speedx == 0)
@@ -293,22 +296,22 @@ int main(int argc, char* argv[])
   auto calculateVertexPerspectiveFunction = std::bind(CalculatePerspective<Vertex>, _1, zoom);
   auto calculateVectorPerspectiveFunction = std::bind(CalculatePerspective<Vector>, _1, zoom);
   auto drawLineFunction = std::bind(&DrawLine, rend, _1, _2, _3, _4);
-  
+
   // animation loop
   while (!close) {
     SDL_Event event;
-   
+
     // Events management
     while (SDL_PollEvent(&event)) {
       switch (event.type) {
-        
+
       case SDL_QUIT:
       {
         // handling of close button
         close = 1;
         break;
       }
-        
+
       case SDL_KEYDOWN:
       {
         auto action = keyActions.find(event.key.keysym.scancode);
@@ -318,19 +321,19 @@ int main(int argc, char* argv[])
         }
         break;
       }
-        
+
       default:
         break;
-        
+
       }
     }
-    
+
     SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
     SDL_RenderClear(rend);
     SDL_SetRenderDrawColor(rend, 0xFF, 0, 0, 0xFF);
 
     auto object = selectedObject.lock();
-    
+
     if (!object)
     {
       continue;
@@ -339,7 +342,7 @@ int main(int argc, char* argv[])
     Vertices vertices;
     Vectors normalVectorsInFaces;
     Vectors normalVectorsInVertices;
-    
+
     RotateObject(
       degx, degy, degz,
       object->GetVertices(),
@@ -353,8 +356,8 @@ int main(int argc, char* argv[])
     std::vector<int> colorNumbersInVertices;
 
     VectorRotation rotation;
-    Vector lightVector(Vertex{0,0,light}); 
-    
+    Vector lightVector(Vertex{0,0,light});
+
     CalculateLight(
       rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
       normalVectorsInFaces,
@@ -375,7 +378,18 @@ int main(int argc, char* argv[])
         renderFunction);
     }
 
-    if (filledMode & DrawFilledMode_GouraudShading)
+   if (filledMode & DrawFilledMode_FlatShadingSpaceCut)
+    {
+      DrawFlatShadedFaces(
+        CenterX, CenterY,
+        colors,
+        vertices2d,
+        object->GetFaces(),
+        colorNumbersInFaces,
+        renderFunction);
+    }
+
+   if (filledMode & DrawFilledMode_GouraudShading)
     {
       DrawGouraudShadedFaces(
         CenterX, CenterY,
@@ -395,7 +409,7 @@ int main(int argc, char* argv[])
         texture,
         renderFunction);
     }
-        
+
     if (lineMode & DrawLineMode_NormalVectorsInFaces)
     {
       DrawNormalVectorsInFaces(
@@ -419,7 +433,7 @@ int main(int argc, char* argv[])
         calculateVectorPerspectiveFunction,
         drawLineFunction);
     }
-        
+
     if (lineMode & DrawLineMode_LineVectors)
     {
       DrawLines(
@@ -461,11 +475,10 @@ int main(int argc, char* argv[])
   SDL_DestroyTexture(helpTexture);
   SDL_DestroyTexture(helpDetailsTexture);
   TTF_Quit();
-    
+
   SDL_DestroyRenderer(rend);
   SDL_DestroyWindow(win);
   SDL_Quit();
 
   return 0;
 }
- 
