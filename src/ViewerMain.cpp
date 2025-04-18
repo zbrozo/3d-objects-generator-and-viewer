@@ -380,9 +380,10 @@ int main(int argc, char* argv[])
 
    if (filledMode & DrawFilledMode_FlatShadingSpaceCut)
     {
-      DrawFlatShadedFaces(
+      DrawFlatShadedFaces_SpaceCut(
         CenterX, CenterY,
         colors,
+        vertices,
         vertices2d,
         object->GetFaces(),
         colorNumbersInFaces,

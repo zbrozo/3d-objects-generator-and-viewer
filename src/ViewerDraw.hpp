@@ -73,3 +73,13 @@ void DrawLines(
   const Faces& faces,
   DrawLineFunction drawLine
   );
+
+void DrawFlatShadedFaces_SpaceCut(
+  int CenterX, int CenterY,
+  SDL_Color* colors,
+  const Vertices& vertices3d,
+  const Vertices& vertices2d,
+  const Faces& faces,
+  const std::vector<int>& colorNumbersInFaces,
+  RenderFunction render
+  );

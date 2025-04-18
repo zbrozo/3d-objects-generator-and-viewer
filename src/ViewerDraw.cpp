@@ -8,8 +8,10 @@
 
 #include <SDL2/SDL.h>
 
+#include <algorithm>
 #include <functional>
 #include <iostream>
+#include <iterator>
 
 void DrawFlatShadedFaces(
   int CenterX, int CenterY,
@@ -237,5 +239,131 @@ void DrawLines(
         x2 + CenterX, y2 + CenterY
         );
     }
+  }
+}
+
+bool FindIntersectionPoint(const Vertex& v1, const Vertex& v2, Vertex& found)
+{
+  return false;
+}
+
+void DrawFlatShadedFaces_SpaceCut(
+  int CenterX, int CenterY,
+  SDL_Color* colors,
+  const Vertices& vertices3d,
+  const Vertices& vertices2d,
+  const Faces& faces,
+  const std::vector<int>& colorNumbersInFaces,
+  RenderFunction render
+  )
+{
+  Vertices vertices1;
+  Vertices vertices2;
+  Faces faces1;
+  Faces faces2;
+
+  auto AddVertex = [](Vertex v, Vertices& vertices)
+  {
+    auto it = std::find(vertices.begin(), vertices.end(), v);
+    if (it != vertices.end())
+    {
+      return static_cast<int>(std::distance(vertices.begin(), it));
+    }
+    vertices.push_back(v);
+    return static_cast<int>(vertices.size());
+  };
+
+  const auto sortedFaces = SortFaceNumbers(vertices2d, faces);
+
+  for (const auto& faceNr : sortedFaces)
+  {
+    Face face1;
+    Face face2;
+
+    const auto& face = faces[faceNr];
+    const size_t size = face.size();
+
+    for (size_t i = 0; i < size; ++i)
+    {
+      Vertex v1;
+      Vertex v2;
+
+      // get vector vertices
+      v1 = vertices3d[face[i]];
+      if (i < faceNr)
+      {
+        v2 = vertices3d[face[i + 1]];
+      }
+      else
+      {
+        v2 = vertices3d[0];
+      }
+
+      if (v1.getZ() >= 0 && v2.getZ() >= 0)
+      {
+        auto i = AddVertex(v1,vertices1);
+        face1.push_back(i);
+        i = AddVertex(v2, vertices1);
+        face1.push_back(i);
+        continue;
+      }
+
+      if (v1.getZ() <= 0 && v2.getZ() <= 0)
+      {
+        auto i = AddVertex(v1, vertices2);
+        face2.push_back(i);
+        i = AddVertex(v2, vertices2);
+        face2.push_back(i);
+        continue;
+      }
+
+      Vertex found;
+      if (FindIntersectionPoint(v1, v2, found))
+      {
+        auto i = AddVertex(v1,vertices1);
+        face1.push_back(i);
+        i = AddVertex(found,vertices1);
+        face1.push_back(i);
+
+        i = AddVertex(found,vertices2);
+        face2.push_back(i);
+        i = AddVertex(v2,vertices2);
+        face2.push_back(i);
+      }
+    }
+
+    if (face1.size())
+    {
+      faces1.push_back(face1);
+    }
+
+    if (face2.size())
+    {
+      faces2.push_back(face2);
+    }
+  }
+
+  for (const auto& faceNr : sortedFaces)
+  {
+    std::vector<SDL_Vertex> geometryVertices;
+
+    SDL_Vertex vertex;
+    vertex.tex_coord.x = 0;
+    vertex.tex_coord.y = 0;
+    vertex.color = colors[colorNumbersInFaces[faceNr]];
+
+    const auto& face = faces[faceNr];
+    const size_t size = face.size();
+
+    for (size_t i = 0; i < size; ++i)
+    {
+      const auto x = vertices2d[face[i]].getX();
+      const auto y = vertices2d[face[i]].getY();
+      vertex.position.x = x + CenterX;
+      vertex.position.y = y + CenterY;
+      geometryVertices.push_back(vertex);
+    }
+
+    render(size, geometryVertices, nullptr);
   }
 }
