@@ -21,7 +21,6 @@ FaceNumbers PrepareFaceNumbers(const Vertices& vertices2d, const Faces &faces)
       continue;
     }
 
-    auto centerVertex = face.GetCenter(vertices2d);
     faceNumbers.push_back(faceNr);
 
     ++faceNr;

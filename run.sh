@@ -40,7 +40,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small cube2 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
+    ./viewer objects_small cube1 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
 else
     cd ./objects
 

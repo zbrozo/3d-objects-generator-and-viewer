@@ -81,5 +81,6 @@ void DrawFlatShadedFaces_SpaceCut(
   const Vertices& vertices2d,
   const Faces& faces,
   const std::vector<int>& colorNumbersInFaces,
+  CalculatePerspectiveFunction calcPerspectiveFunction,
   RenderFunction render
   );

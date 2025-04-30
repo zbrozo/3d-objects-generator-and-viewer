@@ -387,6 +387,7 @@ int main(int argc, char* argv[])
         vertices2d,
         object->GetFaces(),
         colorNumbersInFaces,
+        calculateVertexPerspectiveFunction,
         renderFunction);
     }
 
