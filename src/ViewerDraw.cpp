@@ -324,7 +324,7 @@ void DrawFlatSpaceCutShadedFaces(
       Vertex found;
       if (FindIntersectionPoint(v1, v2, found))
       {
-        if (v1.getZ() >= 0)
+        if (v1.getZ() > 0)
         {
           face1.push_back(AddVertex(v1,vertices1));
         }
