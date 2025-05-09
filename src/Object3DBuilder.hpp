@@ -36,9 +36,9 @@ public:
     mNormalVectorsInFaces = vectors;
   }
 
-  Object3D GetObject3D() const
-  {
-    return *this;
-  }
+  //Object3D GetObject3D() const
+  //{
+  // return *this;
+  //}
   
 };

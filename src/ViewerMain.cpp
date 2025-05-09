@@ -46,7 +46,7 @@ enum DrawFilledMode {
   DrawFilledMode_FlatShading             = 0b0000'0001,
   DrawFilledMode_GouraudShading          = 0b0000'0010,
   DrawFilledMode_TextureMapping          = 0b0000'0100,
-  DrawFilledMode_FlatShadingSpaceCut     = 0b0000'1000,
+  DrawFilledMode_FlatSpaceCutShading     = 0b0000'1000,
 };
 
 const char *help = "press h for help";
@@ -247,7 +247,7 @@ int main(int argc, char* argv[])
     {SDL_SCANCODE_4, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatShading); }},
     {SDL_SCANCODE_5, [&](){ SwitchDrawFilledMode(DrawFilledMode_GouraudShading); }},
     {SDL_SCANCODE_6, [&](){ SwitchDrawFilledMode(DrawFilledMode_TextureMapping); }},
-    {SDL_SCANCODE_7, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatShadingSpaceCut); }},
+    {SDL_SCANCODE_7, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatSpaceCutShading); }},
     {SDL_SCANCODE_UP, [&](){ degx += 1; }},
     {SDL_SCANCODE_DOWN, [&](){ degx -= 1; }},
     {SDL_SCANCODE_LEFT, [&](){ degy += 1; }},
@@ -296,6 +296,12 @@ int main(int argc, char* argv[])
   auto calculateVertexPerspectiveFunction = std::bind(CalculatePerspective<Vertex>, _1, zoom);
   auto calculateVectorPerspectiveFunction = std::bind(CalculatePerspective<Vector>, _1, zoom);
   auto drawLineFunction = std::bind(&DrawLine, rend, _1, _2, _3, _4);
+
+  VectorRotation rotation;
+  Vector lightVector(Vertex{0,0,light});
+  auto calculateLight = std::bind(CalculateLight,
+    rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, 0), 0), 0),
+    _1,_2,_3,_4);
 
   // animation loop
   while (!close) {
@@ -352,97 +358,96 @@ int main(int argc, char* argv[])
       normalVectorsInFaces,
       normalVectorsInVertices);
 
-    std::vector<int> colorNumbersInFaces;
-    std::vector<int> colorNumbersInVertices;
-
-    VectorRotation rotation;
-    Vector lightVector(Vertex{0,0,light});
-
-    CalculateLight(
-      rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
-      normalVectorsInFaces,
-      normalVectorsInVertices,
-      colorNumbersInFaces,
-      colorNumbersInVertices);
-
-    Vertices vertices2d = CalculatePerspective(vertices, zoom);
-
-    if (filledMode & DrawFilledMode_FlatShading)
+    if (filledMode & DrawFilledMode_FlatSpaceCutShading)
     {
-      DrawFlatShadedFaces(
-        CenterX, CenterY,
-        colors,
-        vertices2d,
-        object->GetFaces(),
-        colorNumbersInFaces,
-        renderFunction);
-    }
-
-   if (filledMode & DrawFilledMode_FlatShadingSpaceCut)
-    {
-      DrawFlatShadedFaces_SpaceCut(
+      DrawFlatSpaceCutShadedFaces(
         CenterX, CenterY,
         colors,
         vertices,
-        vertices2d,
         object->GetFaces(),
-        colorNumbersInFaces,
+        calculateLight,
         calculateVertexPerspectiveFunction,
         renderFunction);
     }
-
-   if (filledMode & DrawFilledMode_GouraudShading)
+    else
     {
-      DrawGouraudShadedFaces(
-        CenterX, CenterY,
-        colors,
-        vertices2d,
-        object->GetFaces(),
-        colorNumbersInVertices,
-        renderFunction);
-    }
+      std::vector<int> colorNumbersInFaces;
+      std::vector<int> colorNumbersInVertices;
 
-    if (filledMode & DrawFilledMode_TextureMapping)
-    {
-      DrawTextureMapping(
-        CenterX, CenterY,
-        vertices2d,
-        object->GetFaces(),
-        texture,
-        renderFunction);
-    }
-
-    if (lineMode & DrawLineMode_NormalVectorsInFaces)
-    {
-      DrawNormalVectorsInFaces(
-        CenterX, CenterY,
-        vertices,
-        vertices2d,
-        object->GetFaces(),
+      CalculateLight(
+        rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
         normalVectorsInFaces,
-        calculateVertexPerspectiveFunction,
-        drawLineFunction);
-    }
-
-    if (lineMode & DrawLineMode_NormalVectorsInVertices)
-    {
-      DrawNormalVectorsInVertices(
-        CenterX, CenterY,
-        vertices,
-        vertices2d,
-        object->GetFaces(),
         normalVectorsInVertices,
-        calculateVectorPerspectiveFunction,
-        drawLineFunction);
-    }
+        colorNumbersInFaces,
+        colorNumbersInVertices);
 
-    if (lineMode & DrawLineMode_LineVectors)
-    {
-      DrawLines(
-        CenterX, CenterY,
-        vertices2d,
-        object->GetFaces(),
-        drawLineFunction);
+      Vertices vertices2d = CalculatePerspective(vertices, zoom);
+
+      if (filledMode & DrawFilledMode_FlatShading)
+      {
+        DrawFlatShadedFaces(
+          CenterX, CenterY,
+          colors,
+          vertices2d,
+          object->GetFaces(),
+          colorNumbersInFaces,
+          renderFunction);
+      }
+
+      if (filledMode & DrawFilledMode_GouraudShading)
+      {
+        DrawGouraudShadedFaces(
+          CenterX, CenterY,
+          colors,
+          vertices2d,
+          object->GetFaces(),
+          colorNumbersInVertices,
+          renderFunction);
+      }
+
+      if (filledMode & DrawFilledMode_TextureMapping)
+      {
+        DrawTextureMapping(
+          CenterX, CenterY,
+          vertices2d,
+          object->GetFaces(),
+          texture,
+          renderFunction);
+      }
+
+      if (lineMode & DrawLineMode_NormalVectorsInFaces)
+      {
+        DrawNormalVectorsInFaces(
+          CenterX, CenterY,
+          vertices,
+          vertices2d,
+          object->GetFaces(),
+          normalVectorsInFaces,
+          calculateVertexPerspectiveFunction,
+          drawLineFunction);
+      }
+
+      if (lineMode & DrawLineMode_NormalVectorsInVertices)
+      {
+        DrawNormalVectorsInVertices(
+          CenterX, CenterY,
+          vertices,
+          vertices2d,
+          object->GetFaces(),
+          normalVectorsInVertices,
+          calculateVectorPerspectiveFunction,
+          drawLineFunction);
+      }
+
+      if (lineMode & DrawLineMode_LineVectors)
+      {
+        DrawLines(
+          CenterX, CenterY,
+          vertices2d,
+          object->GetFaces(),
+          drawLineFunction);
+      }
+
     }
 
     degx += speedx;

@@ -2,7 +2,7 @@
 #include "Vertices.hpp"
 #include "Vectors.hpp"
 #include "Faces.hpp"
-
+#include "Object3DBuilder.hpp"
 #include "ViewerSortingFaces.hpp"
 #include "ViewerDraw.hpp"
 
@@ -242,14 +242,12 @@ void DrawLines(
   }
 }
 
-
-void DrawFlatShadedFaces_SpaceCut(
+void DrawFlatSpaceCutShadedFaces(
   int CenterX, int CenterY,
   SDL_Color* colors,
   const Vertices& vertices3d,
-  const Vertices& vertices2d,
   const Faces& faces,
-  const std::vector<int>& colorNumbersInFaces,
+  CalculateLightFunction calcLightFunction,
   CalculatePerspectiveFunction calcPerspectiveFunction,
   RenderFunction render
   )
@@ -295,22 +293,29 @@ void DrawFlatShadedFaces_SpaceCut(
       Vertex v1 = vertices3d[face[i]];
       Vertex v2;
 
-      if (i < faceSize)
+      if (i < (faceSize-1))
       {
         v2 = vertices3d[face[i + 1]];
       }
       else
       {
-        v2 = vertices3d[0];
+        v2 = vertices3d[face[0]];
       }
 
-      if (v1.getZ() >= 0 && v2.getZ() >= 0)
+      if (v1.getZ() == 0)
+      {
+          face1.push_back(AddVertex(v1,vertices1));
+          face2.push_back(AddVertex(v1,vertices2));
+          continue;
+      }
+
+      if (v1.getZ() > 0 && v2.getZ() > 0)
       {
         face1.push_back(AddVertex(v1,vertices1));
         continue;
       }
 
-      if (v1.getZ() <= 0 && v2.getZ() <= 0)
+      if (v1.getZ() < 0 && v2.getZ() < 0)
       {
         face2.push_back(AddVertex(v1, vertices2));
         continue;
@@ -345,6 +350,10 @@ void DrawFlatShadedFaces_SpaceCut(
   }
 
   std::cout << "-------" << std::endl;
+  std::cout << vertices3d << std::endl;
+  std::cout << "-------" << std::endl;
+  std::cout << faces << std::endl;
+  std::cout << "-------" << std::endl;
   std::cout << vertices1 << std::endl;
   std::cout << "-------" << std::endl;
   std::cout << vertices2 << std::endl;
@@ -354,31 +363,47 @@ void DrawFlatShadedFaces_SpaceCut(
   std::cout << faces2 << std::endl;
   std::cout << "-------" << std::endl;
 
+  //  return;
+
+
+  Object3DBuilder object1;
+  object1.SetFaces(faces1);
+  object1.SetVertices(vertices1);
+  object1.CreateNormalVectors();
+
+  std::vector<int> colorNumbersInFaces;
+  std::vector<int> colorNumbersInVertices;  
+  calcLightFunction(
+    object1.GetNormalVectorsInFaces(),
+    object1.GetNormalVectorsInVertices(),
+    colorNumbersInFaces,
+    colorNumbersInVertices);
+
   const auto sortedFaces1 = SortFaceNumbers(vertices1, faces1);
 
   //const auto sortedFaces2 = SortFaceNumbers(vertices2, faces2);
   // std::cout << faces2 << std::endl;
 
-  // for (const auto& faceNr : sortedFaces1)
-  // {
-  //   std::vector<SDL_Vertex> geometryVertices;
+  for (const auto& faceNr : sortedFaces1)
+  {
+    std::vector<SDL_Vertex> geometryVertices;
 
-  //   SDL_Vertex vertex;
-  //   vertex.tex_coord.x = 0;
-  //   vertex.tex_coord.y = 0;
-  //   vertex.color = colors[colorNumbersInFaces[faceNr]];
+    SDL_Vertex vertex;
+    vertex.tex_coord.x = 0;
+    vertex.tex_coord.y = 0;
+    vertex.color = colors[colorNumbersInFaces[faceNr]];
 
-  //   const auto& face = faces1[faceNr];
-  //   const size_t size = face.size();
+    const auto& face = faces1[faceNr];
+    const size_t size = face.size();
 
-  //   for (size_t i = 0; i < size; ++i)
-  //   {
-  //     const auto v = calcPerspectiveFunction(vertices1[face[i]]);
-  //     vertex.position.x = v.getX() + CenterX;
-  //     vertex.position.y = v.getY() + CenterY;
-  //     geometryVertices.push_back(vertex);
-  //   }
+    for (size_t i = 0; i < size; ++i)
+    {
+      const auto v = calcPerspectiveFunction(vertices1[face[i]]);
+      vertex.position.x = v.getX() + CenterX;
+      vertex.position.y = v.getY() + CenterY;
+      geometryVertices.push_back(vertex);
+    }
 
-  //   render(size, geometryVertices, nullptr);
-  // }
+    render(size, geometryVertices, nullptr);
+  }
 }

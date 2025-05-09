@@ -21,6 +21,12 @@ using DrawLineFunction = std::function<void(int, int, int, int)>;
 
 using CalculatePerspectiveFunction = std::function<Vertex(const Vertex &)>;
 
+using CalculateLightFunction = std::function<void(
+  const Vectors&,
+  const Vectors&,
+  std::vector<int>&,
+  std::vector<int>&)>;
+
 void DrawFlatShadedFaces(
   int CenterX, int CenterY,
   SDL_Color* colors,
@@ -74,13 +80,12 @@ void DrawLines(
   DrawLineFunction drawLine
   );
 
-void DrawFlatShadedFaces_SpaceCut(
+void DrawFlatSpaceCutShadedFaces(
   int CenterX, int CenterY,
   SDL_Color* colors,
   const Vertices& vertices3d,
-  const Vertices& vertices2d,
   const Faces& faces,
-  const std::vector<int>& colorNumbersInFaces,
+  CalculateLightFunction calcLightFunction,
   CalculatePerspectiveFunction calcPerspectiveFunction,
   RenderFunction render
   );
