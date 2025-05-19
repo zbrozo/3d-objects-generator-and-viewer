@@ -13,7 +13,7 @@ if [[ "$1" == "" ]]; then
     ../generator --o cube4 --t cube-ext --c Pyramid --p 30 60 --f 0 0 30
     ../generator --o thorus1 --t thorus 4 3 
     ../generator --o thorus2 --t thorus 4 4
-    ../generator --o thorus3 --t thorus 6 8
+    ../generator --o thorus3 --t thorus 6 8 40 
 
     ../generator --o thorus4 --t thorus 6 12 30 70 --s 0 0 3 15 2 15
     ../generator --o thorus5 --t thorus 6 16 30 70 --s 0 0 4 15 4 15
@@ -40,7 +40,7 @@ if [[ "$1" == "" ]]; then
 
     cd ..
     echo "Start viewer"
-    ./viewer objects_small cube1 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
+    ./viewer objects_small thorus3 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
 else
     cd ./objects
 

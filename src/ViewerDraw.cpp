@@ -259,9 +259,12 @@ void DrawFlatSpaceCutShadedFaces(
 
   auto FindIntersectionPoint = [](const Vertex& v1, const Vertex& v2, Vertex& found)
   {
+    //t=−z1/z2−z1
+    //x=x1+t(x2−x1)
+    //y=y1+t(y2−y1)
     double t = -v1.getZ()/(v2.getZ() - v1.getZ());
-    auto x = (1-t) * v1.getX() + t * v2.getX();
-    auto y = (1-t) * v1.getY() + t * v2.getY();
+    auto x = v1.getX() + (t * (v2.getX() - v1.getX()));
+    auto y = v1.getY() + (t * (v2.getY() - v1.getY()));
     found = Vertex(static_cast<int>(x), static_cast<int>(y), 0);
     return true;
   };
@@ -309,6 +312,12 @@ void DrawFlatSpaceCutShadedFaces(
           continue;
       }
 
+      if (v2.getZ() == 0)
+      {
+        face1.push_back(AddVertex(v1,vertices1));
+        continue;
+      }
+      
       if (v1.getZ() > 0 && v2.getZ() > 0)
       {
         face1.push_back(AddVertex(v1,vertices1));
