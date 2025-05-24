@@ -259,12 +259,13 @@ void DrawFlatSpaceCutShadedFaces(
 
   auto FindIntersectionPoint = [](const Vertex& v1, const Vertex& v2, Vertex& found)
   {
-    //t=−z1/z2−z1
-    //x=x1+t(x2−x1)
-    //y=y1+t(y2−y1)
-    double t = -v1.getZ()/(v2.getZ() - v1.getZ());
-    auto x = v1.getX() + (t * (v2.getX() - v1.getX()));
-    auto y = v1.getY() + (t * (v2.getY() - v1.getY()));
+    const double a = v2.getX() - v1.getX();
+    const double b = v2.getY() - v1.getY();
+    const double c = v2.getZ() - v1.getZ();
+    
+    const double x = a / c * (-v1.getZ()) + v1.getX();
+    const double y = b / c * (-v1.getZ()) + v1.getY();
+    
     found = Vertex(static_cast<int>(x), static_cast<int>(y), 0);
     return true;
   };
@@ -389,10 +390,11 @@ void DrawFlatSpaceCutShadedFaces(
     colorNumbersInVertices);
 
   const auto sortedFaces1 = SortFaceNumbers(vertices1, faces1);
-
   //const auto sortedFaces2 = SortFaceNumbers(vertices2, faces2);
   // std::cout << faces2 << std::endl;
 
+  FaceNumbers sortedFaces = {0};
+  
   for (const auto& faceNr : sortedFaces1)
   {
     std::vector<SDL_Vertex> geometryVertices;
@@ -400,7 +402,7 @@ void DrawFlatSpaceCutShadedFaces(
     SDL_Vertex vertex;
     vertex.tex_coord.x = 0;
     vertex.tex_coord.y = 0;
-    vertex.color = colors[colorNumbersInFaces[faceNr]];
+    vertex.color = colors[0]; //colorNumbersInFaces[faceNr]];
 
     const auto& face = faces1[faceNr];
     const size_t size = face.size();

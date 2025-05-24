@@ -27,7 +27,8 @@ if [[ "$1" == "" ]]; then
     ../generator --o cone3 --t composite --c0 Cone --p0 3 50 50 --f0 0 0 0 0 0 0 0 0 0 --c1 Cone --p1 3 50 50 --f1 0 0 0 0 0 0 100 0 0
     ../generator --o tmp --t tetrahedron 80 70
     ../generator --o tetrahedron1 --t composite --c0 tmp --f0 0 0 -40
-    ../generator --v --o tetrahedron2 --t fractaltetrahedron 40
+    ../generator --v --o tetrahedron2 --t regulartetrahedron 80
+    ../generator --v --o tetrahedron3 --t fractaltetrahedron 40
     
     ../generator --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
     ../generator --o composite2 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 20 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 20 0 180 0 --c2 Rectangle --p2 20 50 --f2 0 0 50 0 90 0 --c3 Rectangle --p3 20 50 --f3 0 0 50 0 270 0 --c4 Rectangle --p4 50 20 --f4 0 0 50 90 0 0 --c5 Rectangle --p5 50 20 --f5 0 0 50 270 0 0
@@ -38,9 +39,11 @@ if [[ "$1" == "" ]]; then
     ../generator --o composite6 --t composite --c0 csign --p0 4 80 60 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 80 60 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 80 60 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 80 60 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
     ../generator --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
 
+    ../generator --o square --t composite --c0 square --p0 50
+    
     cd ..
     echo "Start viewer"
-    ./viewer objects_small thorus3 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron2
+    ./viewer objects_small square cube1 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
 else
     cd ./objects
 

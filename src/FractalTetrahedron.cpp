@@ -22,20 +22,21 @@ void FractalTetrahedron::Generate()
   const auto xLen = std::abs(vertices[0].getX() - vertices[1].getX());
   const auto yLen = std::abs(vertices[0].getY() - vertices[1].getY());
   const auto len = std::sqrt(std::pow(xLen, 2) + std::pow(yLen, 2));
-  const auto figureHeight  = std::sqrt(std::pow(len * std::sqrt(3.0) / 2.0, 2) - std::pow(len / 3.0, 2));
+  const auto height = std::sqrt(6.0) * len / 3.0;
 
-  Translate(vertices, -xLen, -mRadius, -figureHeight);
+  // RegularTetrahedron is used here and it is already moved in Z by height/2
+  Translate(vertices, -len/2, -mRadius, 0);
   Merge(vertices, tmp.GetFaces());
 
   vertices = tmp.GetVertices();
-  Translate(vertices, xLen, -mRadius, -figureHeight);
+  Translate(vertices, len/2, -mRadius, 0);
   Merge(vertices, tmp.GetFaces());
 
   vertices = tmp.GetVertices();
-  Translate(vertices, 0, yLen-mRadius, -figureHeight);
+  Translate(vertices, 0, yLen-mRadius, 0);
   Merge(vertices, tmp.GetFaces());
   
   vertices = tmp.GetVertices();
-  Translate(vertices, 0, -mRadius+(yLen-mRadius), 0);
+  Translate(vertices, 0, -mRadius+(yLen-mRadius), height);
   Merge(vertices, tmp.GetFaces());
 }
