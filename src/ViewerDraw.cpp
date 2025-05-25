@@ -308,17 +308,23 @@ void DrawFlatSpaceCutShadedFaces(
 
       if (v1.getZ() == 0)
       {
+        if (std::all_of(face.cbegin(), face.cend(), [](int x) { return x <= 0; }))
+        {
           face1.push_back(AddVertex(v1,vertices1));
+          continue;
+        }
+
+        if (std::all_of(face.cbegin(), face.cend(), [](int x) { return x >= 0; }))
+        {
           face2.push_back(AddVertex(v1,vertices2));
           continue;
-      }
+        }
 
-      if (v2.getZ() == 0)
-      {
         face1.push_back(AddVertex(v1,vertices1));
+        face2.push_back(AddVertex(v1,vertices2));
         continue;
       }
-      
+
       if (v1.getZ() > 0 && v2.getZ() > 0)
       {
         face1.push_back(AddVertex(v1,vertices1));
@@ -375,7 +381,6 @@ void DrawFlatSpaceCutShadedFaces(
 
   //  return;
 
-
   Object3DBuilder object1;
   object1.SetFaces(faces1);
   object1.SetVertices(vertices1);
@@ -393,7 +398,7 @@ void DrawFlatSpaceCutShadedFaces(
   //const auto sortedFaces2 = SortFaceNumbers(vertices2, faces2);
   // std::cout << faces2 << std::endl;
 
-  FaceNumbers sortedFaces = {0};
+  //FaceNumbers sortedFaces = {0};
   
   for (const auto& faceNr : sortedFaces1)
   {
