@@ -29,15 +29,20 @@ Please look into run.sh file to see how they are defined.
 1. Cube
 - params (--a): size (default 50)
 
-_--a option can be avoided and values can written immediately after type name_
+_--a option can be avoided and values can be written immediately after type name_
 
 2. CubeExt - cube made of component objects located on each face 
 - component name used on each face (--c)
 - component params (--p): _depends on used component_
 - face params (--f): translation-x translation-y translation-z (default 0 0 0)
 
+_Value in f and p can be negative_
+
 3. Thorus 
 - params (--a): circle-amount ring-amount circle-radius circle-offset
+
+_--a option can be avoided and values can be written immediately after type name_
+
 - sinus params (--s): circle-multiply-x circle-amp-x circle-multiply-y circle-amp-y circle-multiply-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
 - prefer triangle faces over rectanges or other kind (--3): no values
 
@@ -48,16 +53,22 @@ _--s contains value of double type_
 - component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on created component, see below_
 - translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
+_Value in f and p can be negative_
+
 5. Tetrahedron
 - params (--a): circle-radius height
+
+_--a option can be avoided and values can be written immediately after type name_
 
 6. RegularTetrahedron
 - params (--a): circle-radius
 
+_--a option can be avoided and values can be written immediately after type name_
+
 7. FractalTetrahedron 
 - params (--a): circle-radius
 
-_Value in f and p can be negative_
+_--a option can be avoided and values can be written immediately after type name_
 
 ### Components which can be used in CubeExt and Composite:
 1. Square, name: square
