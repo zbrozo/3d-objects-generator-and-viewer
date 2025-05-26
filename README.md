@@ -48,6 +48,15 @@ _--s contains value of double type_
 - component params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on created component, see below_
 - translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
+5. Tetrahedron
+- params (--a): circle-radius height
+
+6. RegularTetrahedron
+- params (--a): circle-radius
+
+7. FractalTetrahedron 
+- params (--a): circle-radius
+
 _Value in f and p can be negative_
 
 ### Components which can be used in CubeExt and Composite:
@@ -79,10 +88,6 @@ pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_image
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-SDL2_ttf
 pacman -S ucrt64/mingw-w64-ucrt-x86_64-boost
-
-Additional for use with Emacs LSP mode:
-pacman -S ucrt64/mingw-w64-ucrt-x86_64-clang
-pacman -S ucrt64/mingw-w64-ucrt-x86_64-clang-tools-extra
 ```
 
 ![](example.png)
