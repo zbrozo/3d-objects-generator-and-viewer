@@ -11,7 +11,7 @@ Vector Face::CalculateNormalVector(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
-    throw std::out_of_range("Vertex numbers in a face error");
+    throw std::out_of_range("a Vertex numbers in a face error");
   }
 
   const auto n1 = this->at(0);
@@ -35,7 +35,7 @@ Vertex Face::GetCenter(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
-    throw std::out_of_range("Vertex numbers in a face error");
+    throw std::out_of_range("b Vertex numbers in a face error");
   }
 
   const unsigned int size = this->size();
@@ -63,7 +63,7 @@ bool Face::IsVisible(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
-    throw std::out_of_range("Vertex numbers in a face error");
+    throw std::out_of_range("c Vertex numbers in a face error");
   }
 
   auto n0 = this->at(0);

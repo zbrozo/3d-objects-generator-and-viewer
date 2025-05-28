@@ -295,6 +295,7 @@ int main(int argc, char* argv[])
   auto renderFunction = std::bind(&RenderFace, rend, _1, _2, _3);
   auto calculateVertexPerspectiveFunction = std::bind(CalculatePerspective<Vertex>, _1, zoom);
   auto calculateVectorPerspectiveFunction = std::bind(CalculatePerspective<Vector>, _1, zoom);
+  auto calculateVerticesPerspectiveFunction = std::bind(CalculateVerticesPerspective, _1, zoom);
   auto drawLineFunction = std::bind(&DrawLine, rend, _1, _2, _3, _4);
 
   VectorRotation rotation;
@@ -366,7 +367,7 @@ int main(int argc, char* argv[])
         vertices,
         object->GetFaces(),
         calculateLight,
-        calculateVertexPerspectiveFunction,
+        calculateVerticesPerspectiveFunction,
         renderFunction);
     }
     else
@@ -381,7 +382,7 @@ int main(int argc, char* argv[])
         colorNumbersInFaces,
         colorNumbersInVertices);
 
-      Vertices vertices2d = CalculatePerspective(vertices, zoom);
+      Vertices vertices2d = CalculateVerticesPerspective(vertices, zoom);
 
       if (filledMode & DrawFilledMode_FlatShading)
       {

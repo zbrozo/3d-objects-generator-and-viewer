@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ViewerPerspective.hpp"
 struct SDL_Color;
 struct SDL_Vertex;
 struct SDL_Texture;
@@ -9,7 +8,9 @@ struct SDL_Texture;
 
 #include "Types.hpp"
 #include "Vertices.hpp"
+#include "Vectors.hpp"
 #include "Faces.hpp"
+#include "ViewerPerspective.hpp"
 
 using RenderFunction = std::function<void(
                                        int,
@@ -19,7 +20,9 @@ using RenderFunction = std::function<void(
 
 using DrawLineFunction = std::function<void(int, int, int, int)>;
 
-using CalculatePerspectiveFunction = std::function<Vertex(const Vertex &)>;
+using CalculateVertexPerspectiveFunction = std::function<Vertex(const Vertex &)>;
+using CalculateVectorPerspectiveFunction = std::function<Vector(const Vector &)>;
+using CalculateVerticesPerspectiveFunction = std::function<Vertices(const Vertices &)>;
 
 using CalculateLightFunction = std::function<void(
   const Vectors&,
@@ -59,7 +62,7 @@ void DrawNormalVectorsInFaces(
   const Vertices& vertices2d,
   const Faces& faces,
   const Vectors& normalVectorsInFaces,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVertexPerspectiveFunction calcPerspectiveFunction,
   DrawLineFunction drawLine
   );
 
@@ -69,7 +72,7 @@ void DrawNormalVectorsInVertices(
   const Vertices& vertices2d,
   const Faces& faces,
   const Vectors& normalVectorsInVertices,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVertexPerspectiveFunction calcPerspectiveFunction,
   DrawLineFunction drawLine
   );
 
@@ -86,6 +89,6 @@ void DrawFlatSpaceCutShadedFaces(
   const Vertices& vertices3d,
   const Faces& faces,
   CalculateLightFunction calcLightFunction,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVerticesPerspectiveFunction calcPerspectiveFunction,
   RenderFunction render
   );

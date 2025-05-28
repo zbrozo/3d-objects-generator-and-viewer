@@ -1,7 +1,7 @@
 #include "ViewerPerspective.hpp"
 #include "Vertices.hpp"
 
-Vertices CalculatePerspective(const Vertices& vertices, int zoom)
+Vertices CalculateVerticesPerspective(const Vertices& vertices, int zoom)
 {
   Vertices vertices2d;
   

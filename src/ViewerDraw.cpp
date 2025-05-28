@@ -22,7 +22,7 @@ void DrawFlatShadedFaces(
   RenderFunction render
   )
 {
-  const auto sortedFaces = SortFaceNumbers(vertices2d, faces);
+  const auto sortedFaces = GetVisibleFaceNumbers(vertices2d, faces);
 
   for (const auto& faceNr : sortedFaces)
   {
@@ -58,7 +58,7 @@ void DrawGouraudShadedFaces(
   RenderFunction render
   )
 {
-  const auto sortedFaces = SortFaceNumbers(vertices2d, faces);
+  const auto sortedFaces = GetVisibleFaceNumbers(vertices2d, faces);
 
   for (auto faceNr : sortedFaces)
   {
@@ -135,7 +135,7 @@ void DrawNormalVectorsInFaces(
   const Vertices& vertices2d,
   const Faces& faces,
   const Vectors& normalVectorsInFaces,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVertexPerspectiveFunction calcPerspectiveFunction,
   DrawLineFunction drawLine
   )
 {
@@ -168,7 +168,7 @@ void DrawNormalVectorsInVertices(
   const Vertices& vertices2d,
   const Faces& faces,
   const Vectors& normalVectorsInVertices,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVertexPerspectiveFunction calcPerspectiveFunction,
   DrawLineFunction drawLine
   )
 {
@@ -242,13 +242,17 @@ void DrawLines(
   }
 }
 
+namespace {
+
+}
+
 void DrawFlatSpaceCutShadedFaces(
   int CenterX, int CenterY,
   SDL_Color* colors,
   const Vertices& vertices3d,
   const Faces& faces,
   CalculateLightFunction calcLightFunction,
-  CalculatePerspectiveFunction calcPerspectiveFunction,
+  CalculateVerticesPerspectiveFunction calcVerticesPerspectiveFunction,
   RenderFunction render
   )
 {
@@ -325,14 +329,16 @@ void DrawFlatSpaceCutShadedFaces(
         continue;
       }
 
-      if (v1.getZ() > 0 && v2.getZ() > 0)
+      if (v1.getZ() > 0 && v2.getZ() >= 0)
       {
+        // brak przeciecia
         face1.push_back(AddVertex(v1,vertices1));
         continue;
       }
 
-      if (v1.getZ() < 0 && v2.getZ() < 0)
+      if (v1.getZ() < 0 && v2.getZ() <= 0)
       {
+        // brak przeciecia
         face2.push_back(AddVertex(v1, vertices2));
         continue;
       }
@@ -353,7 +359,7 @@ void DrawFlatSpaceCutShadedFaces(
         face2.push_back(AddVertex(found,vertices2));
       }
     }
-
+    
     if (face1.size())
     {
       faces1.push_back(face1);
@@ -365,11 +371,11 @@ void DrawFlatSpaceCutShadedFaces(
     }
   }
 
-  std::cout << "-------" << std::endl;
+  std::cout << "=======" << std::endl;
   std::cout << vertices3d << std::endl;
   std::cout << "-------" << std::endl;
   std::cout << faces << std::endl;
-  std::cout << "-------" << std::endl;
+  std::cout << "#######" << std::endl;
   std::cout << vertices1 << std::endl;
   std::cout << "-------" << std::endl;
   std::cout << vertices2 << std::endl;
@@ -379,47 +385,64 @@ void DrawFlatSpaceCutShadedFaces(
   std::cout << faces2 << std::endl;
   std::cout << "-------" << std::endl;
 
-  //  return;
-
   Object3DBuilder object1;
   object1.SetFaces(faces1);
   object1.SetVertices(vertices1);
   object1.CreateNormalVectors();
 
-  std::vector<int> colorNumbersInFaces;
-  std::vector<int> colorNumbersInVertices;  
+  std::vector<int> colorNumbersInFaces1;
+  std::vector<int> colorNumbersInVertices1;  
   calcLightFunction(
     object1.GetNormalVectorsInFaces(),
     object1.GetNormalVectorsInVertices(),
-    colorNumbersInFaces,
-    colorNumbersInVertices);
+    colorNumbersInFaces1,
+    colorNumbersInVertices1);
 
-  const auto sortedFaces1 = SortFaceNumbers(vertices1, faces1);
-  //const auto sortedFaces2 = SortFaceNumbers(vertices2, faces2);
-  // std::cout << faces2 << std::endl;
+  Object3DBuilder object2;
+  object1.SetFaces(faces2);
+  object1.SetVertices(vertices2);
+  object1.CreateNormalVectors();
 
-  //FaceNumbers sortedFaces = {0};
+  std::vector<int> colorNumbersInFaces2;
+  std::vector<int> colorNumbersInVertices2;  
+  calcLightFunction(
+    object2.GetNormalVectorsInFaces(),
+    object2.GetNormalVectorsInVertices(),
+    colorNumbersInFaces2,
+    colorNumbersInVertices2);
   
-  for (const auto& faceNr : sortedFaces1)
+  auto vertices2d = calcVerticesPerspectiveFunction(vertices2);
+  const auto visibleFaces = GetVisibleFaceNumbers(vertices2d, faces2);
+
+  std::cout << "-------" << std::endl;
+  std::cout << faces2 << std::endl;
+  std::cout << "-------" << std::endl;
+  std::cout << vertices2d << std::endl;
+  
+  for (const auto& faceNr : visibleFaces)
   {
     std::vector<SDL_Vertex> geometryVertices;
 
     SDL_Vertex vertex;
     vertex.tex_coord.x = 0;
     vertex.tex_coord.y = 0;
-    vertex.color = colors[0]; //colorNumbersInFaces[faceNr]];
+    vertex.color = colors[0]; //colors[colorNumbersInFaces2[faceNr]];
 
-    const auto& face = faces1[faceNr];
+    const auto& face = faces2[faceNr];
     const size_t size = face.size();
 
+    std::cout << face << std::endl;
+    
+    
     for (size_t i = 0; i < size; ++i)
     {
-      const auto v = calcPerspectiveFunction(vertices1[face[i]]);
-      vertex.position.x = v.getX() + CenterX;
-      vertex.position.y = v.getY() + CenterY;
+      auto vertexNr = face[i];
+      vertex.position.x = vertices2d[vertexNr].getX() + CenterX;
+      vertex.position.y = vertices2d[vertexNr].getY() + CenterY;
       geometryVertices.push_back(vertex);
     }
 
     render(size, geometryVertices, nullptr);
   }
+  
 }
