@@ -56,16 +56,22 @@ FaceNumbers PrepareInvisibleFaceNumbers(const Vertices& vertices2d, const Faces 
 
 FaceNumbers GetVisibleFaceNumbers(const Vertices& vertices2d, const Faces &faces)
 {
-  FaceNumbers faceNumbers = PrepareVisibleFaceNumbers(vertices2d, faces);
-
+  //FaceNumbers faceNumbers = PrepareVisibleFaceNumbers(vertices2d, faces);
+  FaceNumbers faceNumbers;
+  for (size_t i =0; i < faces.size(); i++)
+  {
+    faceNumbers.push_back(i);
+  }
+  
   std::sort(faceNumbers.begin(), faceNumbers.end(),
     [&vertices2d, &faces](int first, int second)
     {
       const Vertex v1 = faces[first].GetCenter(vertices2d);
       const Vertex v2 = faces[second].GetCenter(vertices2d);
-      return v1.getZ() > v2.getZ();
+      return v1.getZ() >= v2.getZ();
     });
-
+  
+  
   return faceNumbers;
 }
 

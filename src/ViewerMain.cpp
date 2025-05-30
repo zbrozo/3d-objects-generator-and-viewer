@@ -85,6 +85,12 @@ void RenderFace(
     SDL_RenderGeometry(rend, texture, geometryVertices.data(), geometryVertices.size(), triangleIndices, 6);
     break;
   }
+  case 5:
+  {
+    const int triangleIndices[] = {0,1,2,2,3,0,3,4,0};
+    SDL_RenderGeometry(rend, texture, geometryVertices.data(), geometryVertices.size(), triangleIndices, 9);
+    break;
+  }
   default:
     throw std::invalid_argument("Face is not handled");
   }

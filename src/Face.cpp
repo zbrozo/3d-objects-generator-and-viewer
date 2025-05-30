@@ -2,6 +2,7 @@
 #include "Face.hpp"
 #include "Types.hpp"
 #include <cmath>
+#include <cstdint>
 #include <stdexcept>
 #include <iostream>
 
@@ -81,7 +82,7 @@ bool Face::IsVisible(const Vertices& vertices) const
       0));
 
   // cross product w Z (jest większy niż short bo liczony po perspektywie)
-  const int result = v1.getX() * v2.getY() - v1.getY() * v2.getX();
+  const int32_t result = v1.getX() * v2.getY() - v1.getY() * v2.getX();
   return (result <= 0);
 }
 
