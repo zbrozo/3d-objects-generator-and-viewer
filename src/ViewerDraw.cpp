@@ -31,7 +31,7 @@ void DrawFlatShadedFaces(
     SDL_Vertex vertex;
     vertex.tex_coord.x = 0;
     vertex.tex_coord.y = 0;
-    vertex.color = colors[0]; //colors[colorNumbersInFaces[faceNr]];
+    vertex.color = colors[colorNumbersInFaces[faceNr]];
 
     const auto& face = faces[faceNr];
     const size_t size = face.size();
@@ -251,6 +251,7 @@ void DrawFlatSpaceCutShadedFaces(
   SDL_Color* colors,
   const Vertices& vertices3d,
   const Faces& faces,
+  const Vectors& normalVectorsInFaces,
   CalculateLightFunction calcLightFunction,
   CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
   CalculateVerticesPerspectiveFunction calcVerticesPerspectiveFunction,
@@ -258,8 +259,8 @@ void DrawFlatSpaceCutShadedFaces(
   RenderFunction render
   )
 {
-  Vertices vertices1;
-  Vertices vertices2;
+  Vertices vertices;
+  //  Vertices vertices2;
   Faces faces1;
   Faces faces2;
 
@@ -317,20 +318,20 @@ void DrawFlatSpaceCutShadedFaces(
         if (std::all_of(face.cbegin(), face.cend(), [&](int x) { return vertices3d[x].getZ() >= 0; }))
         {
           std::cout << " 1";
-          face1.push_back(AddVertex(v1,vertices1));
+          face1.push_back(AddVertex(v1,vertices));
           continue;
         }
 
         if (std::all_of(face.cbegin(), face.cend(), [&](int x) { return vertices3d[x].getZ() <= 0; }))
         {
           std::cout << " 2";
-          face2.push_back(AddVertex(v1,vertices2));
+          face2.push_back(AddVertex(v1,vertices));
           continue;
         }
 
         std::cout << " 3";
-        face1.push_back(AddVertex(v1,vertices1));
-        face2.push_back(AddVertex(v1,vertices2));
+        face1.push_back(AddVertex(v1,vertices));
+        face2.push_back(AddVertex(v1,vertices));
         continue;
       }
 
@@ -338,7 +339,7 @@ void DrawFlatSpaceCutShadedFaces(
       {
         // brak przeciecia
         std::cout << " 4";
-        face1.push_back(AddVertex(v1,vertices1));
+        face1.push_back(AddVertex(v1,vertices));
         continue;
       }
 
@@ -346,7 +347,7 @@ void DrawFlatSpaceCutShadedFaces(
       {
         // brak przeciecia
         std::cout << " 5";
-        face2.push_back(AddVertex(v1, vertices2));
+        face2.push_back(AddVertex(v1, vertices));
         continue;
       }
 
@@ -356,15 +357,15 @@ void DrawFlatSpaceCutShadedFaces(
         std::cout << " 6";
         if (v1.getZ() > 0)
         {
-          face1.push_back(AddVertex(v1,vertices1));
+          face1.push_back(AddVertex(v1,vertices));
         }
         else
         {
-          face2.push_back(AddVertex(v1,vertices2));
+          face2.push_back(AddVertex(v1,vertices));
         }
 
-        face1.push_back(AddVertex(found,vertices1));
-        face2.push_back(AddVertex(found,vertices2));
+        face1.push_back(AddVertex(found,vertices));
+        face2.push_back(AddVertex(found,vertices));
       }
     }
 
@@ -386,9 +387,7 @@ void DrawFlatSpaceCutShadedFaces(
   std::cout << "-------" << std::endl;
   std::cout << faces << std::endl;
   std::cout << "#######" << std::endl;
-  std::cout << vertices1 << std::endl;
-  std::cout << "-------" << std::endl;
-  std::cout << vertices2 << std::endl;
+  std::cout << vertices << std::endl;
   std::cout << "-------" << std::endl;
   std::cout << faces1 << std::endl;
   std::cout << "-------" << std::endl;
@@ -397,7 +396,7 @@ void DrawFlatSpaceCutShadedFaces(
 
   Object3DBuilder object1;
   object1.SetFaces(faces1);
-  object1.SetVertices(vertices1);
+  object1.SetVertices(vertices);
   object1.CreateNormalVectors();
 
   std::vector<int> colorNumbersInFaces1;
@@ -410,7 +409,7 @@ void DrawFlatSpaceCutShadedFaces(
 
   Object3DBuilder object2;
   object2.SetFaces(faces2);
-  object2.SetVertices(vertices2);
+  object2.SetVertices(vertices);
   object2.CreateNormalVectors();
 
   std::vector<int> colorNumbersInFaces2;
@@ -421,15 +420,9 @@ void DrawFlatSpaceCutShadedFaces(
     colorNumbersInFaces2,
     colorNumbersInVertices2);
   
-  auto vertices2d = calcVerticesPerspectiveFunction(vertices2);
-  const auto visibleFaces = GetVisibleFaceNumbers(vertices2d, faces2);
+  auto vertices2d = calcVerticesPerspectiveFunction(object2.GetVertices());
+  const auto visibleFaces = GetVisibleFaceNumbers(vertices2d, object2.GetFaces());
 
-  std::cout << "-------" << std::endl;
-  std::cout << faces2 << std::endl;
-  std::cout << "-------" << std::endl;
-  std::cout << vertices2d << std::endl;
-
-  
   std::cout << "&&&&&&&" << std::endl;
   for (const auto& faceNr : visibleFaces)
   {
@@ -441,7 +434,7 @@ void DrawFlatSpaceCutShadedFaces(
     vertex.tex_coord.y = 0;
     vertex.color = colors[colorNumbersInFaces2[faceNr]];
 
-    const auto& face = faces2[faceNr];
+    const auto& face = object2.GetFaces()[faceNr];
     const size_t size = face.size();
 
     std::cout << face << std::endl;
@@ -458,12 +451,13 @@ void DrawFlatSpaceCutShadedFaces(
   }
 
   // -----------------
-  for (const auto& faceNr : visibleFaces)
+  //for (const auto& faceNr : visibleFaces)
+  for (int faceNr = 0; faceNr < object2.GetFacesCount(); faceNr++)
   {
-    const auto& face = faces2[faceNr];
-    const auto v = face.GetCenter(vertices2);
+    const auto& face = object2.GetFaces()[faceNr];
+    const auto v = face.GetCenter(object2.GetVertices());
     const auto vBegin = calcVertexPerspectiveFunction(v);
-    const auto vEnd = calcVertexPerspectiveFunction(v + object2.GetNormalVectorsInVertices()[faceNr].getEnd());
+    const auto vEnd = calcVertexPerspectiveFunction(v + object2.GetNormalVectorsInFaces()[faceNr].getEnd());
     
     drawLine(
       vBegin.getX() + CenterX, vBegin.getY() + CenterY,

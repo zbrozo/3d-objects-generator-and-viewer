@@ -83,6 +83,7 @@ bool Face::IsVisible(const Vertices& vertices) const
 
   // cross product w Z (jest większy niż short bo liczony po perspektywie)
   const int32_t result = v1.getX() * v2.getY() - v1.getY() * v2.getX();
+  std::cout << result << std::endl;
   return (result <= 0);
 }
 

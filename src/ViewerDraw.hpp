@@ -88,6 +88,7 @@ void DrawFlatSpaceCutShadedFaces(
   SDL_Color* colors,
   const Vertices& vertices3d,
   const Faces& faces,
+  const Vectors& normalVectorsInFaces,    
   CalculateLightFunction calcLightFunction,
   CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
   CalculateVerticesPerspectiveFunction calcPerspectiveFunction,

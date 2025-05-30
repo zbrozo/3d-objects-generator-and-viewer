@@ -372,6 +372,7 @@ int main(int argc, char* argv[])
         colors,
         vertices,
         object->GetFaces(),
+        normalVectorsInFaces,
         calculateLight,
         calculateVertexPerspectiveFunction,
         calculateVerticesPerspectiveFunction,
