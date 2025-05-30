@@ -252,7 +252,9 @@ void DrawFlatSpaceCutShadedFaces(
   const Vertices& vertices3d,
   const Faces& faces,
   CalculateLightFunction calcLightFunction,
+  CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
   CalculateVerticesPerspectiveFunction calcVerticesPerspectiveFunction,
+  DrawLineFunction drawLine,
   RenderFunction render
   )
 {
@@ -454,6 +456,22 @@ void DrawFlatSpaceCutShadedFaces(
 
     render(size, geometryVertices, nullptr);
   }
+
+  // -----------------
+  for (const auto& faceNr : visibleFaces)
+  {
+    const auto& face = faces2[faceNr];
+    const auto v = face.GetCenter(vertices2);
+    const auto vBegin = calcVertexPerspectiveFunction(v);
+    const auto vEnd = calcVertexPerspectiveFunction(v + object2.GetNormalVectorsInVertices()[faceNr].getEnd());
+    
+    drawLine(
+      vBegin.getX() + CenterX, vBegin.getY() + CenterY,
+      vEnd.getX() + CenterX, vEnd.getY() + CenterY
+      );
+
+  }
+  
   std::cout << std::endl;
 
 }

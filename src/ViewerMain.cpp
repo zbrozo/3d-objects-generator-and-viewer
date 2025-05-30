@@ -373,7 +373,9 @@ int main(int argc, char* argv[])
         vertices,
         object->GetFaces(),
         calculateLight,
+        calculateVertexPerspectiveFunction,
         calculateVerticesPerspectiveFunction,
+        drawLineFunction,
         renderFunction);
     }
     else

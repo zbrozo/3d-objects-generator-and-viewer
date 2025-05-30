@@ -89,6 +89,8 @@ void DrawFlatSpaceCutShadedFaces(
   const Vertices& vertices3d,
   const Faces& faces,
   CalculateLightFunction calcLightFunction,
+  CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
   CalculateVerticesPerspectiveFunction calcPerspectiveFunction,
+  DrawLineFunction drawLine,
   RenderFunction render
   );
