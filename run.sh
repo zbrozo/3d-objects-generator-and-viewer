@@ -39,11 +39,11 @@ if [[ "$1" == "" ]]; then
     ../generator --o composite6 --t composite --c0 csign --p0 4 80 60 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 80 60 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 80 60 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 80 60 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
     ../generator --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
 
-    ../generator --o square --t composite --c0 square --p0 50
+#    ../generator --o square --t composite --c0 square --p0 50
     
     cd ..
     echo "Start viewer"
-    ./viewer objects_small square cube1 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
+    ./viewer objects_small cube1 cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
 else
     cd ./objects
 

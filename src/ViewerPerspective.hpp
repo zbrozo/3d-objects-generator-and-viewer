@@ -13,4 +13,4 @@ Vertex CalculatePerspective(const T& v, int zoom = 400)
   return Vertex(x, y, v.getZ());
 }
 
-Vertices CalculateVerticesPerspective(const Vertices& vertices, int zoom);
+Vertices CalculateVerticesPerspective(const Vertices& vertices, const int* zoom);

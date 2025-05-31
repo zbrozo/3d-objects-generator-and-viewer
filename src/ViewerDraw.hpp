@@ -84,11 +84,14 @@ void DrawLines(
   );
 
 void DrawFlatSpaceCutShadedFaces(
+  int spacecutValueZ,
   int CenterX, int CenterY,
   SDL_Color* colors,
+  SDL_Color* colors2,
   const Vertices& vertices3d,
   const Faces& faces,
   const Vectors& normalVectorsInFaces,    
+  const Vectors& normalVectorsInVertices,
   CalculateLightFunction calcLightFunction,
   CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
   CalculateVerticesPerspectiveFunction calcPerspectiveFunction,

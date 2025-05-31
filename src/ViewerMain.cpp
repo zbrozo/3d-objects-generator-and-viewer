@@ -213,7 +213,8 @@ int main(int argc, char* argv[])
 
   int light = maxLightValue;
   int zoom = 400;
-
+  int spacecut = 0;
+  
   bool help = false;
 
   unsigned short lineMode = DrawLineMode::DrawLineMode_None;
@@ -228,8 +229,10 @@ int main(int argc, char* argv[])
   };
 
   SDL_Color colors[maxColorNumber];
+  SDL_Color colors2[maxColorNumber];
 
   PrepareColors("default.pal", colors);
+  PrepareColors("spacecut.pal", colors2);
 
   std::weak_ptr<Object3D> selectedObject;
 
@@ -243,8 +246,8 @@ int main(int argc, char* argv[])
   SelectObject(0);
 
   std::map<int, std::function<void()>> keyActions{
-    {SDL_SCANCODE_COMMA, [&](){ zoom -= 10; }},
-    {SDL_SCANCODE_PERIOD, [&](){ zoom += 10; }},
+    {SDL_SCANCODE_COMMA, [&](){ zoom -= 2; spacecut += 1; }},
+    {SDL_SCANCODE_PERIOD, [&](){ zoom += 2; spacecut -= 1; }},
     {SDL_SCANCODE_ESCAPE, [&](){ close = 1; }},
     {SDL_SCANCODE_H, [&](){ help = !help; }},
     {SDL_SCANCODE_1, [&](){ SwitchDrawLineMode(DrawLineMode_LineVectors); }},
@@ -301,13 +304,13 @@ int main(int argc, char* argv[])
   auto renderFunction = std::bind(&RenderFace, rend, _1, _2, _3);
   auto calculateVertexPerspectiveFunction = std::bind(CalculatePerspective<Vertex>, _1, zoom);
   auto calculateVectorPerspectiveFunction = std::bind(CalculatePerspective<Vector>, _1, zoom);
-  auto calculateVerticesPerspectiveFunction = std::bind(CalculateVerticesPerspective, _1, zoom);
+  auto calculateVerticesPerspectiveFunction = std::bind(CalculateVerticesPerspective, _1, &zoom);
   auto drawLineFunction = std::bind(&DrawLine, rend, _1, _2, _3, _4);
 
   VectorRotation rotation;
   Vector lightVector(Vertex{0,0,light});
   auto calculateLight = std::bind(CalculateLight,
-    rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, 0), 0), 0),
+    rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
     _1,_2,_3,_4);
 
   // animation loop
@@ -368,11 +371,14 @@ int main(int argc, char* argv[])
     if (filledMode & DrawFilledMode_FlatSpaceCutShading)
     {
       DrawFlatSpaceCutShadedFaces(
+        spacecut,
         CenterX, CenterY,
         colors,
+        colors2,
         vertices,
         object->GetFaces(),
         normalVectorsInFaces,
+        normalVectorsInVertices,
         calculateLight,
         calculateVertexPerspectiveFunction,
         calculateVerticesPerspectiveFunction,
@@ -384,14 +390,13 @@ int main(int argc, char* argv[])
       std::vector<int> colorNumbersInFaces;
       std::vector<int> colorNumbersInVertices;
 
-      CalculateLight(
-        rotation.rotateZ(rotation.rotateY(rotation.rotateX(lightVector, -70), -70), 0),
+      calculateLight(
         normalVectorsInFaces,
         normalVectorsInVertices,
         colorNumbersInFaces,
         colorNumbersInVertices);
 
-      Vertices vertices2d = CalculateVerticesPerspective(vertices, zoom);
+      Vertices vertices2d = CalculateVerticesPerspective(vertices, &zoom);
 
       if (filledMode & DrawFilledMode_FlatShading)
       {
