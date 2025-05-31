@@ -12,7 +12,7 @@ Vector Face::CalculateNormalVector(const Vertices& vertices) const
 {
   if (this->size() < MIN_FACES)
   {
-    throw std::out_of_range("a Vertex numbers in a face error");
+    throw std::out_of_range("Vertex numbers in a face error");
   }
 
   const auto n1 = this->at(0);
@@ -34,28 +34,28 @@ Vector Face::CalculateNormalVector(const Vertices& vertices) const
 
 Vertex Face::GetCenter(const Vertices& vertices) const
 {
-  if (this->size() < MIN_FACES)
+  if (size() < MIN_FACES)
   {
-    throw std::out_of_range("b Vertex numbers in a face error");
+    throw std::out_of_range("Vertex numbers in a face error");
   }
 
-  const unsigned int size = this->size();
+  const size_t s = size();
 
   int x = 0;
   int y = 0;
   int z = 0;
 
-  for (unsigned int i = 0; i < size; ++i)
+  for (unsigned int i = 0; i < s; ++i)
   {
-    const auto nr = this->at(i);
+    const auto nr = at(i);
     x += vertices[nr].getX();
     y += vertices[nr].getY();
     z += vertices[nr].getZ();
   }
 
-  x /= static_cast<int>(size);
-  y /= static_cast<int>(size);
-  z /= static_cast<int>(size);
+  x /= static_cast<int>(s);
+  y /= static_cast<int>(s);
+  z /= static_cast<int>(s);
 
   return Vertex(x, y, z);
 }
@@ -83,7 +83,6 @@ bool Face::IsVisible(const Vertices& vertices) const
 
   // cross product w Z (jest większy niż short bo liczony po perspektywie)
   const int32_t result = v1.getX() * v2.getY() - v1.getY() * v2.getX();
-  //std::cout << result << std::endl;
   return (result <= 0);
 }
 

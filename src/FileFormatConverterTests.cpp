@@ -7,9 +7,9 @@
 #include <boost/test/unit_test.hpp>
 #include <cstdint>
 
-BOOST_AUTO_TEST_SUITE(ZbrFormatConverter_Suite)
+BOOST_AUTO_TEST_SUITE(FileFormatConverter_Suite)
 
-BOOST_AUTO_TEST_CASE(zbr_format_convert_to_buffer_test)
+BOOST_AUTO_TEST_CASE(fikle_format_convert_to_buffer_test)
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
   
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(zbr_format_convert_to_buffer_test)
   builder.SetFaces(faces);
   builder.SetNormalVectorsInFaces(normals);
   
-  ZbrFormatConverter converter;
+  FileFormatConverter converter;
   auto buffer = converter.ConvertFromObject(builder);
   
   BOOST_CHECK_EQUAL(16, buffer.GetSize());
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE(zbr_format_convert_from_buffer_test)
   
   BinaryBuffer buffer(data);
 
-  ZbrFormatConverter converter;
+  FileFormatConverter converter;
   auto object = converter.ConvertToObject(buffer);
 
   auto vertices = object.GetVertices();

@@ -241,7 +241,7 @@ int main(int argc, char* argv[])
 
     const auto object3d = factory->Create(name, paramsMap);
 
-    ZbrFormatConverter converter;
+    FileFormatConverter converter;
     auto buffer = converter.ConvertFromObject(*object3d);
 
     const std::string fileName = outputName.empty() ? object3d->GetName() : outputName;

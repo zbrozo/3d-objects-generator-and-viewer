@@ -5,7 +5,7 @@
 
 class Object3D;
 
-class ZbrFormatConverter
+class FileFormatConverter
 {
 public:
   BinaryBuffer<uint16_t> ConvertFromObject(const Object3D& object);

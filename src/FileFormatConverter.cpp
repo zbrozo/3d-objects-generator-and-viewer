@@ -9,8 +9,7 @@
 #include <algorithm>
 #include <type_traits>
 
-
-BinaryBuffer<uint16_t> ZbrFormatConverter::ConvertFromObject(const Object3D& object)
+BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& object)
 {
   auto swapBytes = swapByteOrder<int, uint16_t>;
 
@@ -60,7 +59,7 @@ BinaryBuffer<uint16_t> ZbrFormatConverter::ConvertFromObject(const Object3D& obj
   return buffer;
 }
 
-Object3D ZbrFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buffer)
+Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buffer)
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
 

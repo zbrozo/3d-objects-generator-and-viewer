@@ -273,8 +273,6 @@ void DrawFlatSpaceCutShadedFaces(
     const auto& face = faces[faceNr];
     const size_t size = face.size();
 
-    std::cout << face << std::endl;
-
     for (size_t i = 0; i < size; ++i)
     {
       auto vertexNr = face[i];
@@ -292,16 +290,13 @@ void DrawFlatSpaceCutShadedFaces(
 void DrawFlatSpaceCutShadedFaces(
   int spacecutValueZ,
   int CenterX, int CenterY,
-  SDL_Color* colors,
+  SDL_Color* colors1,
   SDL_Color* colors2,
   const Vertices& vertices3d,
+  const Vertices& vertices2d,
   const Faces& faces,
-  const Vectors& normalVectorsInFaces,
-  const Vectors& normalVectorsInVertices,
-  CalculateLightFunction calcLightFunction,
-  CalculateVertexPerspectiveFunction calcVertexPerspectiveFunction,
+  const std::vector<int>& colorNumbersInFaces,
   CalculateVerticesPerspectiveFunction calcVerticesPerspectiveFunction,
-  DrawLineFunction drawLine,
   RenderFunction render
   )
 {
@@ -335,21 +330,11 @@ void DrawFlatSpaceCutShadedFaces(
     return static_cast<int>(vertices.size() - 1);
   };
   
-  auto vertices2d = calcVerticesPerspectiveFunction(vertices3d);
   const auto visibleFaces = GetVisibleFaceNumbers(vertices2d, faces);
-
-  std::vector<int> colorNumbersInFaces;
-  std::vector<int> colorNumbersInVertices;  
-  calcLightFunction(
-    normalVectorsInFaces,
-    normalVectorsInVertices,
-    colorNumbersInFaces,
-    colorNumbersInVertices);
 
   std::vector<std::pair<size_t, size_t>> facesPairs1;
   std::vector<std::pair<size_t, size_t>> facesPairs2;
 
-  //for (size_t faceNr = 0; faceNr < faces.size(); ++faceNr)
   for (const auto faceNr : visibleFaces) 
   {
     Face face1;
@@ -378,19 +363,19 @@ void DrawFlatSpaceCutShadedFaces(
       {
         if (std::all_of(face.cbegin(), face.cend(), [&](int x) { return vertices3d[x].getZ() >= spacecutValueZ; }))
         {
-          std::cout << " 1";
+          //std::cout << " 1";
           face1.push_back(AddVertex(v1,vertices));
           continue;
         }
 
         if (std::all_of(face.cbegin(), face.cend(), [&](int x) { return vertices3d[x].getZ() <= spacecutValueZ; }))
         {
-          std::cout << " 2";
+          //std::cout << " 2";
           face2.push_back(AddVertex(v1,vertices));
           continue;
         }
 
-        std::cout << " 3";
+        //std::cout << " 3";
         face1.push_back(AddVertex(v1,vertices));
         face2.push_back(AddVertex(v1,vertices));
         continue;
@@ -399,7 +384,7 @@ void DrawFlatSpaceCutShadedFaces(
       if (v1.getZ() > spacecutValueZ && v2.getZ() >= spacecutValueZ)
       {
         // brak przeciecia
-        std::cout << " 4";
+        //std::cout << " 4";
         face1.push_back(AddVertex(v1,vertices));
         continue;
       }
@@ -407,7 +392,7 @@ void DrawFlatSpaceCutShadedFaces(
       if (v1.getZ() < spacecutValueZ && v2.getZ() <= spacecutValueZ)
       {
         // brak przeciecia
-        std::cout << " 5";
+        //std::cout << " 5";
         face2.push_back(AddVertex(v1, vertices));
         continue;
       }
@@ -415,7 +400,7 @@ void DrawFlatSpaceCutShadedFaces(
       Vertex found;
       if (FindIntersectionPoint(v1, v2, found, spacecutValueZ))
       {
-        std::cout << " 6";
+        //std::cout << " 6";
         if (v1.getZ() > spacecutValueZ)
         {
           face1.push_back(AddVertex(v1,vertices));
@@ -430,8 +415,8 @@ void DrawFlatSpaceCutShadedFaces(
       }
     }
 
-    std::cout << std::endl;
-    
+    //std::cout << std::endl;
+
     if (face1.size())
     {
       faces1.push_back(face1);
@@ -458,37 +443,24 @@ void DrawFlatSpaceCutShadedFaces(
   // std::cout << "-------" << std::endl;
   // std::cout << "&&&&&&&" << std::endl;
 
-  vertices2d = calcVerticesPerspectiveFunction(vertices);
+  auto newObjectVertices2d = calcVerticesPerspectiveFunction(vertices);
 
   DrawFlatSpaceCutShadedFaces(
     CenterX, CenterY,
-    vertices2d,
+    newObjectVertices2d,
     faces1,
     facesPairs1,
-    colors,
+    colors1,
     colorNumbersInFaces,
     render);
  
   DrawFlatSpaceCutShadedFaces(
     CenterX, CenterY,
-    vertices2d,
+    newObjectVertices2d,
     faces2,
     facesPairs2,
     colors2,
     colorNumbersInFaces,
     render);
 
-  // // draw normals in faces
-  // for (size_t faceNr = 0; faceNr < faces.size(); faceNr++)
-  // {
-  //   const auto& face = faces[faceNr];
-  //   const auto v = face.GetCenter(vertices);
-  //   const auto vBegin = calcVertexPerspectiveFunction(v);
-  //   const auto vEnd = calcVertexPerspectiveFunction(v + normalVectorsInFaces[faceNr].getEnd());
-    
-  //   drawLine(
-  //     vBegin.getX() + CenterX, vBegin.getY() + CenterY,
-  //     vEnd.getX() + CenterX, vEnd.getY() + CenterY
-  //     );
-  // }
 }

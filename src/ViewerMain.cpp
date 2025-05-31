@@ -21,6 +21,11 @@
 #include "ViewerRotate.hpp"
 #include "ViewerDraw.hpp"
 
+#include <boost/program_options.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/expressions.hpp>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_image.h>
@@ -59,9 +64,14 @@ const char *helpDetailed =
   "4 - flat shaded\n"
   "5 - gouraud shaded\n"
   "6 - textured\n"
-  "7 - flast shaded space cut\n"
-  "space - rotate\n"
-  "cursors - modify rotation\n"
+  "7 - flat shaded space cut\n"
+  "space - rotate start and stop\n"
+  "r - reset rotation\n"
+  "cursors - modify rotation x and y\n"
+  "q,w - modify rotation x\n"
+  "a,s - modify rotation y\n"
+  "z,x - modify rotation z\n"
+  "m,n - light move in z\n"
   ", - zoom in\n"
   ". - zoom out\n"
   ;
@@ -120,7 +130,7 @@ void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>&
     FileLoader loader(path + "/" + name);
     auto buffer = loader.Load();
 
-    ZbrFormatConverter converter;
+    FileFormatConverter converter;
     auto object = converter.ConvertToObject(buffer);
 
     objects.push_back(std::make_unique<Object3D>(object));
@@ -148,6 +158,16 @@ SDL_Texture*  getMessage(
 }
 
 
+void SetLogging(bool verbose)
+{
+  boost::log::trivial::severity_level logLevel = (verbose ?
+    boost::log::trivial::debug : boost::log::trivial::error);
+
+  auto logFilter = boost::log::filter(boost::log::trivial::severity >= logLevel);
+  boost::log::core::get()->set_filter(logFilter);
+}
+
+
 int main(int argc, char* argv[])
 {
   if (argc == 1)
@@ -158,6 +178,8 @@ int main(int argc, char* argv[])
     return 0;
   }
 
+  SetLogging(false);
+  
   std::vector<std::shared_ptr<Object3D>> objects;
   LoadObjects(argc, argv, objects);
 
@@ -257,6 +279,12 @@ int main(int argc, char* argv[])
     {SDL_SCANCODE_5, [&](){ SwitchDrawFilledMode(DrawFilledMode_GouraudShading); }},
     {SDL_SCANCODE_6, [&](){ SwitchDrawFilledMode(DrawFilledMode_TextureMapping); }},
     {SDL_SCANCODE_7, [&](){ SwitchDrawFilledMode(DrawFilledMode_FlatSpaceCutShading); }},
+    {SDL_SCANCODE_Q, [&](){ degx += 1; }},
+    {SDL_SCANCODE_W, [&](){ degx -= 1; }},
+    {SDL_SCANCODE_A, [&](){ degy += 1; }},
+    {SDL_SCANCODE_S, [&](){ degy -= 1; }},
+    {SDL_SCANCODE_Z, [&](){ degz += 1; }},
+    {SDL_SCANCODE_X, [&](){ degz -= 1; }},
     {SDL_SCANCODE_UP, [&](){ degx += 1; }},
     {SDL_SCANCODE_DOWN, [&](){ degx -= 1; }},
     {SDL_SCANCODE_LEFT, [&](){ degy += 1; }},
@@ -287,6 +315,15 @@ int main(int argc, char* argv[])
         speedz = 0;
       }
     }},
+    {SDL_SCANCODE_R, [&]() {
+      degx = 0;
+      degy = 0;
+      degz = 0;
+      speedx = 0;
+      speedy = 0;
+      speedz = 0;
+      }
+    },
     {SDL_SCANCODE_F1, [&](){ SelectObject(0); }},
     {SDL_SCANCODE_F2, [&](){ SelectObject(1); }},
     {SDL_SCANCODE_F3, [&](){ SelectObject(2); }},
@@ -368,6 +405,17 @@ int main(int argc, char* argv[])
       normalVectorsInFaces,
       normalVectorsInVertices);
 
+    std::vector<int> colorNumbersInFaces;
+    std::vector<int> colorNumbersInVertices;
+    
+    calculateLight(
+      normalVectorsInFaces,
+      normalVectorsInVertices,
+      colorNumbersInFaces,
+      colorNumbersInVertices);
+
+    Vertices vertices2d = CalculateVerticesPerspective(vertices, &zoom);
+    
     if (filledMode & DrawFilledMode_FlatSpaceCutShading)
     {
       DrawFlatSpaceCutShadedFaces(
@@ -376,95 +424,78 @@ int main(int argc, char* argv[])
         colors,
         colors2,
         vertices,
+        vertices2d,
         object->GetFaces(),
-        normalVectorsInFaces,
-        normalVectorsInVertices,
-        calculateLight,
-        calculateVertexPerspectiveFunction,
+        colorNumbersInFaces,
         calculateVerticesPerspectiveFunction,
-        drawLineFunction,
         renderFunction);
     }
-    else
+
+    if (filledMode & DrawFilledMode_FlatShading)
     {
-      std::vector<int> colorNumbersInFaces;
-      std::vector<int> colorNumbersInVertices;
-
-      calculateLight(
-        normalVectorsInFaces,
-        normalVectorsInVertices,
+      DrawFlatShadedFaces(
+        CenterX, CenterY,
+        colors,
+        vertices2d,
+        object->GetFaces(),
         colorNumbersInFaces,
-        colorNumbersInVertices);
-
-      Vertices vertices2d = CalculateVerticesPerspective(vertices, &zoom);
-
-      if (filledMode & DrawFilledMode_FlatShading)
-      {
-        DrawFlatShadedFaces(
-          CenterX, CenterY,
-          colors,
-          vertices2d,
-          object->GetFaces(),
-          colorNumbersInFaces,
-          renderFunction);
-      }
-
-      if (filledMode & DrawFilledMode_GouraudShading)
-      {
-        DrawGouraudShadedFaces(
-          CenterX, CenterY,
-          colors,
-          vertices2d,
-          object->GetFaces(),
-          colorNumbersInVertices,
-          renderFunction);
-      }
-
-      if (filledMode & DrawFilledMode_TextureMapping)
-      {
-        DrawTextureMapping(
-          CenterX, CenterY,
-          vertices2d,
-          object->GetFaces(),
-          texture,
-          renderFunction);
-      }
-
-      if (lineMode & DrawLineMode_NormalVectorsInFaces)
-      {
-        DrawNormalVectorsInFaces(
-          CenterX, CenterY,
-          vertices,
-          vertices2d,
-          object->GetFaces(),
-          normalVectorsInFaces,
-          calculateVertexPerspectiveFunction,
-          drawLineFunction);
-      }
-
-      if (lineMode & DrawLineMode_NormalVectorsInVertices)
-      {
-        DrawNormalVectorsInVertices(
-          CenterX, CenterY,
-          vertices,
-          vertices2d,
-          object->GetFaces(),
-          normalVectorsInVertices,
-          calculateVectorPerspectiveFunction,
-          drawLineFunction);
-      }
-
-      if (lineMode & DrawLineMode_LineVectors)
-      {
-        DrawLines(
-          CenterX, CenterY,
-          vertices2d,
-          object->GetFaces(),
-          drawLineFunction);
-      }
-
+        renderFunction);
     }
 
+    if (filledMode & DrawFilledMode_GouraudShading)
+    {
+      DrawGouraudShadedFaces(
+        CenterX, CenterY,
+        colors,
+        vertices2d,
+        object->GetFaces(),
+        colorNumbersInVertices,
+        renderFunction);
+    }
+
+    if (filledMode & DrawFilledMode_TextureMapping)
+    {
+      DrawTextureMapping(
+        CenterX, CenterY,
+        vertices2d,
+        object->GetFaces(),
+        texture,
+        renderFunction);
+    }
+
+    if (lineMode & DrawLineMode_NormalVectorsInFaces)
+    {
+      DrawNormalVectorsInFaces(
+        CenterX, CenterY,
+        vertices,
+        vertices2d,
+        object->GetFaces(),
+        normalVectorsInFaces,
+        calculateVertexPerspectiveFunction,
+          drawLineFunction);
+    }
+
+    if (lineMode & DrawLineMode_NormalVectorsInVertices)
+    {
+      DrawNormalVectorsInVertices(
+        CenterX, CenterY,
+        vertices,
+        vertices2d,
+        object->GetFaces(),
+        normalVectorsInVertices,
+        calculateVectorPerspectiveFunction,
+        drawLineFunction);
+    }
+
+    if (lineMode & DrawLineMode_LineVectors)
+    {
+      DrawLines(
+        CenterX, CenterY,
+        vertices2d,
+        object->GetFaces(),
+        drawLineFunction);
+    }
+    
     degx += speedx;
     degy += speedy;
     degz += speedz;

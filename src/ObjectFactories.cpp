@@ -208,7 +208,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
             FileLoader loader(name);
             auto buffer = loader.Load();
 
-            ZbrFormatConverter converter;
+            FileFormatConverter converter;
             auto object = std::make_unique<Object3D>(converter.ConvertToObject(buffer));
 
             BOOST_LOG_TRIVIAL(trace) << "Loaded component: " << name;
