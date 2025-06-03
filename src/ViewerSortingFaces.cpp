@@ -7,7 +7,7 @@
 
 namespace {
 
-FaceNumbers PrepareVisibleFaceNumbers(const Vertices& vertices2d, const Faces &faces)
+FaceNumbers PrepareVisibleFaceNumbers(const Vertices& vertices, const Faces &faces)
 {
   FaceNumbers faceNumbers;
 
@@ -15,7 +15,7 @@ FaceNumbers PrepareVisibleFaceNumbers(const Vertices& vertices2d, const Faces &f
 
   for (const auto& face : faces)
   {
-    if (!face.IsVisible(vertices2d))
+    if (!face.IsVisible(vertices))
     {
       ++faceNr;
       continue;
@@ -29,7 +29,7 @@ FaceNumbers PrepareVisibleFaceNumbers(const Vertices& vertices2d, const Faces &f
   return faceNumbers;
 }
 
-FaceNumbers PrepareInvisibleFaceNumbers(const Vertices& vertices2d, const Faces &faces)
+FaceNumbers PrepareInvisibleFaceNumbers(const Vertices& vertices, const Faces &faces)
 {
   FaceNumbers faceNumbers;
 
@@ -37,7 +37,7 @@ FaceNumbers PrepareInvisibleFaceNumbers(const Vertices& vertices2d, const Faces 
 
   for (const auto& face : faces)
   {
-    if (face.IsVisible(vertices2d))
+    if (face.IsVisible(vertices))
     {
       ++faceNr;
       continue;
@@ -54,31 +54,31 @@ FaceNumbers PrepareInvisibleFaceNumbers(const Vertices& vertices2d, const Faces 
 
 } // namespace
 
-FaceNumbers GetVisibleFaceNumbers(const Vertices& vertices2d, const Faces &faces)
+FaceNumbers GetVisibleFaceNumbers(const Vertices& vertices, const Faces &faces)
 {
-  FaceNumbers faceNumbers = PrepareVisibleFaceNumbers(vertices2d, faces);
-  
+  FaceNumbers faceNumbers = PrepareVisibleFaceNumbers(vertices, faces);
+
   std::sort(faceNumbers.begin(), faceNumbers.end(),
-    [&vertices2d, &faces](int first, int second)
+    [&vertices, &faces](int first, int second)
     {
-      const Vertex v1 = faces[first].GetCenter(vertices2d);
-      const Vertex v2 = faces[second].GetCenter(vertices2d);
-      return v1.getZ() >= v2.getZ();
+      const Vertex v1 = faces[first].GetCenter(vertices);
+      const Vertex v2 = faces[second].GetCenter(vertices);
+      return v1.getZ() > v2.getZ();
     });
-  
+
   return faceNumbers;
 }
 
-FaceNumbers GetInvisibleFaceNumbers(const Vertices& vertices2d, const Faces &faces)
+FaceNumbers GetInvisibleFaceNumbers(const Vertices& vertices, const Faces &faces)
 {
-  FaceNumbers faceNumbers = PrepareInvisibleFaceNumbers(vertices2d, faces);
-  
+  FaceNumbers faceNumbers = PrepareInvisibleFaceNumbers(vertices, faces);
+
   std::sort(faceNumbers.begin(), faceNumbers.end(),
-    [&vertices2d, &faces](int first, int second)
+    [&vertices, &faces](int first, int second)
     {
-      const Vertex v1 = faces[first].GetCenter(vertices2d);
-      const Vertex v2 = faces[second].GetCenter(vertices2d);
-      return v1.getZ() > v2.getZ();
+      const Vertex v1 = faces[first].GetCenter(vertices);
+      const Vertex v2 = faces[second].GetCenter(vertices);
+      return v1.getZ() < v2.getZ();
     });
 
   return faceNumbers;
