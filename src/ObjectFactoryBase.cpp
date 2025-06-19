@@ -21,21 +21,21 @@ auto findParamsVector = [](const ParamsPair& params, ParamsId id) {
 
 template<typename T>
 void appendParams (std::string& result, const T& params) {
-  if constexpr (!std::is_same_v<T, bool>)
+  if constexpr (!std::is_same_v<T, int>)
   {
-    // for (auto value : params)
-    // {
-    //   if constexpr (std::is_same_v<T, ParamsVector>) {
-    //     result += "_" + std::to_string(value);
-    //   }
-    //   else if constexpr (std::is_same_v<T, SinusParamsVector>) {
-    //     result += "_" + std::to_string(value);
-    //   }
-    //   else
-    //     if constexpr (std::is_same_v<T, ComponentNamesVector>) {
-    //       result += "_" + value;
-    //     }
-    // }
+    for (auto value : params)
+    {
+      if constexpr (std::is_same_v<T, ParamsVector>) {
+        result += "_" + std::to_string(value);
+      }
+      else if constexpr (std::is_same_v<T, SinusParamsVector>) {
+        result += "_" + std::to_string(value);
+      }
+      else
+        if constexpr (std::is_same_v<T, ComponentNamesVector>) {
+          result += "_" + value;
+        }
+    }
   }
 };
 
