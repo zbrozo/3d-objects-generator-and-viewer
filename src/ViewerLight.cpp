@@ -162,7 +162,19 @@ void CalculateLight(
   auto calcColorNumber = [lightVector](const Vector& v){
     const int range = maxLightValue * maxLightValue;
     const int z = v.getX() * lightVector.getX() + v.getY() * lightVector.getY() + v.getZ() * lightVector.getZ();
-    const int id = ((range + z) * maxColorNumber) / (2 * range);
+    int id = ((range + z) * maxColorNumber) / (2 * range);
+
+
+    // when normal vector is bigger than maxLightValue 
+    if (id >= maxLightValue)
+    {
+      id = maxLightValue - 1;
+    }
+    if (id < 0)
+    {
+      id = 0;
+    }
+
     return id;
   };
   
