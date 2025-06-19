@@ -23,19 +23,19 @@ template<typename T>
 void appendParams (std::string& result, const T& params) {
   if constexpr (!std::is_same_v<T, bool>)
   {
-    for (auto value : params)
-    {
-      if constexpr (std::is_same_v<T, ParamsVector>) {
-        result += "_" + std::to_string(value);
-      }
-      else if constexpr (std::is_same_v<T, SinusParamsVector>) {
-        result += "_" + std::to_string(value);
-      }
-      else
-        if constexpr (std::is_same_v<T, ComponentNamesVector>) {
-          result += "_" + value;
-        }
-    }
+    // for (auto value : params)
+    // {
+    //   if constexpr (std::is_same_v<T, ParamsVector>) {
+    //     result += "_" + std::to_string(value);
+    //   }
+    //   else if constexpr (std::is_same_v<T, SinusParamsVector>) {
+    //     result += "_" + std::to_string(value);
+    //   }
+    //   else
+    //     if constexpr (std::is_same_v<T, ComponentNamesVector>) {
+    //       result += "_" + value;
+    //     }
+    // }
   }
 };
 
@@ -50,14 +50,22 @@ std::unique_ptr<Object3D> ObjectFactoryBase::Create(
   const ParamsMap& params) const
 {
   auto object = FactoryMethod(name, params);
-  Generate(*object);
+
+  int normalLength = 0;
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::NormalLength)); it != params.end())
+  {
+    normalLength = std::get<int>(params.at(ParamsId::NormalLength));
+  }
+  
+  Generate(*object, normalLength);
   return object;
 }
 
 std::string ObjectFactoryBase::CreateFullName(const std::string& name, const ParamsMap &params) const
 {
   std::string result = name;
-
+  
   for (const auto& paramsVector : params)
   {
     std::visit(
@@ -66,14 +74,13 @@ std::string ObjectFactoryBase::CreateFullName(const std::string& name, const Par
       },
       paramsVector.second);
   }
-
   return result;
 }
 
-void ObjectFactoryBase::Generate(Object3D& object) const
+void ObjectFactoryBase::Generate(Object3D& object, int normalLength) const
 {
   auto& generator = dynamic_cast<IGenerator&>(object);
   generator.Generate();
 
-  object.CreateNormalVectors();
+  object.CreateNormalVectors(normalLength);
 }

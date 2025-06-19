@@ -144,7 +144,7 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
   auto preferTrianglesIt = params.find(ParamsId::PreferTriangles);
   if (preferTrianglesIt != params.end())
   {
-    preferTriangles =  std::get<bool>(preferTrianglesIt->second);
+    preferTriangles =  std::get<int>(preferTrianglesIt->second);
   }
 
   return std::make_unique<Thorus>(

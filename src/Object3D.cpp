@@ -44,8 +44,10 @@ auto PrepareFacesAssignedToVertices(
   return result;
 }
 
-auto CalculateNormalVectorToFaces(const Vertices& vertices,
-  const Faces& faces
+auto CalculateNormalVectorToFaces(
+  const Vertices& vertices,
+  const Faces& faces,
+  int normalLength
   )
 {
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
@@ -54,7 +56,7 @@ auto CalculateNormalVectorToFaces(const Vertices& vertices,
 
   for(auto face : faces)
   {
-    const auto vector = face.CalculateNormalVector(vertices);
+    const auto vector = face.CalculateNormalVector(vertices, normalLength);
     normalVectors.push_back(vector);
   }
 
@@ -95,7 +97,7 @@ auto CalculateVectorsInVertices(
   return vectorsInVertices;
 }
 
-auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices)
+auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices, int normalLength)
 {
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
@@ -103,7 +105,7 @@ auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices)
 
   for (auto vector : vectorsInVertices)
   {
-    normalizedVectorsInVertices.push_back(vector.normalize());
+    normalizedVectorsInVertices.push_back(vector.normalize(normalLength));
   }
 
   return normalizedVectorsInVertices;
@@ -111,17 +113,17 @@ auto NormalizeVectorsInVertices(const Vectors& vectorsInVertices)
 
 } // namespace
 
-void Object3D::CreateNormalVectors()
+void Object3D::CreateNormalVectors(int normalLength)
 {
   BOOST_LOG_TRIVIAL(trace) << __FUNCTION__;
 
   FaceNumbersInVertices facesAssignedToVertex = PrepareFacesAssignedToVertices(mVertices, mFaces);
 
-  mNormalVectorsInFaces = CalculateNormalVectorToFaces(mVertices, mFaces);
+  mNormalVectorsInFaces = CalculateNormalVectorToFaces(mVertices, mFaces, normalLength);
 
   Vectors vectorsInVertices = CalculateVectorsInVertices(facesAssignedToVertex, mNormalVectorsInFaces);
 
-  mNormalVectorsInVertices = NormalizeVectorsInVertices(vectorsInVertices);
+  mNormalVectorsInVertices = NormalizeVectorsInVertices(vectorsInVertices, normalLength);
 }
 
 void Object3D::Translate(int x, int y, int z)

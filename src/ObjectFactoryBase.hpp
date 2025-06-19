@@ -48,7 +48,7 @@ protected:
     const std::string& name,
     const ParamsMap& params) const = 0;
 
-  void Generate(Object3D& object) const;
+  void Generate(Object3D& object, int normalLength) const;
 
   std::string CreateFullName(
     const std::string& name,

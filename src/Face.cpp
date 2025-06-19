@@ -8,7 +8,7 @@
 
 #define MIN_FACES 3
 
-Vector Face::CalculateNormalVector(const Vertices& vertices) const
+Vector Face::CalculateNormalVector(const Vertices& vertices, int normalLength) const
 {
   if (this->size() < MIN_FACES)
   {
@@ -29,7 +29,7 @@ Vector Face::CalculateNormalVector(const Vertices& vertices) const
       vertices[n3].getY() - vertices[n2].getY(),
       vertices[n3].getZ() - vertices[n2].getZ()));
 
-  return v1.calculateCrossProduct(v2).normalize();
+  return v1.calculateCrossProduct(v2).normalize(normalLength);
 }
 
 Vertex Face::GetCenter(const Vertices& vertices) const

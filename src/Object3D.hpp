@@ -72,7 +72,7 @@ public:
     return mVertices.size();
   }
 
-  void CreateNormalVectors();
+  void CreateNormalVectors(int normalLength);
 
   void Translate(int x, int y, int z);
 

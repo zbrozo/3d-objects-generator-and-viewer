@@ -37,7 +37,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Face& face);
   
-  Vector CalculateNormalVector(const Vertices& vertices) const;
+  Vector CalculateNormalVector(const Vertices& vertices, int normalLength) const;
   Vertex GetCenter(const Vertices& vertices) const;
   bool IsVisible(const Vertices& vertices) const;
 };

@@ -50,15 +50,16 @@ enum class ParamsId {
   Params3,
   Params4,
   Params5,
-  PreferTriangles
+  PreferTriangles,
+  NormalLength
 };
 
 using ParamsVector = std::vector<int>;
 using SinusParamsVector = std::vector<double>;
 using ComponentNamesVector = std::vector<std::string>;
 
-using ParamsPair = std::pair<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, bool>>;
-using ParamsMap = std::map<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, bool>>;
+using ParamsPair = std::pair<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, int>>;
+using ParamsMap = std::map<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, int>>;
 
 class Object3D;
 using ComponentsVector = std::vector<std::unique_ptr<Object3D>>;

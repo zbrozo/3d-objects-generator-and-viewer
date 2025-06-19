@@ -164,6 +164,7 @@ int main(int argc, char* argv[])
     ("f4", po::value<ParamsVector>()->multitoken(), "")
     ("f5", po::value<ParamsVector>()->multitoken(), "")
     ("3", "prefer triangle faces over rectangles")
+    ("n", po::value<int>(), "normal vector length")
     ;
 
   const po::variables_map& options = ReadGeneratorParams(argc, argv, optionsDesc);
@@ -188,6 +189,12 @@ int main(int argc, char* argv[])
     return 1;
   }
 
+  int normalLength = 0;
+  if (options.count("n"))
+  {
+    normalLength = options["n"].as<int>();
+  }
+  
   std::string outputName;
   if (options.count("o"))
   {
@@ -223,6 +230,7 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "f5", ParamsId::Params5, paramsMap);
 
   paramsMap[ParamsId::PreferTriangles] = preferTriangles ? true : false;
+  paramsMap[ParamsId::NormalLength] = normalLength;
 
   SetLogging(verbose);
 

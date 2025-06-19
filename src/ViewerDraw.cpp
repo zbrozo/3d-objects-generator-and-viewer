@@ -342,7 +342,7 @@ void DrawFlatSpaceCutShadedFaces(
 
     const auto& face = faces[faceNr];
     const size_t faceSize = face.size();
-
+    
     // find intersection in each 3d vector and split its parts to different arrays
     for (size_t i = 0; i < faceSize; ++i)
     {
@@ -358,7 +358,7 @@ void DrawFlatSpaceCutShadedFaces(
       {
         v2 = vertices3d[face[0]];
       }
-
+      
       if (v1.getZ() == spacecutValueZ)
       {
         if (std::all_of(face.cbegin(), face.cend(), [&](int x) { return vertices3d[x].getZ() >= spacecutValueZ; }))
