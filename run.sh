@@ -35,7 +35,7 @@ mkdir -p ./objects
     ../generator --o composite5 --t composite --c0 cube1 --f0 0 0 0 0 0 0 -100 0 0 --c1 cube1 --f1 0 0 0 0 0 0 100 0 0 --c2 cube1 --f2 0 0 0 0 0 0 0 -100 0 --c3 cube1 --f3 0 0 0 0 0 0 0 100 0
     ../generator --n 64 --o tmp --t cube 40
     ../generator --n 80 --o composite6 --t composite --c0 csign --p0 4 100 80 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 100 80 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 100 80 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 100 80 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
-    ../generator --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
+    ../generator --n 60 --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
 
 #    ../generator --o square --t composite --c0 square --p0 50
     

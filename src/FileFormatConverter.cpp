@@ -17,11 +17,11 @@ BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& ob
 
   BOOST_LOG_TRIVIAL(debug) << "vertices = " + std::to_string(object.GetVerticesCount());
   BOOST_LOG_TRIVIAL(debug) << "faces = " + std::to_string(object.GetFacesCount());
-
+  
   buffer.Push(swapBytes(object.GetVerticesCount()));
   buffer.Push(swapBytes(object.GetFacesCount()));
   
-  for (auto it = object.GetVertices().rbegin(); it != object.GetVertices().rend(); ++it)
+  for (auto it = object.GetVertices().begin(); it != object.GetVertices().end(); ++it)
   {
     auto value = *it;
     buffer.Push(swapBytes(value.getX()));
@@ -29,7 +29,7 @@ BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& ob
     buffer.Push(swapBytes(value.getZ()));
   }
 
-  for (auto it = object.GetNormalVectorsInVertices().rbegin(); it != object.GetNormalVectorsInVertices().rend(); ++it)
+  for (auto it = object.GetNormalVectorsInVertices().begin(); it != object.GetNormalVectorsInVertices().end(); ++it)
   {
     auto value = *it;
     buffer.Push(swapBytes(value.getX()));
@@ -39,23 +39,23 @@ BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& ob
 
   for(auto face : object.GetFaces())
   {
-    buffer.Push(static_cast<uint16_t>(0));
-    
+    //buffer.Push(static_cast<uint16_t>(0));
+
     buffer.Push(swapBytes(static_cast<int16_t>(face.size())));
     for (auto number : face)
     {
-      buffer.Push(swapBytes(number * 8)); // multiplied by 8 because of later usage in renderer code
+      buffer.Push(swapBytes(number));
     }
   }
 
-  for (auto it = object.GetNormalVectorsInFaces().rbegin(); it != object.GetNormalVectorsInFaces().rend(); ++it)
+  for (auto it = object.GetNormalVectorsInFaces().begin(); it != object.GetNormalVectorsInFaces().end(); ++it)
   {
     auto value = *it;
     buffer.Push(swapBytes(value.getX()));
     buffer.Push(swapBytes(value.getY()));
-    buffer.Push(swapBytes(value.getZ()));    
+    buffer.Push(swapBytes(value.getZ()));
   }
-  
+
   return buffer;
 }
 
@@ -72,7 +72,7 @@ Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buff
 
   BOOST_LOG_TRIVIAL(debug) << "vertices = " + std::to_string(verticesCount);
   BOOST_LOG_TRIVIAL(debug) << "faces = " + std::to_string(facesCount);
-  
+
   Vertices vertices;
   for (int i = 0; i < verticesCount; i++)
   {
@@ -96,13 +96,13 @@ Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buff
   Faces faces;
   for (int i = 0; i < facesCount; i++)
   {
-    buffer.ReadWord(offset); // not used
+    //buffer.ReadWord(offset); // not used
     const auto faceSize = swapBytes(buffer.ReadWord(offset));
-    
+
     Face face;
     for (int faceNr = 0; faceNr < faceSize; faceNr++)
     {
-      const auto vertexNr = swapBytes(buffer.ReadWord(offset)) / 8;
+      const auto vertexNr = swapBytes(buffer.ReadWord(offset));
       face.push_back(vertexNr);
     }
     faces.push_back(face);
@@ -118,14 +118,14 @@ Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buff
     normalVectorsInFaces.push_back(vector);
   }
 
-  std::reverse(vertices.begin(), vertices.end());
-  std::reverse(normalVectorsInVertices.begin(), normalVectorsInVertices.end());
-  std::reverse(normalVectorsInFaces.begin(), normalVectorsInFaces.end());
+  //std::reverse(vertices.begin(), vertices.end());
+  //std::reverse(normalVectorsInVertices.begin(), normalVectorsInVertices.end());
+  //std::reverse(normalVectorsInFaces.begin(), normalVectorsInFaces.end());
 
   builder.SetVertices(vertices);
   builder.SetFaces(faces);
   builder.SetNormalVectorsInVertices(normalVectorsInVertices);
   builder.SetNormalVectorsInFaces(normalVectorsInFaces);
-  
+
   return builder;
 };
