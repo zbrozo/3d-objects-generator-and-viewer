@@ -9,7 +9,7 @@
 
 BOOST_AUTO_TEST_SUITE(FileFormatConverter_Suite)
 
-BOOST_AUTO_TEST_CASE(fikle_format_convert_to_buffer_test)
+BOOST_AUTO_TEST_CASE(file_format_convert_to_buffer_test)
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
   
@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE(fikle_format_convert_to_buffer_test)
   FileFormatConverter converter;
   auto buffer = converter.ConvertFromObject(builder);
   
-  BOOST_CHECK_EQUAL(16, buffer.GetSize());
+  BOOST_CHECK_EQUAL(15, buffer.GetSize());
   
   BOOST_CHECK_EQUAL(1, swapBytes(buffer.ReadWord(0)));
   BOOST_CHECK_EQUAL(1, swapBytes(buffer.ReadWord(1)));
@@ -39,22 +39,20 @@ BOOST_AUTO_TEST_CASE(fikle_format_convert_to_buffer_test)
   BOOST_CHECK_EQUAL(11, swapBytes(buffer.ReadWord(6)));
   BOOST_CHECK_EQUAL(12, swapBytes(buffer.ReadWord(7)));
 
-  BOOST_CHECK_EQUAL(0, swapBytes(buffer.ReadWord(8)));
-  BOOST_CHECK_EQUAL(3, swapBytes(buffer.ReadWord(9)));
-  
-  BOOST_CHECK_EQUAL(101*8, swapBytes(buffer.ReadWord(10)));
-  BOOST_CHECK_EQUAL(102*8, swapBytes(buffer.ReadWord(11)));
-  BOOST_CHECK_EQUAL(103*8, swapBytes(buffer.ReadWord(12)));
+  BOOST_CHECK_EQUAL(3, swapBytes(buffer.ReadWord(8)));
 
-  BOOST_CHECK_EQUAL(10, swapBytes(buffer.ReadWord(13)));
-  BOOST_CHECK_EQUAL(11, swapBytes(buffer.ReadWord(14)));
-  BOOST_CHECK_EQUAL(12, swapBytes(buffer.ReadWord(15)));
-  
+  BOOST_CHECK_EQUAL(101, swapBytes(buffer.ReadWord(9)));
+  BOOST_CHECK_EQUAL(102, swapBytes(buffer.ReadWord(10)));
+  BOOST_CHECK_EQUAL(103, swapBytes(buffer.ReadWord(11)));
+
+  BOOST_CHECK_EQUAL(10, swapBytes(buffer.ReadWord(12)));
+  BOOST_CHECK_EQUAL(11, swapBytes(buffer.ReadWord(13)));
+  BOOST_CHECK_EQUAL(12, swapBytes(buffer.ReadWord(14)));
 }
 
-BOOST_AUTO_TEST_CASE(zbr_format_convert_from_buffer_test)
+BOOST_AUTO_TEST_CASE(file_format_convert_from_buffer_test)
 {
-  std::vector<uint16_t> data = {1, 1, 2, 3, 4, 10, 11, 12, 0, 3, 101*8, 102*8, 103*8, 10, 11, 12};
+  std::vector<uint16_t> data = {1, 1, 2, 3, 4, 10, 11, 12, 3, 101, 102, 103, 10, 11, 12};
   
   for (auto& value : data)
   {
