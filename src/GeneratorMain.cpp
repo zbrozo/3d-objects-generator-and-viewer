@@ -60,6 +60,7 @@ void InitComponentFactoryMap(ComponentFactories& componentFactories)
   componentFactories[ObjectId::Cylinder] = std::make_unique<Components::CylinderFactory>();
   componentFactories[ObjectId::CylinderWithTriangularFaces] = std::make_unique<Components::CylinderWithTriangularFacesFactory>();
   componentFactories[ObjectId::CSign] = std::make_unique<Components::CSignFactory>();
+  componentFactories[ObjectId::Star] = std::make_unique<Components::StarFactory>();
 }
 
 const auto& GetFactory(const std::string& name, const ObjectFactoryMap& objectFactoryMap)
@@ -194,7 +195,7 @@ int main(int argc, char* argv[])
   {
     normalLength = options["n"].as<int>();
   }
-  
+
   std::string outputName;
   if (options.count("o"))
   {

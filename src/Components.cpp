@@ -413,4 +413,73 @@ void CSign::Generate()
     });
 }
 
+void Star::Generate()
+{
+  auto FindIntersectionPoint = [](Vertex v1begin, Vertex v1end, Vertex v2begin, Vertex v2end) {
+
+    double m1 = 0;
+    double b1 = 0;
+    double m2 = 0;
+    double b2 = 0;
+
+    auto d1y = v1end.getY() - v1begin.getY();
+    auto d1x = v1end.getX() - v1begin.getX();
+    auto d2y = v2end.getY() - v2begin.getY();
+    auto d2x = v2end.getX() - v2begin.getX();
+
+    if (d1x != 0)
+    {
+      m1 = d1y / d1x;
+    }
+
+    b1 = v1begin.getY() - m1 * v1begin.getX();
+
+    if (d2x != 0)
+    {
+      m2 = d2y / d2x;
+    }
+
+    b2 = v2begin.getY() - m2 * v2begin.getX();
+
+    const int x = (b2 -b1) / (m1 - m2);
+    const int y = m1 * x + b1;
+
+    return Vertex(x, y, 0);
+  };
+
+  mVertices = CreateCircleVerticesExt(mCircleAmount, mCircleAmount, mCircleRadius);
+
+  auto v0 = FindIntersectionPoint(mVertices[0], mVertices[2], mVertices[1], mVertices[4]);
+  auto v1 = FindIntersectionPoint(mVertices[0], mVertices[2], mVertices[1], mVertices[3]);
+  auto v2 = FindIntersectionPoint(mVertices[1], mVertices[3], mVertices[2], mVertices[4]);
+  auto v3 = FindIntersectionPoint(mVertices[0], mVertices[3], mVertices[2], mVertices[4]);
+  auto v4 = FindIntersectionPoint(mVertices[0], mVertices[3], mVertices[1], mVertices[4]);
+
+  mVertices.push_back(v0);
+  mVertices.push_back(v1);
+  mVertices.push_back(v2);
+  mVertices.push_back(v3);
+  mVertices.push_back(v4);
+
+  for (size_t i = 0; i < static_cast<size_t>(mCircleAmount); i++)
+  {
+    if (i == 0)
+    {
+      Face face;
+      face.push_back(i);
+      face.push_back(mCircleAmount);
+      face.push_back(2 * mCircleAmount - 1);
+      mFaces.push_back(face);
+    }
+    else
+    {
+      Face face;
+      face.push_back(i);
+      face.push_back(mCircleAmount + i);
+      face.push_back(mCircleAmount + i - 1);
+      mFaces.push_back(face);
+    }
+  }
+}
+
 } // namespace

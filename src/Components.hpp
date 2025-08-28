@@ -367,4 +367,52 @@ public:
   CSign& operator=(CSign &&) = delete;
 };
 
+class Star : public Object3D, public IGenerator
+{
+  int mCircleAmount = 5;
+  int mCircleRadius = 50;
+  int mCircleDegree = 72;
+  int mWidth = 10;
+
+public:
+
+  Star(
+    const std::optional<int>& circleAmount,
+    const std::optional<int>& circleRadius,
+    const std::optional<int>& circleDegree,
+    const std::optional<int>& width
+    ) :
+    Object3D("")
+  {
+    if (circleAmount.has_value())
+    {
+      mCircleAmount = circleAmount.value();
+    }
+
+    if (circleRadius.has_value())
+    {
+      mCircleRadius = circleRadius.value();
+    }
+
+    if (circleDegree.has_value())
+    {
+      mCircleDegree = circleDegree.value();
+    }
+
+    if (width.has_value())
+    {
+      mWidth = width.value();
+    }
+  }
+
+  void Generate() override;
+
+  virtual ~Star() = default;
+
+  Star(const Star&) = delete;
+  Star(Star&&) = delete;
+  Star& operator=(const Star&) = delete;
+  Star& operator=(Star &&) = delete;
+};
+
 } // namespace Components

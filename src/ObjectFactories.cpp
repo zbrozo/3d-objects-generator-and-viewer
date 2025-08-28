@@ -37,6 +37,7 @@ std::map<std::string, ObjectId> ComponentIdMap {
   {"cylinder", ObjectId::Cylinder},
   {"cylindertriangles", ObjectId::CylinderWithTriangularFaces},
   {"csign", ObjectId::CSign},
+  {"star", ObjectId::Star},
 };
 
 auto findParamsVector = [](const ParamsPair& params,  ParamsId id)
@@ -128,7 +129,7 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
   ParamsVector foundParams;
   SinusParamsVector foundSinusParams;
   bool preferTriangles = false;
-  
+
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {

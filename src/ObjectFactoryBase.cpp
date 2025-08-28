@@ -57,7 +57,7 @@ std::unique_ptr<Object3D> ObjectFactoryBase::Create(
   {
     normalLength = std::get<int>(params.at(ParamsId::NormalLength));
   }
-  
+
   Generate(*object, normalLength);
   return object;
 }
@@ -65,7 +65,7 @@ std::unique_ptr<Object3D> ObjectFactoryBase::Create(
 std::string ObjectFactoryBase::CreateFullName(const std::string& name, const ParamsMap &params) const
 {
   std::string result = name;
-  
+
   for (const auto& paramsVector : params)
   {
     std::visit(

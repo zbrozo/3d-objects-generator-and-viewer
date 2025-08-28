@@ -24,6 +24,7 @@ enum class ObjectId {
   Cylinder,
   CylinderWithTriangularFaces,
   CSign,
+  Star,
 };
 
 enum class ParamsId {
