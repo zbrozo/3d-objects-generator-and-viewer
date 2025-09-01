@@ -47,7 +47,7 @@ Vertices CreateCircleVerticesExt(int count, int amount, int radius, int degree =
   Vertex vertex(0, radius, 0);
   VertexRotation rotation;
 
-  const int degStep = 360 / amount;
+  const int degStep = 360U / amount;
 
   Vertices circle;
 
@@ -417,32 +417,32 @@ void Star::Generate()
 {
   auto FindIntersectionPoint = [](Vertex v1begin, Vertex v1end, Vertex v2begin, Vertex v2end) {
 
-    double m1 = 0;
+    double a1 = 0;
     double b1 = 0;
-    double m2 = 0;
+    double a2 = 0;
     double b2 = 0;
 
-    auto d1y = v1end.getY() - v1begin.getY();
-    auto d1x = v1end.getX() - v1begin.getX();
-    auto d2y = v2end.getY() - v2begin.getY();
-    auto d2x = v2end.getX() - v2begin.getX();
+    double d1y = v1end.getY() - v1begin.getY();
+    double d1x = v1end.getX() - v1begin.getX();
+    double d2y = v2end.getY() - v2begin.getY();
+    double d2x = v2end.getX() - v2begin.getX();
 
     if (d1x != 0)
     {
-      m1 = d1y / d1x;
+      a1 = d1y / d1x;
     }
 
-    b1 = v1begin.getY() - m1 * v1begin.getX();
+    b1 = v1begin.getY() - a1 * v1begin.getX();
 
     if (d2x != 0)
     {
-      m2 = d2y / d2x;
+      a2 = d2y / d2x;
     }
 
-    b2 = v2begin.getY() - m2 * v2begin.getX();
+    b2 = v2begin.getY() - a2 * v2begin.getX();
 
-    const int x = (b2 -b1) / (m1 - m2);
-    const int y = m1 * x + b1;
+    const int x = (b2 - b1) / (a1 - a2);
+    const int y = a1 * x + b1;
 
     return Vertex(x, y, 0);
   };
