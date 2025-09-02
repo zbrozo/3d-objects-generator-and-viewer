@@ -371,16 +371,12 @@ class Star : public Object3D, public IGenerator
 {
   int mCircleAmount = 5;
   int mCircleRadius = 50;
-  int mCircleDegree = 72;
-  int mWidth = 10;
 
 public:
 
   Star(
     const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius,
-    const std::optional<int>& circleDegree,
-    const std::optional<int>& width
+    const std::optional<int>& circleRadius
     ) :
     Object3D("")
   {
@@ -392,16 +388,6 @@ public:
     if (circleRadius.has_value())
     {
       mCircleRadius = circleRadius.value();
-    }
-
-    if (circleDegree.has_value())
-    {
-      mCircleDegree = circleDegree.value();
-    }
-
-    if (width.has_value())
-    {
-      mWidth = width.value();
     }
   }
 

@@ -449,17 +449,16 @@ void Star::Generate()
 
   mVertices = CreateCircleVerticesExt(mCircleAmount, mCircleAmount, mCircleRadius);
 
-  auto v0 = FindIntersectionPoint(mVertices[0], mVertices[2], mVertices[1], mVertices[4]);
-  auto v1 = FindIntersectionPoint(mVertices[0], mVertices[2], mVertices[1], mVertices[3]);
-  auto v2 = FindIntersectionPoint(mVertices[1], mVertices[3], mVertices[2], mVertices[4]);
-  auto v3 = FindIntersectionPoint(mVertices[0], mVertices[3], mVertices[2], mVertices[4]);
-  auto v4 = FindIntersectionPoint(mVertices[0], mVertices[3], mVertices[1], mVertices[4]);
+  for (int i = 0; i < mCircleAmount; i++)
+  {
+    auto p1s = (i - 1 < 0) ? (i - 1 + mCircleAmount) : (i - 1);
+    auto p1e = (i + 1 >= mCircleAmount) ? (i + 1 - mCircleAmount) : (i + 1);
+    auto p2s = i;
+    auto p2e = (i + 2 >= mCircleAmount) ? (i + 2 - mCircleAmount) : (i + 2);
 
-  mVertices.push_back(v0);
-  mVertices.push_back(v1);
-  mVertices.push_back(v2);
-  mVertices.push_back(v3);
-  mVertices.push_back(v4);
+    auto v = FindIntersectionPoint(mVertices[p1s], mVertices[p1e], mVertices[p2s], mVertices[p2e]);
+    mVertices.push_back(v);
+  }
 
   for (size_t i = 0; i < static_cast<size_t>(mCircleAmount); i++)
   {

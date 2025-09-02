@@ -129,9 +129,7 @@ std::unique_ptr<Object3D> StarFactory::FactoryMethod(
 {
   std::optional<int> param1 = getParam(params, 0);
   std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  std::optional<int> param4 = getParam(params, 3);
-  return std::make_unique<Components::Star>(param1, param2, param3, param4);
+  return std::make_unique<Components::Star>(param1, param2);
 }
 
 } // namespace Components

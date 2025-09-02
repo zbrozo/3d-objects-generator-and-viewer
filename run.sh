@@ -36,7 +36,7 @@ cd ./objects
 ../generator --n 80 --o composite6 --t composite --c0 csign --p0 4 100 80 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 100 80 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 100 80 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 100 80 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
 ../generator --n 60 --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
 
-../generator --v --n 60 --o scxstar --t composite --c0 star --p0 5 80 72 0 --f0 0 0 0 0 0 0 0 0 20 --c1 star --p1 5 80 72 0 --f1 0 0 0 0 -180 0 0 0 -20
+../generator --v --n 60 --o scxstar --t composite --c0 star --p0 7 80 --f0 0 0 0 0 0 0 0 0 20 --c1 star --p1 7 80 --f1 0 0 0 0 -180 0 0 0 -20
 
 #    ../generator --o square --t composite --c0 square --p0 50
     
