@@ -72,6 +72,8 @@ public:
     return mVertices.size();
   }
 
+  // TODO: move below methods to some another class like builder
+
   void CreateNormalVectors(int normalLength);
 
   void Translate(int x, int y, int z);

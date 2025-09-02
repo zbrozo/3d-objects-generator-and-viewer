@@ -51,6 +51,16 @@ std::unique_ptr<Object3D> RectangleFactory::FactoryMethod(
   return std::make_unique<Components::Rectangle>(sizeX, sizeY);
 }
 
+std::unique_ptr<Object3D> TrapezeFactory::FactoryMethod(
+  const std::string& /*name*/,
+  const ParamsVector& params) const
+{
+  std::optional<int> top = getParam(params, 0);
+  std::optional<int> bottom = getParam(params, 1);
+  std::optional<int> height = getParam(params, 2);
+  return std::make_unique<Components::Trapeze>(top, bottom, height);
+}
+
 std::unique_ptr<Object3D> SquareWithHolePart1Factory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const

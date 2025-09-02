@@ -5,7 +5,12 @@ mkdir -p ./objects
 cd ./objects
 
 ../generator --n 0 --o cube1 --t cube 70
-../generator --n 80 --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 70 30 30 --f 0 0 70 30 30
+
+../generator --n 80 --o insidePart.tmp --t composite --c0 rectangle --p0 50 50 --f0 0 0 0 0 90 0 -50 0 0 --c1 rectangle --p1 50 50 --f1 0 0 0 0 -90 0 50 0 0 --c2 rectangle --p2 50 50 --f2 0 0 0 90 0 0 0 50 0 --c3 rectangle --p3 50 50 --f3 0 0 0 -90 0 0 0 -50 0
+../generator --n 80 --o outsidePart.tmp --t composite --c0 trapeze --p0 100 140 50 --f0 0 0 0 0 0 0 0 50 50 
+../generator --n 80 --o cube2 --t composite --c0 insidePart.tmp --c1 outsidePart.tmp
+
+#../generator --n 80 --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 70 30 30 --f 0 0 70 30 30
 ../generator --n 64 --o cube3 --t cube-ext --c Pyramid --p 70 --f 0 0 70
 ../generator --n 80 --o cube4 --t cube-ext --c Pyramid --p 40 70 --f 0 0 40
 ../generator --o thorus1 --t thorus 4 3 
@@ -42,4 +47,4 @@ cd ./objects
     
 cd ..
 echo "Start viewer"
-./viewer objects scxstar cube4 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
+./viewer objects scxstar cube2 composite6 composite7 thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3

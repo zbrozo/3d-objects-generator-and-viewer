@@ -114,6 +114,25 @@ void Rectangle::Generate()
   mVertices = vertices;
 }
 
+void Trapeze::Generate()
+{
+  Vertices vertices {
+    {1, 1, 0},
+    {-1, 1, 0},
+    {-1, -1, 0},
+    {1, -1, 0},
+  };
+
+
+  vertices[0] = Vertex(vertices[0].getX() * mTop /2, vertices[0].getY() * mHeight / 2, vertices[0].getZ());
+  vertices[1] = Vertex(vertices[1].getX() * mTop /2, vertices[1].getY() * mHeight / 2, vertices[1].getZ());
+  vertices[2] = Vertex(vertices[2].getX() * mBottom /2, vertices[2].getY() * mHeight / 2, vertices[2].getZ());
+  vertices[3] = Vertex(vertices[3].getX() * mBottom /2, vertices[3].getY() * mHeight / 2, vertices[3].getZ());
+
+  mFaces.push_back({0,1,2,3});
+  mVertices = vertices;
+}
+
 void SquareWithHolePart1::Generate()
 {
   Vertices vertices {

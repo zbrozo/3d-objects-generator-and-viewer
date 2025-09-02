@@ -53,6 +53,7 @@ void InitComponentFactoryMap(ComponentFactories& componentFactories)
 {
   componentFactories[ObjectId::Square] = std::make_unique<Components::SquareFactory>();
   componentFactories[ObjectId::Rectangle] = std::make_unique<Components::RectangleFactory>();
+  componentFactories[ObjectId::Trapeze] = std::make_unique<Components::TrapezeFactory>();
   componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
   componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
   componentFactories[ObjectId::Pyramid] = std::make_unique<Components::PyramidFactory>();

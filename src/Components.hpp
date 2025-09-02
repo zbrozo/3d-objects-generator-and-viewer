@@ -65,9 +65,44 @@ public:
   Rectangle(Rectangle &&) = delete;
   Rectangle& operator=(const Rectangle&) = delete;
   Rectangle& operator=(Rectangle &&) = delete;
-
 };
 
+class Trapeze : public Object3D, public IGenerator
+{
+  int mTop = 50;
+  int mBottom = 50;
+  int mHeight = 50;
+
+public:
+
+  Trapeze(std::optional<int> top, std::optional<int> bottom, std::optional<int> height) :
+    Object3D("")
+  {
+    if (top.has_value())
+    {
+      mTop = top.value();
+    }
+
+    if (bottom.has_value())
+    {
+      mBottom = bottom.value();
+    }
+
+    if (height.has_value())
+    {
+      mHeight = height.value();
+    }
+  }
+
+  void Generate() override;
+
+  virtual ~Trapeze() = default;
+
+  Trapeze(Trapeze const &) = delete;
+  Trapeze(Trapeze &&) = delete;
+  Trapeze& operator=(const Trapeze&) = delete;
+  Trapeze& operator=(Trapeze &&) = delete;
+};
 
 class SquareWithHolePart1 : public Object3D, public IGenerator
 {

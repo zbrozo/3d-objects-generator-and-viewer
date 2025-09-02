@@ -30,6 +30,7 @@ namespace
 std::map<std::string, ObjectId> ComponentIdMap {
   {"square", ObjectId::Square},
   {"rectangle", ObjectId::Rectangle},
+  {"trapeze", ObjectId::Trapeze},
   {"squareholepart1", ObjectId::SquareHolePart1},
   {"squareholepart2", ObjectId::SquareHolePart2},
   {"pyramid", ObjectId::Pyramid},
