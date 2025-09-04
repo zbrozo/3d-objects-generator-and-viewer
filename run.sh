@@ -6,11 +6,15 @@ cd ./objects
 
 ../generator --n 0 --o cube1 --t cube 70
 
-../generator --n 80 --o insidePart.tmp --t composite --c0 rectangle --p0 50 50 --f0 0 0 0 0 90 0 -50 0 0 --c1 rectangle --p1 50 50 --f1 0 0 0 0 -90 0 50 0 0 --c2 rectangle --p2 50 50 --f2 0 0 0 90 0 0 0 50 0 --c3 rectangle --p3 50 50 --f3 0 0 0 -90 0 0 0 -50 0
-../generator --n 80 --o outsidePart.tmp --t composite --c0 trapeze --p0 100 140 50 --f0 0 0 0 0 0 0 0 50 50 
-../generator --n 80 --o cube2 --t composite --c0 insidePart.tmp --c1 outsidePart.tmp
+# cube with one hole
+../generator --n 80 --o tmp1 --t composite --c0 rectangle --p0 100 100 --f0 0 0 0 0 90 0 -50 0 0 --c1 rectangle --p1 100 100 --f1 0 0 0 0 -90 0 50 0 0 --c2 rectangle --p2 100 100 --f2 0 0 0 90 0 0 0 50 0 --c3 rectangle --p3 100 100 --f3 0 0 0 -90 0 0 0 -50 0
+../generator --n 80 --o tmp2 --t composite --c0 trapeze --p0 100 200 50 --f0 0 0 0 0 0 180 0 75 50 --c1 trapeze --p1 100 200 50 --f1 0 0 0 0 0 0 0 -75 50 --c2 trapeze --p2 100 200 50 --f2 0 0 0 0 0 90 75 0 50 --c3 trapeze --p3 100 200 50 --f3 0 0 0 0 0 -90 -75 0 50
+../generator --n 80 --o tmp3 --t composite --c0 rectangle --p0 200 100 --f0 0 0 0 0 0 90 0 0 0 
+../generator --n 80 --o tmp4 --t composite --c0 tmp3 --f0 0 0 0 0 90 0 100 0 0 --c1 tmp3 --f1 0 0 0 0 -90 0 -100 0 0
+../generator --n 80 --o cube2 --t composite --c0 tmp1 --c1 tmp2 --c2 tmp2  --f2 0 0 0 0 180 0 0 0 0 --c3 tmp4 --c4 tmp4 --f4 0 0 0 0 0 90 0 0 0
 
 #../generator --n 80 --o cube2 --t cube-ext --c SquareHolePart1 SquareHolePart2 --p 70 30 30 --f 0 0 70 30 30
+
 ../generator --n 64 --o cube3 --t cube-ext --c Pyramid --p 70 --f 0 0 70
 ../generator --n 80 --o cube4 --t cube-ext --c Pyramid --p 40 70 --f 0 0 40
 ../generator --o thorus1 --t thorus 4 3 

@@ -85,7 +85,7 @@ void Square::Generate()
   std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
     [&](const Vertex& vertex)
     {
-      return vertex * mSize;
+      return vertex * mSize / 2;
     });
 
   mFaces.push_back({0,1,2,3});
@@ -105,8 +105,8 @@ void Rectangle::Generate()
     [&](const Vertex& vertex)
     {
       return Vertex(
-        vertex.getX() * mSizeX,
-        vertex.getY() * mSizeY,
+        vertex.getX() * mSizeX / 2,
+        vertex.getY() * mSizeY / 2,
         vertex.getZ());
     });
 
@@ -122,7 +122,6 @@ void Trapeze::Generate()
     {-1, -1, 0},
     {1, -1, 0},
   };
-
 
   vertices[0] = Vertex(vertices[0].getX() * mTop /2, vertices[0].getY() * mHeight / 2, vertices[0].getZ());
   vertices[1] = Vertex(vertices[1].getX() * mTop /2, vertices[1].getY() * mHeight / 2, vertices[1].getZ());
