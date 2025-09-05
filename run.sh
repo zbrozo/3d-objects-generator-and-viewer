@@ -10,14 +10,14 @@ cd ./objects
 
 # cube with hole in each face
 ../generator --n 80 --o tmp1 --t composite --c0 rectangle --p0 50 20 --f0 0 0 0 90 0 0 0 0 0
-../generator --n 80 --o tmp2 --t composite --c0 tmp1 --f0 0 0 0 0 0 0 0 25 0 --c1 tmp1 --f1 0 0 0 0 0 0 0 25 0 --c2 tmp1 --f2 0 0 0 0 0 90 -25 0 0 --c3 tmp1 --f3 0 0 0 0 0 -90 25 0 0
+../generator --n 80 --o tmp2 --t composite --c0 tmp1 --f0 0 0 0 0 0 0 0 25 0 --c1 tmp1 --f1 0 0 0 0 0 180 0 -25 0 --c2 tmp1 --f2 0 0 0 0 0 90 -25 0 0 --c3 tmp1 --f3 0 0 0 0 0 -90 25 0 0
 ../generator --n 80 --o tmp3 --t composite --c0 trapeze --p0 90 50 20 --f0 0 0 0 0 0 0 0 35 10
 ../generator --n 80 --o tmp4 --t composite --c0 tmp3 --c1 tmp3 --f1 0 0 0 0 0 90 0 0 0 --c2 tmp3 --f2 0 0 0 0 0 -90 0 0 0 --c3 tmp3 --f3 0 0 0 0 0 180 0 0 0
 ../generator --n 80 --o tmp2 --t composite --c0 tmp2 --f0 0 0 0 0 0 0 0 0 35
 ../generator --n 80 --o tmp4 --t composite --c0 tmp4 --f0 0 0 0 0 0 0 0 0 35
 ../generator --n 80 --o tmp2 --t composite --c0 tmp2 --f0 0 0 0 0 0 0 0 0 0 --c1 tmp2 --f1 0 0 0 90 0 0 0 0 0 --c2 tmp2 --f2 0 0 0 -90 0 0 0 0 0 --c3 tmp2 --f3 0 0 0 180 0 0 0 0 0 --c4 tmp2 --f4 0 0 0 0 90 0 0 0 0 --c5 tmp2 --f5 0 0 0 0 -90 0 0 0 0
 ../generator --n 80 --o tmp4 --t composite --c0 tmp4 --f0 0 0 0 0 0 0 0 0 0 --c1 tmp4 --f1 0 0 0 90 0 0 0 0 0 --c2 tmp4 --f2 0 0 0 -90 0 0 0 0 0 --c3 tmp4 --f3 0 0 0 180 0 0 0 0 0 --c4 tmp4 --f4 0 0 0 0 90 0 0 0 0 --c5 tmp4 --f5 0 0 0 0 -90 0 0 0 0
-../generator --n 80 --o cube2 --t composite --c0 tmp2
+../generator --n 80 --o cube2 --t composite --c0 tmp2 --c1 tmp4
 
 # cube with two holes
 ../generator --n 80 --o tmp1 --t composite --c0 square --p0 80 --f0 0 0 0 0 90 0 -40 0 0 --c1 rectangle --p1 80 80 --f1 0 0 0 0 -90 0 40 0 0 --c2 rectangle --p2 80 80 --f2 0 0 0 90 0 0 0 40 0 --c3 rectangle --p3 80 80 --f3 0 0 0 -90 0 0 0 -40 0
