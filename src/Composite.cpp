@@ -1,7 +1,10 @@
 #include "Composite.hpp"
 #include "IGenerator.hpp"
-#include <optional>
+
 #include <boost/log/trivial.hpp>
+#include <boost/tokenizer.hpp>
+
+#include <optional>
 #include <iostream>
 
 namespace
@@ -40,9 +43,11 @@ void Composite::Generate()
 {
   BOOST_LOG_TRIVIAL(debug) << __FUNCTION__;
 
-  for (const auto& object : *mObjects)
+  for (const auto& object : *mComponents)
   {
-    auto params = object.first;
+    auto params = object.first.first;
+    auto cmds = object.first.second;
+
     auto& components = *object.second;
 
     auto param0 = getParam(params, 0);
@@ -70,12 +75,21 @@ void Composite::Generate()
     Faces objectFaces;
     Vertices objectVertices;
 
+    //boost::char_separator<char> sep(",;:");
+    //boost::tokenizer<boost::char_separator<char>> tokens(script, sep);
+
+    for (auto cmd : cmds)
+    {
+      std::cout << cmd << std::endl;
+    }
+
     for (const auto& component : components)
     {
       Vertices vertices{component->GetVertices()};
       vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
 
       RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
+
       objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
     }
 

@@ -13,11 +13,11 @@ class ComponetsVector;
 class Composite : public Object3D, public IGenerator
 {
 
-  std::unique_ptr<ComponentsWithParamsVector> mObjects = nullptr;
+  std::unique_ptr<ComponentsWithParamsVector> mComponents = nullptr;
   
 public:
-  Composite(const char *name, std::unique_ptr<ComponentsWithParamsVector> objects) :
-    Object3D(name), mObjects(std::move(objects))
+  Composite(const char *name, std::unique_ptr<ComponentsWithParamsVector> components) :
+    Object3D(name), mComponents(std::move(components))
   {
   }
   

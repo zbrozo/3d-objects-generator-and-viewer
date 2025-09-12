@@ -165,6 +165,12 @@ int main(int argc, char* argv[])
     ("f3", po::value<ParamsVector>()->multitoken(), "")
     ("f4", po::value<ParamsVector>()->multitoken(), "")
     ("f5", po::value<ParamsVector>()->multitoken(), "")
+    ("s0", po::value<StringVector>()->multitoken(), "")
+    ("s1", po::value<StringVector>()->multitoken(), "")
+    ("s2", po::value<StringVector>()->multitoken(), "")
+    ("s3", po::value<StringVector>()->multitoken(), "")
+    ("s4", po::value<StringVector>()->multitoken(), "")
+    ("s5", po::value<StringVector>()->multitoken(), "")
     ("3", "prefer triangle faces over rectangles")
     ("n", po::value<int>(), "normal vector length")
     ;
@@ -187,8 +193,8 @@ int main(int argc, char* argv[])
   }
   else
   {
-    std::cout << optionsDesc << std::endl;
-    return 1;
+    name = "composite";
+    std::cout << "default object type (" + name + ") used"  << std::endl;
   }
 
   int normalLength = 0;
@@ -230,6 +236,13 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "f3", ParamsId::Params3, paramsMap);
   AddParams<ParamsVector>(options, "f4", ParamsId::Params4, paramsMap);
   AddParams<ParamsVector>(options, "f5", ParamsId::Params5, paramsMap);
+
+  AddParams<StringVector>(options, "s0", ParamsId::Script0, paramsMap);
+  AddParams<StringVector>(options, "s1", ParamsId::Script1, paramsMap);
+  AddParams<StringVector>(options, "s2", ParamsId::Script2, paramsMap);
+  AddParams<StringVector>(options, "s3", ParamsId::Script3, paramsMap);
+  AddParams<StringVector>(options, "s4", ParamsId::Script4, paramsMap);
+  AddParams<StringVector>(options, "s5", ParamsId::Script5, paramsMap);
 
   paramsMap[ParamsId::PreferTriangles] = preferTriangles ? true : false;
   paramsMap[ParamsId::NormalLength] = normalLength;

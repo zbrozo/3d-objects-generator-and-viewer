@@ -52,19 +52,29 @@ enum class ParamsId {
   Params3,
   Params4,
   Params5,
+  Script0,
+  Script1,
+  Script2,
+  Script3,
+  Script4,
+  Script5,
   PreferTriangles,
   NormalLength
 };
+
+using IntVector = std::vector<int>;
+using StringVector = std::vector<std::string>;
 
 using ParamsVector = std::vector<int>;
 using SinusParamsVector = std::vector<double>;
 using ComponentNamesVector = std::vector<std::string>;
 
-using ParamsPair = std::pair<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, int>>;
-using ParamsMap = std::map<ParamsId, std::variant<ParamsVector, ComponentNamesVector, SinusParamsVector, int>>;
+using ParamsPair = std::pair<ParamsId, std::variant<IntVector, StringVector, SinusParamsVector, int>>;
+using ParamsMap = std::map<ParamsId, std::variant<IntVector, StringVector, SinusParamsVector, int>>;
 
 class Object3D;
 using ComponentsVector = std::vector<std::unique_ptr<Object3D>>;
-using ComponentsWithParamsPair = std::pair<ParamsVector, std::unique_ptr<ComponentsVector>>;
+using ComponentTransformParamsPair = std::pair<ParamsVector, StringVector>;
+using ComponentsWithParamsPair = std::pair<ComponentTransformParamsPair, std::unique_ptr<ComponentsVector>>;
 using ComponentsWithParamsVector = std::vector<ComponentsWithParamsPair>;
 
