@@ -2,7 +2,6 @@
 #include "IGenerator.hpp"
 
 #include <boost/log/trivial.hpp>
-#include <boost/tokenizer.hpp>
 
 #include <optional>
 #include <iostream>
@@ -75,22 +74,56 @@ void Composite::Generate()
     Faces objectFaces;
     Vertices objectVertices;
 
-    //boost::char_separator<char> sep(",;:");
-    //boost::tokenizer<boost::char_separator<char>> tokens(script, sep);
-
-    for (auto cmd : cmds)
-    {
-      std::cout << cmd << std::endl;
-    }
-
     for (const auto& component : components)
     {
       Vertices vertices{component->GetVertices()};
-      vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
+      
+      for (const std::string& cmd : cmds)
+      {
+        const auto found = cmd.find('=', 0);
+        if (found != std::string::npos)
+        {
+          const std::string name = cmd.substr(0, found);
+          const int value = std::stoi(cmd.substr(found + 1));
 
-      RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
+          if (name == "rx")
+          {
+            vertices = vertices.Rotate(value, 0, 0);
+          }
+          else if (name == "ry")
+          {
+            vertices = vertices.Rotate(0, value, 0);
+          }
+          else if (name == "rz")
+          {
+            vertices = vertices.Rotate(0, 0, value);
+          }
+          else if (name == "tx")
+          {
+            vertices += Vertex(value, 0, 0);
+          }
+          else if (name == "ty")
+          {
+            vertices += Vertex(0, value, 0);
+          }
+          else if (name == "tz")
+          {
+            vertices += Vertex(0, 0, value);
+          }
+        }
+      }
 
-      objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
+      for (const auto& face : component->GetFaces())
+      {
+        const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, vertices);
+        objectVertices = resultVertices;
+        objectFaces.push_back(resultFace);
+      }
+      
+      //Vertices vertices{component->GetVertices()};
+      //vertices += Vertex(beforeRotationTransitionX, beforeRotationTransitionY, beforeRotationTransitionZ);
+      //RotateSide(degX, degY, degZ, component->GetFaces(), vertices, objectFaces, objectVertices);
+      //objectVertices += Vertex(afterRotationTransitionX, afterRotationTransitionY, afterRotationTransitionZ);
     }
 
     Merge(objectVertices, objectFaces);
