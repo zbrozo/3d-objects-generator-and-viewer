@@ -49,11 +49,11 @@ cd ./objects
 ../generator --n 80 --o cube4 --t cube-ext --c Pyramid --p 40 70 --f 0 0 40
 
 ### cube with one hole
-../generator --n 80 --o tmp1 --t composite --c0 square --p0 80 --f0 0 0 0 0 90 0 -40 0 0 --c1 square --p1 80 --f1 0 0 0 0 -90 0 40 0 0 --c2 square --p2 80 --f2 0 0 0 90 0 0 0 40 0 --c3 square --p3 80 --f3 0 0 0 -90 0 0 0 -40 0
-../generator --n 80 --o tmp2 --t composite --c0 trapeze --p0 80 100 10 --f0 0 0 0 0 0 180 0 45 40 --c1 trapeze --p1 80 100 10 --f1 0 0 0 0 0 0 0 -45 40 --c2 trapeze --p2 80 100 10 --f2 0 0 0 0 0 90 45 0 40 --c3 trapeze --p3 80 100 10 --f3 0 0 0 0 0 -90 -45 0 40
-../generator --n 80 --o tmp3 --t composite --c0 rectangle --p0 100 80 --f0 0 0 0 0 0 90 0 0 0 
-../generator --n 80 --o tmp3 --t composite --c0 tmp3 --f0 0 0 0 0 90 0 50 0 0 --c1 tmp3 --f1 0 0 0 0 -90 0 -50 0 0
-../generator --n 80 --o cube5 --t composite --c0 tmp1 --c1 tmp2 --c2 tmp2 --f2 0 0 0 0 180 0 0 0 0 --c3 tmp3 --c4 tmp3 --f4 0 0 0 0 0 90 0 0 0
+../generator --o tmp1 --c0 square --p0 80 --s0 ry=90 tx=-40 --c1 square --p1 80 --s1 ry=-90 tx=40 --c2 square --p2 80 --s2 rx=90 ty=40 --c3 square --p3 80 --s3 rx=-90 ty=-40
+../generator --o tmp2 --c0 trapeze --p0 80 100 10 --s0 rz=180 ty=45 tz=40 --c1 trapeze --p1 80 100 10 --s1 ty=-45 tz=40 --c2 trapeze --p2 80 100 10 --s2 rz=90 tx=45 tz=40 --c3 trapeze --p3 80 100 10 --s3 rz=-90 tx=-45 tz=40
+../generator --o tmp3 --c0 rectangle --p0 100 80 --s0 rz=-90
+../generator --o tmp3 --c0 tmp3 --s0 ry=90 tx=50 --c1 tmp3 --s1 ry=-90 tx=-50
+../generator --n 80 --o cube5 --c0 tmp1 --c1 tmp2 --c2 tmp2 --s2 ry=180 --c3 tmp3 --c4 tmp3 --s4 rz=90
 
 ### thorus
 ../generator --o thorus1 --t thorus 4 3 
@@ -92,5 +92,5 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer objects cube1 cube2 cube2_1 cube2_2 cube2_3 composite7 tetrahedron3 composite6 composite7
+./viewer objects cube5 cube2 cube2_1 cube2_2 cube2_3 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
