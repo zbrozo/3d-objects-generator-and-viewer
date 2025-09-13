@@ -52,8 +52,8 @@ _--s contains value of double type_
 - component name (--c0, --c1, --c2, --c3, --c4, --c5): _if component is not defined in this app then an object file with given name is searched_
 - component creation params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on created component, see --p in components
 - component transformation params (--s0, --s1, --s2, --s3, --s4, --s5): available params are: 
-    - rx, ry, rz - rotation degrees 
-    - tx, ty, tz - translation
+    - rotation degrees (rx, ry, rz)
+    - translation (tx, ty, tz)
 
 - translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
