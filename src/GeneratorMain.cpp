@@ -194,7 +194,6 @@ int main(int argc, char* argv[])
   else
   {
     name = "composite";
-    std::cout << "default object type (" + name + ") used"  << std::endl;
   }
 
   int normalLength = 0;

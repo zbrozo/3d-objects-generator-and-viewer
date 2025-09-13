@@ -71,25 +71,26 @@ cd ./objects
 ../generator --o cone1 --t composite --c0 Cone --p0 3 50 50 --c1 Cone --p1 3 50 -50
 ../generator --o cone2 --t composite --c0 Cone --p0 6 50 50 --c1 Cone --p1 6 50 -50
 ../generator --o cone3 --t composite --c0 Cone --p0 3 50 50 --f0 0 0 0 0 0 0 0 0 0 --c1 Cone --p1 3 50 50 --f1 0 0 0 0 0 0 100 0 0
-../generator --o tmp --t tetrahedron 80 70
-../generator --o tetrahedron1 --t composite --c0 tmp --f0 0 0 -40
-../generator --o tetrahedron2 --t regulartetrahedron 80
+
+../generator --o tmp --t tetrahedron 80 60
+../generator --n 80 --o tetrahedron1 --c0 tmp --s0 tz=-70
+
+../generator --n 80 --o tetrahedron2 --t regulartetrahedron 80
 ../generator --n 80 --o tetrahedron3 --t fractaltetrahedron 50
     
-../generator --o composite1 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 0 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 0 0 180 0
-../generator --o composite2 --t composite --c0 Pyramid --p0 50 50 --f0 0 0 20 0 0 0 --c1 Pyramid --p1 50 50 --f1 0 0 20 0 180 0 --c2 Rectangle --p2 20 50 --f2 0 0 50 0 90 0 --c3 Rectangle --p3 20 50 --f3 0 0 50 0 270 0 --c4 Rectangle --p4 50 20 --f4 0 0 50 90 0 0 --c5 Rectangle --p5 50 20 --f5 0 0 50 270 0 0
-../generator --o composite3 --t composite --c0 Cone --p0 6 50 50 --f0 0 0 25 --c1 Cone --p1 6 50 -50 --f1 0 0 -25 --c2 Cylinder --p2 6 50 50 --f2 0 0 25
-../generator --o composite4 --t composite --c0 Cone --p0 6 50 50 --f0 0 0 25 --c1 Cone --p1 6 50 -50 --f1 0 0 -25 0 0 30 --c2 CylinderTriangles --p2 6 50 50 --f2 0 0 25
-../generator --o composite5 --t composite --c0 cube1 --f0 0 0 0 0 0 0 -100 0 0 --c1 cube1 --f1 0 0 0 0 0 0 100 0 0 --c2 cube1 --f2 0 0 0 0 0 0 0 -100 0 --c3 cube1 --f3 0 0 0 0 0 0 0 100 0
-../generator --n 64 --o tmp --t cube 40
-../generator --n 80 --o composite6 --t composite --c0 csign --p0 4 100 80 0 0 10 --f0 0 0 0 0 0 0 -10 0 0 --c1 csign --p1 4 100 80 0 0 10 --f1 0 0 0 0 180 0 10 0 0 --c2 csign --p2 4 100 80 0 0 10 --f2 0 0 0 0 90 0 0 0 10 --c3 csign --p3 4 100 80 0 0 10 --f3 0 0 0 0 -90 0 0 0 -10 --c4 tmp --f4 0 0 0 0 0 0 0 0 0
-../generator --n 60 --o composite7 --t composite --c0 csign --p0 5 80 50 0 0 20 --f0 0 0 0 0 0 0 10 0 0 --c1 csign --p1 5 80 50 0 0 20 --f1 0 0 0 90 180 0 10 0 0
+../generator --n 80 --o composite1 --c0 Pyramid --p0 50 50 --c1 Pyramid --p1 50 50 --s1 ry=180
+../generator --n 80 --o composite2 --c0 Pyramid --p0 50 50 --s0 tz=20 --c1 Pyramid --p1 50 50 --s1 tz=20 ry=180 --c2 Rectangle --p2 40 100 --s2 tz=50 ry=90 --c3 Rectangle --p3 40 100 --s3 tz=50 ry=270 --c4 Rectangle --p4 100 40 --s4 tz=50 rx=90 --c5 Rectangle --p5 100 40 --s5 tz=50 rx=270
+../generator --n 80 --o composite3 --c0 Cone --p0 6 50 50 --s0 tz=25 --c1 Cone --p1 6 50 -50 --s1 tz=-25 --c2 Cylinder --p2 6 50 50 --s2 tz=25
+../generator --n 80 --o composite4 --c0 Cone --p0 6 50 30 --s0 tz=25 --c1 Cone --p1 6 50 -30 --s1 tz=-25 rz=30 --c2 CylinderTriangles --p2 6 50 50 --s2 tz=25
 
-../generator --v --n 60 --o scxstar --t composite --c0 star --p0 7 80 --f0 0 0 0 0 0 0 0 0 20 --c1 star --p1 7 80 --f1 0 0 0 0 -180 0 0 0 -20
+../generator --o tmp --t cube 40
+../generator --n 80 --o composite6 --c0 csign --p0 4 100 80 0 0 10 --s0 tx=-10 --c1 csign --p1 4 100 80 0 0 10 --s1 ry=180 tx=10 --c2 csign --p2 4 100 80 0 0 10 --s2 ry=90 tz=10 --c3 csign --p3 4 100 80 0 0 10 --s3 ry=-90 tz=-10 --c4 tmp
 
-#    ../generator --o square --t composite --c0 square --p0 50
-    
+../generator --n 60 --o composite7 --c0 csign --p0 5 80 50 0 0 20 --s0 tx=10 --c1 csign --p1 5 80 50 0 0 20 --s1 rx=90 ry=180 tx=10
+
+../generator --n 60 --o scxstar --c0 star --p0 5 72 --s0 tz=20 --c1 star --p1 5 72 --s1 ry=-180 tz=-20
+
 cd ..
 echo "Start viewer"
-./viewer objects cube2 cube2_1 cube2_2 cube2_3 composite6 composite7
+./viewer objects cube1 cube2 cube2_1 cube2_2 cube2_3 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
