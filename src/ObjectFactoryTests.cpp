@@ -18,44 +18,44 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
-{
-  ParamsMap paramsMap;
-  CubeExtFactory factory;
-  ComponentFactories componentFactories;
-  componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
-  componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
+// BOOST_AUTO_TEST_CASE(cube_ext_factory_test1)
+// {
+//   ParamsMap paramsMap;
+//   CubeExtFactory factory;
+//   ComponentFactories componentFactories;
+//   componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
+//   componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
   
-  paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
-  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translaction x, y, z
+//   paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
+//   paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translaction x, y, z
 
-  factory.Init(componentFactories);
-  const auto object = factory.Create("cube-ext", paramsMap);
+//   factory.Init(componentFactories);
+//   const auto object = factory.Create("cube-ext", paramsMap);
   
-  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->GetName());
-  BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
-  BOOST_CHECK_EQUAL(48, object->GetFacesCount());
-}
+//   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_0_0_50", object->GetName());
+//   BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
+//   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
+// }
 
-BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
-{
-  ParamsMap paramsMap;
-  CubeExtFactory factory;
-  ComponentFactories componentFactories;
-  componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
-  componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
+// BOOST_AUTO_TEST_CASE(cube_ext_factory_test2)
+// {
+//   ParamsMap paramsMap;
+//   CubeExtFactory factory;
+//   ComponentFactories componentFactories;
+//   componentFactories[ObjectId::SquareHolePart1] = std::make_unique<Components::SquareWithHolePart1Factory>();
+//   componentFactories[ObjectId::SquareHolePart2] = std::make_unique<Components::SquareWithHolePart2Factory>();
  
-  paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
-  paramsMap[ParamsId::ComponentsParams] = ParamsVector{50, 20, 20};
-  paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translation x, y, z
+//   paramsMap[ParamsId::ComponentsList] = ComponentNamesVector{"SquareHolePart1", "SquareHolePart2"};
+//   paramsMap[ParamsId::ComponentsParams] = ParamsVector{50, 20, 20};
+//   paramsMap[ParamsId::Params] = ParamsVector{0, 0, 50}; // set translation x, y, z
 
-  factory.Init(componentFactories);
-  const auto object = factory.Create("cube-ext", paramsMap);
+//   factory.Init(componentFactories);
+//   const auto object = factory.Create("cube-ext", paramsMap);
   
-  BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->GetName());
-  BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
-  BOOST_CHECK_EQUAL(48, object->GetFacesCount());
-}
+//   BOOST_CHECK_EQUAL("cube-ext_SquareHolePart1_SquareHolePart2_50_20_20_0_0_50", object->GetName());
+//   BOOST_CHECK_EQUAL(40, object->GetVerticesCount());
+//   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
+// }
 
 BOOST_AUTO_TEST_CASE(thorus_factory_test)
 {

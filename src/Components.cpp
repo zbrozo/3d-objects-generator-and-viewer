@@ -304,7 +304,7 @@ void Cylinder::Generate()
 
 }
 
-void CylinderWithTriangularFaces::Generate()
+void TriangulatedCylinder::Generate()
 {
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
   Vertices vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);

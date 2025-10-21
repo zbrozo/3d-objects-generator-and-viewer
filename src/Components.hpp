@@ -299,7 +299,7 @@ public:
 
 };
 
-class CylinderWithTriangularFaces : public Object3D, public IGenerator
+class TriangulatedCylinder : public Object3D, public IGenerator
 {
   int mCircleAmount = 3;
   int mCircleRadius = 50;
@@ -307,7 +307,7 @@ class CylinderWithTriangularFaces : public Object3D, public IGenerator
 
 public:
 
-  CylinderWithTriangularFaces(
+  TriangulatedCylinder(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -332,12 +332,12 @@ public:
 
   void Generate() override;
 
-  virtual ~CylinderWithTriangularFaces() = default;
+  virtual ~TriangulatedCylinder() = default;
 
-  CylinderWithTriangularFaces(const CylinderWithTriangularFaces&) = delete;
-  CylinderWithTriangularFaces(CylinderWithTriangularFaces&&) = delete;
-  CylinderWithTriangularFaces& operator=(const CylinderWithTriangularFaces&) = delete;
-  CylinderWithTriangularFaces& operator=(CylinderWithTriangularFaces &&) = delete;
+  TriangulatedCylinder(const TriangulatedCylinder&) = delete;
+  TriangulatedCylinder(TriangulatedCylinder&&) = delete;
+  TriangulatedCylinder& operator=(const TriangulatedCylinder&) = delete;
+  TriangulatedCylinder& operator=(TriangulatedCylinder&&) = delete;
 };
 
 class CSign : public Object3D, public IGenerator

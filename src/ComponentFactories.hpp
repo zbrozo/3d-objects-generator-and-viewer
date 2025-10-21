@@ -70,7 +70,7 @@ public:
     const ParamsVector& params) const override;
 };
 
-class CylinderWithTriangularFacesFactory : public ComponentFactoryBase
+class TriangulatedCylinderFactory : public ComponentFactoryBase
 {
 public:
   std::unique_ptr<Object3D> FactoryMethod(
