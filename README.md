@@ -55,6 +55,7 @@ _--s contains value of double type_
     - rotation degrees (rx, ry, rz)
     - translation (tx, ty, tz)
 
+OBSOLETE:
 - translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
 _Value in f and p can be negative_

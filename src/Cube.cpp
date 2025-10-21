@@ -9,7 +9,7 @@ void Cube::RotateSide(int degx, int degy, int degz,
                       Vertices& objectVertices)
 {
   const auto rotatedVertices = vertices.Rotate(degx, degy, degz);
-  
+
   for (const auto& face : faces)
   {
     const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, rotatedVertices);
@@ -50,16 +50,15 @@ void Cube::Generate()
     {
       return vertex * mSize;
     });
-  
+
   Face face{0,1,2,3};
-  
+
   Faces faces;
   faces.push_back(face);
-  
+
   const auto result = CreateCube(faces, vertices);
 
   mFaces = result.first;
   mVertices = result.second;
 }
-
 

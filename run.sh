@@ -66,7 +66,6 @@ cd ./objects
 ../generator --3 --o thorus7 --t thorus 6 16 30 70 --s 0 0 4 10 4 10
 
 ../generator --3 --o thorus8 --t thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
-
 ###
 ../generator --o cone1 --t composite --c0 Cone --p0 3 50 50 --c1 Cone --p1 3 50 -50
 ../generator --o cone2 --t composite --c0 Cone --p0 6 50 50 --c1 Cone --p1 6 50 -50
@@ -88,9 +87,12 @@ cd ./objects
 
 ../generator --n 60 --o composite7 --c0 csign --p0 5 80 50 0 0 20 --s0 tx=10 --c1 csign --p1 5 80 50 0 0 20 --s1 rx=90 ry=180 tx=10
 
-../generator --n 60 --o scxstar --c0 star --p0 5 72 --s0 tz=20 --c1 star --p1 5 72 --s1 ry=-180 tz=-20
+# scoopex sign :)
+../generator --o tmp1 --t pentagram 14
+../generator --o tmp2 --t thorus 4 10 15 90
+../generator --n 60 --o scoopex --c0 tmp1 --c1 tmp2
 
 cd ..
 echo "Start viewer"
-./viewer objects cube5 cube2 cube2_1 cube2_2 cube2_3 composite7 tetrahedron3 composite6 composite7
+./viewer objects scoopex cube2 cube2_1 cube2_2 cube2_3 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3

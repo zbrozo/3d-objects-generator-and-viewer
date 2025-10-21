@@ -38,6 +38,7 @@ set(FactoriesSRC
   src/Tetrahedron.cpp
   src/RegularTetrahedron.cpp
   src/FractalTetrahedron.cpp  
+  src/Pentagram.cpp
   src/FileLoader.cpp
 )
 
