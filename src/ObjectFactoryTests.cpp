@@ -12,7 +12,7 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
   CubeFactory factory;
 
   const auto object = factory.Create("cube", paramsMap);
-  
+
   BOOST_CHECK_EQUAL("cube", object->GetName());
   BOOST_CHECK_EQUAL(8, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(composite_factory_test)
   CompositeFactory factory;
   ComponentFactories componentFactories;
   componentFactories[ObjectId::Cone] = std::make_unique<Components::ConeFactory>();
- 
+
   paramsMap[ParamsId::ComponentsList0] = ComponentNamesVector{"Cone"};
   paramsMap[ParamsId::ComponentsList1] = ComponentNamesVector{"Cone"};
   paramsMap[ParamsId::ComponentsParams0] = ParamsVector{3,50,50};
@@ -100,7 +100,7 @@ BOOST_AUTO_TEST_CASE(tetrahedron_factory_test)
   ComponentFactories componentFactories;
 
   paramsMap[ParamsId::AdditionalParams] = ParamsVector{50, 68};
-  
+
   factory.Init(componentFactories);
   auto object = factory.Create("tetrahedron", paramsMap);
 
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(regulartetrahedron_factory_test)
   ParamsMap paramsMap;
   RegularTetrahedronFactory factory;
   ComponentFactories componentFactories;
-    
+
   factory.Init(componentFactories);
   auto object = factory.Create("regulartetrahedron", paramsMap);
 
@@ -136,6 +136,22 @@ BOOST_AUTO_TEST_CASE(fractaltetrahedron_factory_test)
   BOOST_CHECK_EQUAL("fractaltetrahedron", object->GetName());
   BOOST_CHECK_EQUAL(10, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(16, object->GetFacesCount());
+}
+
+BOOST_AUTO_TEST_CASE(pentagram_factory_test)
+{
+  ParamsMap paramsMap;
+  PentagramFactory factory;
+  ComponentFactories componentFactories;
+
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{20};
+
+  factory.Init(componentFactories);
+  auto object = factory.Create("pentagram", paramsMap);
+
+  BOOST_CHECK_EQUAL("pentagram_20", object->GetName());
+  BOOST_CHECK_EQUAL(20, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(25, object->GetFacesCount());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
