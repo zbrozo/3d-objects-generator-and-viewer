@@ -130,8 +130,10 @@ auto ReadGeneratorParams(int argc, char *argv[], po::options_description& desc)
 
 void SetLogging(bool verbose)
 {
-  boost::log::trivial::severity_level logLevel = (verbose ?
-    boost::log::trivial::debug : boost::log::trivial::error);
+  boost::log::trivial::severity_level logLevel =
+    verbose
+    ? boost::log::trivial::debug
+    : boost::log::trivial::error;
 
   auto logFilter = boost::log::filter(boost::log::trivial::severity >= logLevel);
   boost::log::core::get()->set_filter(logFilter);
@@ -139,43 +141,37 @@ void SetLogging(bool verbose)
 
 int main(int argc, char* argv[])
 {
-  po::options_description optionsDesc("generator <type> [params]\n");
+  po::options_description optionsDesc("generator <options>\n");
   optionsDesc.add_options()
     ("help", "produce help message")
     ("v", "debug")
     ("o", po::value<std::string>(), "output file name")
-    ("t", po::value<std::string>(), "main object type")
-    ("f", po::value<ParamsVector>()->multitoken(), "translation and rotation params")
+    ("n", po::value<std::string>(), "main object name")
+    ("a", po::value<ParamsVector>(), "main object params")
+    ("t", po::value<ParamsVector>()->multitoken(), "transform params")
     ("s", po::value<SinusParamsVector>()->multitoken(), "sinus params")
     ("c", po::value<ComponentNamesVector>()->multitoken(), "component name")
     ("p", po::value<ParamsVector>()->multitoken(), "component params")
-    ("a", po::value<ParamsVector>(), "main object params")
-    ("c0", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c1", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c2", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c3", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c4", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("c5", po::value<ComponentNamesVector>()->multitoken(), "")
-    ("p0", po::value<ParamsVector>()->multitoken(), "")
-    ("p1", po::value<ParamsVector>()->multitoken(), "")
-    ("p2", po::value<ParamsVector>()->multitoken(), "")
-    ("p3", po::value<ParamsVector>()->multitoken(), "")
-    ("p4", po::value<ParamsVector>()->multitoken(), "")
-    ("p5", po::value<ParamsVector>()->multitoken(), "")
-    ("f0", po::value<ParamsVector>()->multitoken(), "")
-    ("f1", po::value<ParamsVector>()->multitoken(), "")
-    ("f2", po::value<ParamsVector>()->multitoken(), "")
-    ("f3", po::value<ParamsVector>()->multitoken(), "")
-    ("f4", po::value<ParamsVector>()->multitoken(), "")
-    ("f5", po::value<ParamsVector>()->multitoken(), "")
-    ("s0", po::value<StringVector>()->multitoken(), "")
-    ("s1", po::value<StringVector>()->multitoken(), "")
-    ("s2", po::value<StringVector>()->multitoken(), "")
-    ("s3", po::value<StringVector>()->multitoken(), "")
-    ("s4", po::value<StringVector>()->multitoken(), "")
-    ("s5", po::value<StringVector>()->multitoken(), "")
     ("3", "prefer triangle faces over rectangles")
-    ("n", po::value<int>(), "normal vector length")
+    ("l", po::value<int>(), "normal vector length")
+    ("c0", po::value<ComponentNamesVector>()->multitoken(), "name of component 0")
+    ("c1", po::value<ComponentNamesVector>()->multitoken(), "name of component 1")
+    ("c2", po::value<ComponentNamesVector>()->multitoken(), "name of component 2")
+    ("c3", po::value<ComponentNamesVector>()->multitoken(), "name of component 3")
+    ("c4", po::value<ComponentNamesVector>()->multitoken(), "name of component 4")
+    ("c5", po::value<ComponentNamesVector>()->multitoken(), "name of component 5")
+    ("p0", po::value<ParamsVector>()->multitoken(), "params for component 0")
+    ("p1", po::value<ParamsVector>()->multitoken(), "params for component 1")
+    ("p2", po::value<ParamsVector>()->multitoken(), "params for component 2")
+    ("p3", po::value<ParamsVector>()->multitoken(), "params for component 3")
+    ("p4", po::value<ParamsVector>()->multitoken(), "params for component 4")
+    ("p5", po::value<ParamsVector>()->multitoken(), "params for component 5")
+    ("t0", po::value<StringVector>()->multitoken(), "transform component 0")
+    ("t1", po::value<StringVector>()->multitoken(), "transform component 1")
+    ("t2", po::value<StringVector>()->multitoken(), "transform component 2")
+    ("t3", po::value<StringVector>()->multitoken(), "transform component 3")
+    ("t4", po::value<StringVector>()->multitoken(), "transform component 4")
+    ("t5", po::value<StringVector>()->multitoken(), "transform component 5")
     ;
 
   const po::variables_map& options = ReadGeneratorParams(argc, argv, optionsDesc);
@@ -190,9 +186,9 @@ int main(int argc, char* argv[])
   const auto preferTriangles = options.count("3");
 
   std::string name;
-  if (options.count("t"))
+  if (options.count("n"))
   {
-    name = options["t"].as<std::string>();
+    name = options["n"].as<std::string>();
   }
   else
   {
@@ -200,9 +196,9 @@ int main(int argc, char* argv[])
   }
 
   int normalLength = 0;
-  if (options.count("n"))
+  if (options.count("l"))
   {
-    normalLength = options["n"].as<int>();
+    normalLength = options["l"].as<int>();
   }
 
   std::string outputName;
@@ -214,7 +210,7 @@ int main(int argc, char* argv[])
   ParamsMap paramsMap;
   AddParams<ComponentNamesVector>(options, "c", ParamsId::ComponentsList, paramsMap);
   AddParams<ParamsVector>(options, "p", ParamsId::ComponentsParams, paramsMap);
-  AddParams<ParamsVector>(options, "f", ParamsId::Params, paramsMap);
+  AddParams<ParamsVector>(options, "t", ParamsId::Params, paramsMap);
   AddParams<ParamsVector>(options, "a", ParamsId::AdditionalParams, paramsMap);
   AddParams<SinusParamsVector>(options, "s", ParamsId::SinusParams, paramsMap);
 
@@ -232,19 +228,12 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "p4", ParamsId::ComponentsParams4, paramsMap);
   AddParams<ParamsVector>(options, "p5", ParamsId::ComponentsParams5, paramsMap);
 
-  AddParams<ParamsVector>(options, "f0", ParamsId::Params0, paramsMap);
-  AddParams<ParamsVector>(options, "f1", ParamsId::Params1, paramsMap);
-  AddParams<ParamsVector>(options, "f2", ParamsId::Params2, paramsMap);
-  AddParams<ParamsVector>(options, "f3", ParamsId::Params3, paramsMap);
-  AddParams<ParamsVector>(options, "f4", ParamsId::Params4, paramsMap);
-  AddParams<ParamsVector>(options, "f5", ParamsId::Params5, paramsMap);
-
-  AddParams<StringVector>(options, "s0", ParamsId::Script0, paramsMap);
-  AddParams<StringVector>(options, "s1", ParamsId::Script1, paramsMap);
-  AddParams<StringVector>(options, "s2", ParamsId::Script2, paramsMap);
-  AddParams<StringVector>(options, "s3", ParamsId::Script3, paramsMap);
-  AddParams<StringVector>(options, "s4", ParamsId::Script4, paramsMap);
-  AddParams<StringVector>(options, "s5", ParamsId::Script5, paramsMap);
+  AddParams<StringVector>(options, "t0", ParamsId::Script0, paramsMap);
+  AddParams<StringVector>(options, "t1", ParamsId::Script1, paramsMap);
+  AddParams<StringVector>(options, "t2", ParamsId::Script2, paramsMap);
+  AddParams<StringVector>(options, "t3", ParamsId::Script3, paramsMap);
+  AddParams<StringVector>(options, "t4", ParamsId::Script4, paramsMap);
+  AddParams<StringVector>(options, "t5", ParamsId::Script5, paramsMap);
 
   paramsMap[ParamsId::PreferTriangles] = preferTriangles ? true : false;
   paramsMap[ParamsId::NormalLength] = normalLength;
