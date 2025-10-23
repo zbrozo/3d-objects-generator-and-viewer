@@ -2,7 +2,6 @@
 #include "Vertices.hpp"
 #include "Vectors.hpp"
 #include "Faces.hpp"
-#include "Object3DBuilder.hpp"
 #include "ViewerSortingFaces.hpp"
 #include "ViewerDraw.hpp"
 

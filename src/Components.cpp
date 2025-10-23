@@ -1,8 +1,9 @@
 #include "Components.hpp"
 #include "Rotation.hpp"
+#include "Tools.hpp"
+
 #include <algorithm>
 #include <exception>
-
 #include <cstdint>
 #include <boost/log/trivial.hpp>
 #include <cmath>
@@ -34,7 +35,7 @@ auto CreateSideFaces(const std::vector<Vertices>& allVertices)
   for(const auto& tmpVertices : allVertices)
   {
     Face face{0,1,2,3};
-    const auto [resultFace, resultVertices] = Object3D::Merge(vertices, face, tmpVertices);
+    const auto [resultFace, resultVertices] = Tools::Merge(vertices, face, tmpVertices);
     vertices = resultVertices;
     faces.push_back(resultFace);
   }

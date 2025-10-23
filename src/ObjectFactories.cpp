@@ -68,7 +68,7 @@ auto getParam(const SinusParamsVector& values, unsigned int index)
   return std::optional<double>();
 }
 
-}
+} // namespace
 
 std::unique_ptr<Object3D> CubeFactory::FactoryMethod(
   const std::string& name,
@@ -180,7 +180,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
   auto componentsWithParamsVector = std::make_unique<ComponentsWithParamsVector>();
 
   auto create = [&params, &componentsWithParamsVector, &name, this]
-    (ParamsId listId, ParamsId paramsId, ParamsId mainParamsId, ParamsId scriptId)
+    (ParamsId listId, ParamsId paramsId, ParamsId mainParamsId, ParamsId transfromCmdsId)
   {
     auto components = std::make_unique<ComponentsVector>();
 
@@ -201,7 +201,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
     }
 
     if (auto it = std::find_if(params.begin(), params.end(),
-        std::bind(findParamsVector, _1,  scriptId)); it != params.end())
+        std::bind(findParamsVector, _1,  transfromCmdsId)); it != params.end())
     {
       transformCmds = std::get<StringVector>(it->second);
     }
@@ -230,6 +230,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
         else
         {
             const auto id = ComponentIdMap[name];
+
             BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
 
             components->push_back(
@@ -242,12 +243,12 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
       ComponentsWithParamsPair(std::make_pair(mainParamsVector, transformCmds), std::move(components)));
   };
 
-  create(ParamsId::ComponentsList0, ParamsId::ComponentsParams0, ParamsId::Params0, ParamsId::Script0);
-  create(ParamsId::ComponentsList1, ParamsId::ComponentsParams1, ParamsId::Params1, ParamsId::Script1);
-  create(ParamsId::ComponentsList2, ParamsId::ComponentsParams2, ParamsId::Params2, ParamsId::Script2);
-  create(ParamsId::ComponentsList3, ParamsId::ComponentsParams3, ParamsId::Params3, ParamsId::Script3);
-  create(ParamsId::ComponentsList4, ParamsId::ComponentsParams4, ParamsId::Params4, ParamsId::Script4);
-  create(ParamsId::ComponentsList5, ParamsId::ComponentsParams5, ParamsId::Params5, ParamsId::Script5);
+  create(ParamsId::ComponentsList0, ParamsId::ComponentsParams0, ParamsId::Params0, ParamsId::TransformCmds0);
+  create(ParamsId::ComponentsList1, ParamsId::ComponentsParams1, ParamsId::Params1, ParamsId::TransformCmds1);
+  create(ParamsId::ComponentsList2, ParamsId::ComponentsParams2, ParamsId::Params2, ParamsId::TransformCmds2);
+  create(ParamsId::ComponentsList3, ParamsId::ComponentsParams3, ParamsId::Params3, ParamsId::TransformCmds3);
+  create(ParamsId::ComponentsList4, ParamsId::ComponentsParams4, ParamsId::Params4, ParamsId::TransformCmds4);
+  create(ParamsId::ComponentsList5, ParamsId::ComponentsParams5, ParamsId::Params5, ParamsId::TransformCmds5);
 
   return std::make_unique<Composite>(
     CreateFullName(name, params).c_str(),

@@ -3,6 +3,7 @@
 #include "Components.hpp"
 #include "ComponentFactories.hpp"
 #include "Params.hpp"
+#include "Tools.hpp"
 
 #include <algorithm>
 #include <optional>
@@ -82,5 +83,5 @@ void ObjectFactoryBase::Generate(Object3D& object, int normalLength) const
   auto& generator = dynamic_cast<IGenerator&>(object);
   generator.Generate();
 
-  object.CreateNormalVectors(normalLength);
+  object = Tools::CreateNormalVectors(object, normalLength);
 }

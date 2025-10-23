@@ -1,5 +1,6 @@
 #include "CubeExt.hpp"
 #include "IGenerator.hpp"
+#include "Tools.hpp"
 
 #include <boost/log/trivial.hpp>
 
@@ -32,13 +33,13 @@ void CubeExt::Generate()
 
     for (auto& object : *pair.second)
     {
-      object->Translate(translationX, translationY, translationZ);
+      Tools::Translate(mVertices, translationX, translationY, translationZ);
 
       const auto [faces, vertices] = CreateCube(
         object->GetFaces(),
         object->GetVertices());
 
-      Merge(vertices, faces);
+      Tools::Merge(mVertices, mFaces, vertices, faces);
     }
   }
 }

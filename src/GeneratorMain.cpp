@@ -228,12 +228,12 @@ int main(int argc, char* argv[])
   AddParams<ParamsVector>(options, "p4", ParamsId::ComponentsParams4, paramsMap);
   AddParams<ParamsVector>(options, "p5", ParamsId::ComponentsParams5, paramsMap);
 
-  AddParams<StringVector>(options, "t0", ParamsId::Script0, paramsMap);
-  AddParams<StringVector>(options, "t1", ParamsId::Script1, paramsMap);
-  AddParams<StringVector>(options, "t2", ParamsId::Script2, paramsMap);
-  AddParams<StringVector>(options, "t3", ParamsId::Script3, paramsMap);
-  AddParams<StringVector>(options, "t4", ParamsId::Script4, paramsMap);
-  AddParams<StringVector>(options, "t5", ParamsId::Script5, paramsMap);
+  AddParams<StringVector>(options, "t0", ParamsId::TransformCmds0, paramsMap);
+  AddParams<StringVector>(options, "t1", ParamsId::TransformCmds1, paramsMap);
+  AddParams<StringVector>(options, "t2", ParamsId::TransformCmds2, paramsMap);
+  AddParams<StringVector>(options, "t3", ParamsId::TransformCmds3, paramsMap);
+  AddParams<StringVector>(options, "t4", ParamsId::TransformCmds4, paramsMap);
+  AddParams<StringVector>(options, "t5", ParamsId::TransformCmds5, paramsMap);
 
   paramsMap[ParamsId::PreferTriangles] = preferTriangles ? true : false;
   paramsMap[ParamsId::NormalLength] = normalLength;

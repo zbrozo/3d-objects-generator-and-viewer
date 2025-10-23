@@ -20,6 +20,7 @@ set(BasicMathSRC
   src/Vertex3D.cpp
   src/Vector3D.cpp
   src/Object3D.cpp
+  src/Tools.cpp
   src/Vertices.cpp
   src/Vectors.cpp
   src/Faces.cpp

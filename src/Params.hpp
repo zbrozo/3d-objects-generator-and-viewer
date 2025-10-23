@@ -6,6 +6,8 @@
 #include <memory>
 #include <variant>
 
+#include "Types.hpp"
+
 enum class ObjectId {
   None = 0,
   Cube,
@@ -53,18 +55,15 @@ enum class ParamsId {
   Params3,
   Params4,
   Params5,
-  Script0,
-  Script1,
-  Script2,
-  Script3,
-  Script4,
-  Script5,
+  TransformCmds0,
+  TransformCmds1,
+  TransformCmds2,
+  TransformCmds3,
+  TransformCmds4,
+  TransformCmds5,
   PreferTriangles,
   NormalLength
 };
-
-using IntVector = std::vector<int>;
-using StringVector = std::vector<std::string>;
 
 using ParamsVector = std::vector<int>;
 using SinusParamsVector = std::vector<double>;

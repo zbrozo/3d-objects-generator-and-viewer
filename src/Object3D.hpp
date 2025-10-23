@@ -11,7 +11,6 @@
 
 class Object3D
 {
-
   std::string mName;
 
 protected:
@@ -72,15 +71,4 @@ public:
     return mVertices.size();
   }
 
-  // TODO: move below methods to some another class like builder
-
-  void CreateNormalVectors(int normalLength);
-
-  void Translate(int x, int y, int z);
-
-  void Merge(const Vertices& vertices, const Faces& faces);
-
-  static std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
-                                         const Face& face,
-                                         const Vertices& vertices);
 };

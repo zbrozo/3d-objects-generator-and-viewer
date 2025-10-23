@@ -1,5 +1,6 @@
 #include "Cube.hpp"
 #include "Object3D.hpp"
+#include "Tools.hpp"
 #include <algorithm>
 
 void Cube::RotateSide(int degx, int degy, int degz,
@@ -12,7 +13,7 @@ void Cube::RotateSide(int degx, int degy, int degz,
 
   for (const auto& face : faces)
   {
-    const auto [resultFace, resultVertices] = Object3D::Merge(objectVertices, face, rotatedVertices);
+    const auto [resultFace, resultVertices] = Tools::Merge(objectVertices, face, rotatedVertices);
     objectVertices = resultVertices;
     objectFaces.push_back(resultFace);
   }

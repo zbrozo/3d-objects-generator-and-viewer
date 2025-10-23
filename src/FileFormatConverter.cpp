@@ -1,7 +1,7 @@
 #include "FileFormatConverter.hpp"
 #include "BinaryBuffer.hpp"
 #include "Object3D.hpp"
-#include "Object3DBuilder.hpp"
+#include "ObjectBuilder.hpp"
 #include "SwapByteOrder.hpp"
 
 #include <boost/log/trivial.hpp>
@@ -17,10 +17,10 @@ BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& ob
 
   BOOST_LOG_TRIVIAL(debug) << "vertices = " + std::to_string(object.GetVerticesCount());
   BOOST_LOG_TRIVIAL(debug) << "faces = " + std::to_string(object.GetFacesCount());
-  
+
   buffer.Push(swapBytes(object.GetVerticesCount()));
   buffer.Push(swapBytes(object.GetFacesCount()));
-  
+
   for (auto it = object.GetVertices().begin(); it != object.GetVertices().end(); ++it)
   {
     auto value = *it;
@@ -63,7 +63,7 @@ Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buff
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
 
-  Object3DBuilder builder;
+  ObjectBuilder builder;
 
   size_t offset = 0;
 

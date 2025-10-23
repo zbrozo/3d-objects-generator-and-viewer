@@ -1,5 +1,6 @@
 #include "FractalTetrahedron.hpp"
 #include "RegularTetrahedron.hpp"
+#include "Tools.hpp"
 
 #include <cmath>
 #include <algorithm>
@@ -26,17 +27,17 @@ void FractalTetrahedron::Generate()
 
   // RegularTetrahedron is used here and it is already moved in Z by height/2
   Translate(vertices, -len/2, -mRadius, 0);
-  Merge(vertices, tmp.GetFaces());
+  Tools::Merge(mVertices, mFaces, vertices, tmp.GetFaces());
 
   vertices = tmp.GetVertices();
   Translate(vertices, len/2, -mRadius, 0);
-  Merge(vertices, tmp.GetFaces());
+  Tools::Merge(mVertices, mFaces, vertices, tmp.GetFaces());
 
   vertices = tmp.GetVertices();
   Translate(vertices, 0, yLen-mRadius, 0);
-  Merge(vertices, tmp.GetFaces());
-  
+  Tools::Merge(mVertices, mFaces, vertices, tmp.GetFaces());
+
   vertices = tmp.GetVertices();
   Translate(vertices, 0, -mRadius+(yLen-mRadius), height);
-  Merge(vertices, tmp.GetFaces());
+  Tools::Merge(mVertices, mFaces, vertices, tmp.GetFaces());
 }
