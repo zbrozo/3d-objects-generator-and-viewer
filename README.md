@@ -39,17 +39,11 @@ _--a option can be avoided and values can be written immediately after type name
 _Value in f and p can be negative_
 
 3. Thorus 
-- params (--a): circle-amount ring-amount circle-radius circle-offset
+- params (--a): circle-amount ring-amount circle-radius circle-offset circle-amount2 circle-rotation-start-degree circle-rotation-step-degree
 
 _--a option can be avoided and values can be written immediately after type name_
 
 - sinus params (--s): circle-step-x circle-amp-x circle-step-y circle-amp-y circle-step-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
-
-block:
-bss - size of verticles in block
-bsx - step
-bax - amp
-
 
 - prefer triangle faces over rectanges or other kind (--3): no values
 

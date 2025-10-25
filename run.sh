@@ -89,7 +89,7 @@ cd ./objects
 ../generator --o tmp2 --n thorus 4 10 15 90
 ../generator --l 60 --o scoopex --c0 tmp1 --c1 tmp2
 
-../generator --o tmp1 --n thorus 4 8 20 70 6 0 0
+../generator --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
 ../generator --l 80 --o composite8 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
 cd ..

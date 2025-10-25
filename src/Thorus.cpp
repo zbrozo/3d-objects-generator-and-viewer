@@ -131,7 +131,7 @@ Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSi
   return facesInRing;
 }
 
-}
+} // namespace
 
 Vertices Thorus::CreateCircleVertices()
 {
@@ -166,9 +166,18 @@ Vertices Thorus::CreateRingVertices(Vertices circle)
   // obrót w Z okręgu tworzy torus
   for (int i = 0; i < count; i++)
   {
-    const auto modifiedCircle = ApplySinusToCircle(circle, i);
+    Vertices transformedCircle = circle;
 
-    for (const auto& v : modifiedCircle)
+    std::transform(transformedCircle.cbegin(), transformedCircle.cend(), transformedCircle.begin(),
+      [&](const Vertex& vertex){ 
+        Vertex v = rotation.rotateX(vertex, mCircleRotStartDeg + mCircleRotStepDeg * i); 
+        v = v + Vertex(0, mCircleOffset, 0);
+        return v;
+      });
+
+    transformedCircle = ApplySinusToCircle(transformedCircle, i);
+
+    for (const auto& v : transformedCircle)
     {
       const auto degree = degStep * i;
       const int d = degree;
@@ -300,7 +309,16 @@ Thorus::Thorus(
   {
     mRingAmount2 = ringAmount2.value();
   }
+  if (circleRotStartDeg.has_value())
+  {
+    mCircleRotStartDeg = circleRotStartDeg.value();
+  }
+  if (circleRotStepDeg.has_value())
+  {
+    mCircleRotStepDeg = circleRotStepDeg.value();
+  }
 
+  // Sinus transformation parameters
   if (circleSinusStepX.has_value())
   {
     mCircleSinusStepX = circleSinusStepX.value();
@@ -363,8 +381,6 @@ void Thorus::Generate()
 
   Vertices circle { CreateCircleVertices() };
 
-  std::transform(circle.cbegin(), circle.cend(), circle.begin(),
-    [&](const Vertex& vertex ){ return vertex + Vertex(0, mCircleOffset, 0); });
 
   mVertices = ApplySinusToRing(CreateRingVertices(circle));
   
