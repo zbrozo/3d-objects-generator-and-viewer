@@ -95,12 +95,11 @@ void DrawTextureMapping(
   RenderFunction render
   )
 {
-  for (auto face : faces)
+  const auto sortedFaces = GetVisibleFaceNumbers(vertices2d, faces);
+
+  for (const auto& faceNr : sortedFaces)
   {
-    if (!face.IsVisible(vertices2d))
-    {
-      continue;
-    }
+    const auto& face = faces[faceNr];
 
     std::vector<SDL_Vertex> geometryVertices;
 

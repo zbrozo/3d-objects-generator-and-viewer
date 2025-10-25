@@ -80,19 +80,19 @@ cd ./objects
 ../generator --l 80 --o composite4 --c0 Cone --p0 6 50 30 --t0 tz=25 --c1 Cone --p1 6 50 -30 --t1 tz=-25 rz=30 --c2 TriangulatedCylinder --p2 6 50 50 --t2 tz=25
 
 ../generator --o tmp --n cube 40
-../generator --l 80 --o composite6 --c0 csign --p0 4 100 80 0 0 10 --t0 tx=-10 --c1 csign --p1 4 100 80 0 0 10 --t1 ry=180 tx=10 --c2 csign --p2 4 100 80 0 0 10 --t2 ry=90 tz=10 --c3 csign --p3 4 100 80 0 0 10 --t3 ry=-90 tz=-10 --c4 tmp
+../generator --3 --o tmp1 --n thorus 4 6 15 95 3 45 0
+../generator --v --l 80 --o composite6 --c0 tmp1 --t0 tx=-10 --c1 tmp1 --t1 ry=180 tx=10 --c2 tmp1 --t2 ry=90 tz=10 --c3 tmp1 --t3 ry=-90 tz=-10 --c4 tmp
 
-../generator --l 60 --o composite7 --c0 csign --p0 5 80 50 0 0 20 --t0 tx=10 --c1 csign --p1 5 80 50 0 0 20 --t1 rx=90 ry=180 tx=10
+../generator --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
+../generator --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
 # scoopex sign :)
 ../generator --o tmp1 --n pentagram 14
 ../generator --o tmp2 --n thorus 4 10 15 90
 ../generator --l 60 --o scoopex --c0 tmp1 --c1 tmp2
 
-../generator --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
-../generator --l 80 --o composite8 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
 cd ..
 echo "Start viewer"
-./viewer objects composite8 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer objects composite6 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
