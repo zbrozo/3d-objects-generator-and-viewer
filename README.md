@@ -43,7 +43,14 @@ _Value in f and p can be negative_
 
 _--a option can be avoided and values can be written immediately after type name_
 
-- sinus params (--s): circle-multiply-x circle-amp-x circle-multiply-y circle-amp-y circle-multiply-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
+- sinus params (--s): circle-step-x circle-amp-x circle-step-y circle-amp-y circle-step-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
+
+block:
+bss - size of verticles in block
+bsx - step
+bax - amp
+
+
 - prefer triangle faces over rectanges or other kind (--3): no values
 
 _--s contains value of double type_
@@ -51,12 +58,9 @@ _--s contains value of double type_
 4. Composite - currently the most flexible object that can be made of 6 different components, moved and rotated
 - component name (--c0, --c1, --c2, --c3, --c4, --c5): _if component is not defined in this app then an object file with given name is searched_
 - component creation params (--p0, --p1, --p2, --p3, --p4, --p5): _depends on created component, see --p in components
-- component transformation params (--s0, --s1, --s2, --s3, --s4, --s5): available params are: 
+- component transformation params (--t0, --t1, --t2, --t3, --t4, --t5): available params are: 
     - rotation degrees (rx, ry, rz)
     - translation (tx, ty, tz)
-
-OBSOLETE:
-- translation and rotation (--f0, --f1, --f2, --f3, --f4, --f5): translation-x translation-y translation-z degree-x degree-y degree-z (default: 0 0 0 0 0 0)
 
 _Value in f and p can be negative_
 
@@ -80,19 +84,15 @@ _--a option can be avoided and values can be written immediately after type name
 --p size (default: 50)
 2. Rectangle, name: rectangle
 --p size-x size-y (default: 50 50)
-3. Square with hole part1, name: squareholepart1
---p size1 size2 (default: 50 20)
-4. Square with hole part2, name: squareholepart2
---p size1 size2 (default: 50 20)
-5. Pyramid, name: pyramid
+3. Pyramid, name: pyramid
 --p size height (default: 50 20)
-6. Taper, name: taper
+4. Taper, name: taper
 --p circle-amount circle-radius height (default: 3 50 50)
-7. Cylinder made of squares, name: cylinder
+5. Cylinder made of squares, name: cylinder
 --p circle-amount cirlce-radius height (default: 3 50 50)
-8. Cylinder made of triangles, name: cylindertriangles
+6. Cylinder made of triangles, name: cylindertriangles
 --p circle-amount cirlce-radius height (default: 3 50 50)
-9. CSign made of half of a circle, name: csign
+7. CSign made of half of a circle, name: csign
 --p number-of-points circle1-radius circle2-radius circle1-x-offset circle2-x-offset width (default: 3 50 50 0 0 10)
 
 ### Build on MS Windows

@@ -6,22 +6,27 @@
 
 class Thorus : public Object3D, public IGenerator
 {
-  int mCircleAmount = 10;
-  int mRingAmount = 10;
-  int mCircleRadius = 30;
-  int mCircleOffset = 50;
-  double mCircleSinusStepX = 0;
-  double mCircleSinusAmpX = 0;
-  double mCircleSinusStepY = 0;
-  double mCircleSinusAmpY = 0;
-  double mCircleSinusStepZ = 0;
-  double mCircleSinusAmpZ = 0;
-  double mRingSinusStepX = 0;
-  double mRingSinusAmpX = 0;
-  double mRingSinusStepY = 0;
-  double mRingSinusAmpY = 0;
-  double mRingSinusStepZ = 0;
-  double mRingSinusAmpZ = 0;
+  int mCircleAmount = 0;
+  int mRingAmount = 0;
+  int mCircleRadius = 0;
+  int mCircleOffset = 0;
+
+  int mRingAmount2 = 0;
+  int mCircleRotStartDeg = 0;
+  int mCircleRotStepDeg = 0;
+
+  double mCircleSinusStepX = 0.0;
+  double mCircleSinusAmpX = 0.0;
+  double mCircleSinusStepY = 0.0;
+  double mCircleSinusAmpY = 0.0;
+  double mCircleSinusStepZ = 0.0;
+  double mCircleSinusAmpZ = 0.0;
+  double mRingSinusStepX = 0.0;
+  double mRingSinusAmpX = 0.0;
+  double mRingSinusStepY = 0.0;
+  double mRingSinusAmpY = 0.0;
+  double mRingSinusStepZ = 0.0;
+  double mRingSinusAmpZ = 0.0;
   bool mPreferTriangles = false;
 
 public:
@@ -32,6 +37,9 @@ public:
     std::optional<int> ringAmount,
     std::optional<int> circleRadius,
     std::optional<int> circleOffset,
+    std::optional<int> ringAmount2,
+    std::optional<int> circleRotStartDeg,
+    std::optional<int> circleRotStepDeg,
     std::optional<double> circleSinusStepX,
     std::optional<double> circleSinusAmpX,
     std::optional<double> circleSinusStepY,

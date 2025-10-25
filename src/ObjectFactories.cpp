@@ -14,6 +14,7 @@
 #include "Params.hpp"
 #include "FileLoader.hpp"
 #include "FileFormatConverter.hpp"
+#include "Types.hpp"
 
 #include <cctype>
 #include <memory>
@@ -132,6 +133,7 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
 {
   ParamsVector foundParams;
   SinusParamsVector foundSinusParams;
+  StringVector founSinus;
   bool preferTriangles = false;
 
   if (auto it = std::find_if(params.begin(), params.end(),
@@ -158,6 +160,10 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
     getParam(foundParams, 1),
     getParam(foundParams, 2),
     getParam(foundParams, 3),
+    getParam(foundParams, 4),
+    getParam(foundParams, 5),
+    getParam(foundParams, 6),
+
     getParam(foundSinusParams, 0),
     getParam(foundSinusParams, 1),
     getParam(foundSinusParams, 2),

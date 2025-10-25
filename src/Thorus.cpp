@@ -41,6 +41,7 @@ Faces CreateFacesInCircle(
 {
   if (begin + count > circleSize)
   {
+    // error
     return Faces();
   }
 
@@ -86,24 +87,18 @@ Faces CreateFacesInCircle(
   return faces;
 }
 
-Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSize)
+Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSize, int ringSize2)
 {
   Faces facesInRing;
 
-  for (int ringIndex = 0; ringIndex < ringSize; ++ringIndex)
+  for (int ringIndex = 0; ringIndex < ringSize2; ++ringIndex)
   {
     Faces faces;
 
-    const auto isLast = (ringIndex == (ringSize - 1));
+    const bool ringIsClosed = ringSize == ringSize2;
+    const bool lastElementInRing = ringIsClosed && (ringIndex == (ringSize - 1));
 
-    if (isLast)
-    {
-      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2, true);
-    }
-    else
-    {
-      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2);
-    }
+    faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2, lastElementInRing);
 
     for (auto face : faces)
     {
@@ -114,24 +109,18 @@ Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSi
   return facesInRing;
 }
 
-Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSize)
+Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSize, int ringSize2)
 {
   Faces facesInRing;
 
-  for (int ringIndex = 0; ringIndex < ringSize; ++ringIndex)
+  for (int ringIndex = 0; ringIndex < ringSize2; ++ringIndex)
   {
     Faces faces;
 
-    const auto isLast = (ringIndex == (ringSize - 1));
+    const bool ringIsClosed = ringSize == ringSize2;
+    const bool lastElementInRing = ringIsClosed && (ringIndex == (ringSize - 1));
 
-    if (isLast)
-    {
-      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2, true);
-    }
-    else
-    {
-      faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2);
-    }
+    faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2, lastElementInRing);
 
     for (auto face : faces)
     {
@@ -172,8 +161,10 @@ Vertices Thorus::CreateRingVertices(Vertices circle)
 
   const auto degStep = 360.0 / mRingAmount;
 
+  const int count = (mRingAmount == mRingAmount2) ?  mRingAmount : (mRingAmount2 + 1);
+
   // obrót w Z okręgu tworzy torus
-  for (int i = 0; i < mRingAmount; i++)
+  for (int i = 0; i < count; i++)
   {
     const auto modifiedCircle = ApplySinusToCircle(circle, i);
 
@@ -260,6 +251,9 @@ Thorus::Thorus(
   std::optional<int> ringAmount,
   std::optional<int> circleRadius,
   std::optional<int> circleOffset,
+  std::optional<int> ringAmount2,
+  std::optional<int> circleRotStartDeg,
+  std::optional<int> circleRotStepDeg,
   std::optional<double> circleSinusStepX,
   std::optional<double> circleSinusAmpX,
   std::optional<double> circleSinusStepY,
@@ -301,6 +295,10 @@ Thorus::Thorus(
   if (circleOffset.has_value())
   {
     mCircleOffset = circleOffset.value();
+  }
+  if (ringAmount2.has_value())
+  {
+    mRingAmount2 = ringAmount2.value();
   }
 
   if (circleSinusStepX.has_value())
@@ -358,26 +356,50 @@ Thorus::Thorus(
 
 void Thorus::Generate()
 {
+  if (0 == mRingAmount2)
+  {
+    mRingAmount2 = mRingAmount;
+  }
+
   Vertices circle { CreateCircleVertices() };
 
   std::transform(circle.cbegin(), circle.cend(), circle.begin(),
     [&](const Vertex& vertex ){ return vertex + Vertex(0, mCircleOffset, 0); });
 
   mVertices = ApplySinusToRing(CreateRingVertices(circle));
-
+  
   /// --- Faces ---
 
-  auto internalFaces = CreateInternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount);
+  auto internalFaces = CreateInternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount, mRingAmount2);
 
   for (auto face : internalFaces)
   {
     mFaces.push_back(face);
   }
 
-  auto externalFaces = CreateExternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount);
+  auto externalFaces = CreateExternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount, mRingAmount2);
 
   for (auto face : externalFaces)
   {
     mFaces.push_back(face);
+  }
+
+  // optional add closing faces 
+  if (mRingAmount != mRingAmount2)
+  {
+    Face face1;
+    for (int i = 0; i < mCircleAmount; i++)
+    {
+      face1.push_back(i);
+    }
+
+    Face face2;
+    for (int i = mCircleAmount - 1; i >= 0; --i)
+    {
+      face2.push_back(mCircleAmount * mRingAmount2 +  i);
+    }
+
+    mFaces.push_back(face1);
+    mFaces.push_back(face2);
   }
 }

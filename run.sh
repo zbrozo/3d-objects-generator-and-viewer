@@ -59,9 +59,9 @@ cd ./objects
 
 ../generator --l 60 --o thorus4 --n thorus 6 12 30 70 --s 0 0 3 15 2 15
 ../generator --l 60 --o thorus5 --n thorus 6 16 30 70 --s 0 0 4 15 4 15
-../generator --3 --o thorus6 --n thorus 6 12 30 70 --s 0 0 3 10 2 10
-../generator --3 --o thorus7 --n thorus 6 16 30 70 --s 0 0 4 10 4 10
-../generator --3 --o thorus8 --n thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
+../generator --l 80 --3 --o thorus6 --n thorus 6 12 30 70 --s 0 0 3 10 2 10
+../generator --l 80 --3 --o thorus7 --n thorus 6 16 30 70 --s 0 0 4 10 4 10
+../generator --l 80 --3 --o thorus8 --n thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
 
 ###
 ../generator --l 80 --o cone1 --c0 Cone --p0 3 80 80 --c1 Cone --p1 3 80 -80
@@ -89,7 +89,10 @@ cd ./objects
 ../generator --o tmp2 --n thorus 4 10 15 90
 ../generator --l 60 --o scoopex --c0 tmp1 --c1 tmp2
 
+../generator --o tmp1 --n thorus 4 8 20 70 6 0 0
+../generator --l 80 --o composite8 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
+
 cd ..
 echo "Start viewer"
-./viewer objects cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer objects composite8 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
