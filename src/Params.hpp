@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PARAMS_HPP_
+#define _PARAMS_HPP_
 
 #include <vector>
 #include <string>
@@ -20,8 +21,6 @@ enum class ObjectId {
   Square,
   Rectangle,
   Trapeze,
-  //SquareHolePart1,
-  //SquareHolePart2,
   Pyramid,
   Cone,
   Cylinder,
@@ -78,3 +77,4 @@ using ComponentTransformParamsPair = std::pair<ParamsVector, StringVector>;
 using ComponentsWithParamsPair = std::pair<ComponentTransformParamsPair, std::unique_ptr<ComponentsVector>>;
 using ComponentsWithParamsVector = std::vector<ComponentsWithParamsPair>;
 
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _THORUS_HPP_
+#define _THORUS_HPP_
 
 #include "Object3D.hpp"
 #include "IGenerator.hpp"
@@ -73,3 +74,5 @@ private:
   Vertices ApplySinusToCircle(const Vertices& vertices, int index);
 
 };
+
+#endif

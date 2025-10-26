@@ -1,8 +1,5 @@
-#pragma once
-
-#include <vector>
-#include <string>
-#include <utility>
+#ifndef _OBJECT3D_HPP_
+#define _OBJECT3D_HPP_
 
 #include "Types.hpp"
 #include "Faces.hpp"
@@ -22,7 +19,7 @@ protected:
 
 public:
 
-  Object3D(const std::string& name) :
+  explicit Object3D(const std::string& name) :
     mName(name)
   {
   }
@@ -72,3 +69,5 @@ public:
   }
 
 };
+
+#endif

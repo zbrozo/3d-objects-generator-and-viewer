@@ -81,7 +81,7 @@ cd ./objects
 
 ../generator --o tmp --n cube 40
 ../generator --3 --o tmp1 --n thorus 4 6 15 95 3 45 0
-../generator --v --l 80 --o composite6 --c0 tmp1 --t0 tx=-10 --c1 tmp1 --t1 ry=180 tx=10 --c2 tmp1 --t2 ry=90 tz=10 --c3 tmp1 --t3 ry=-90 tz=-10 --c4 tmp
+../generator --l 80 --o composite6 --c0 tmp1 --t0 tx=-10 --c1 tmp1 --t1 ry=180 tx=10 --c2 tmp1 --t2 ry=90 tz=10 --c3 tmp1 --t3 ry=-90 tz=-10 --c4 tmp
 
 ../generator --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
 ../generator --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20

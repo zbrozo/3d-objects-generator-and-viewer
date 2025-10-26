@@ -41,6 +41,7 @@ set(FactoriesSRC
   src/FractalTetrahedron.cpp  
   src/Pentagram.cpp
   src/FileLoader.cpp
+  src/ObjectParamValidators.cpp
 )
 
 set(GeneratorSRC

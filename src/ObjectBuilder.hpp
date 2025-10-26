@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _OBJECT_BUILDER_HPP_
+#define _OBJECT_BUILDER_HPP_
+
 #include "Object3D.hpp"
 
 class ObjectBuilder : public Object3D
@@ -16,7 +18,7 @@ public:
   ObjectBuilder& operator=(const ObjectBuilder&) = delete;
   ObjectBuilder& operator=(ObjectBuilder&&) = delete;
 
-  ObjectBuilder(const Object3D& object) :
+  explicit ObjectBuilder(const Object3D& object) :
     Object3D(object)
   {
   }
@@ -41,3 +43,5 @@ public:
     mNormalVectorsInFaces = vectors;
   }
 };
+
+#endif

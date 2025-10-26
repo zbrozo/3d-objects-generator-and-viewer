@@ -1,10 +1,10 @@
+#include "Params.hpp"
 #include "Types.hpp"
 #include "Rotation.hpp"
 #include "Thorus.hpp"
-#include <algorithm>
-#include <exception>
-#include <stdexcept>
+#include "ObjectParamValidators.hpp"
 
+#include <algorithm>
 
 namespace {
 
@@ -100,7 +100,7 @@ Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSi
 
     faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2, lastElementInRing);
 
-    for (auto face : faces)
+    for (const auto& face : faces)
     {
       facesInRing.push_back(face);
     }
@@ -122,7 +122,7 @@ Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSi
 
     faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2, lastElementInRing);
 
-    for (auto face : faces)
+    for (const auto& face : faces)
     {
       facesInRing.push_back(face);
     }
@@ -277,46 +277,16 @@ Thorus::Thorus(
   std::optional<double> ringSinusAmpZ,
   bool preferTriangles
   ) :
-  Object3D(name)
+  Object3D(name),
+  mPreferTriangles(preferTriangles)
 {
-  mPreferTriangles = preferTriangles;
-
-  if (circleAmount.has_value())
-  {
-    if (circleAmount.value() < 3)
-    {
-      throw std::out_of_range("Too less points declared");
-    }
-    mCircleAmount = circleAmount.value();
-  }
-  if (ringAmount.has_value())
-  {
-    if (ringAmount.value() < 3)
-    {
-      throw std::out_of_range("Too less points declared");
-    }
-    mRingAmount = ringAmount.value();
-  }
-  if (circleRadius.has_value())
-  {
-    mCircleRadius = circleRadius.value();
-  }
-  if (circleOffset.has_value())
-  {
-    mCircleOffset = circleOffset.value();
-  }
-  if (ringAmount2.has_value())
-  {
-    mRingAmount2 = ringAmount2.value();
-  }
-  if (circleRotStartDeg.has_value())
-  {
-    mCircleRotStartDeg = circleRotStartDeg.value();
-  }
-  if (circleRotStepDeg.has_value())
-  {
-    mCircleRotStepDeg = circleRotStepDeg.value();
-  }
+  SetParam<int>(mCircleAmount, circleAmount, std::bind(IntValidator, std::placeholders::_1, 3, std::nullopt));
+  SetParam<int>(mRingAmount, ringAmount, std::bind(IntValidator, std::placeholders::_1, 3, std::nullopt));
+  SetParam<int>(mCircleRadius, circleRadius, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
+  SetParam<int>(mCircleOffset, circleOffset, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
+  SetParam<int>(mRingAmount2, ringAmount2, std::bind(IntValidator, std::placeholders::_1, 0, mRingAmount));
+  SetParam<int>(mCircleRotStartDeg, circleRotStartDeg, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
+  SetParam<int>(mCircleRotStepDeg, circleRotStepDeg, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
 
   // Sinus transformation parameters
   if (circleSinusStepX.has_value())
