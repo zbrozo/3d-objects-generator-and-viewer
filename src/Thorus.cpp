@@ -5,6 +5,7 @@
 #include "ObjectParamValidators.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 namespace {
 
@@ -87,50 +88,6 @@ Faces CreateFacesInCircle(
   return faces;
 }
 
-Faces CreateInternalFacesInRing(bool preferTriangles, int circleSize, int ringSize, int ringSize2)
-{
-  Faces facesInRing;
-
-  for (int ringIndex = 0; ringIndex < ringSize2; ++ringIndex)
-  {
-    Faces faces;
-
-    const bool ringIsClosed = ringSize == ringSize2;
-    const bool lastElementInRing = ringIsClosed && (ringIndex == (ringSize - 1));
-
-    faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, 0, circleSize/2, lastElementInRing);
-
-    for (const auto& face : faces)
-    {
-      facesInRing.push_back(face);
-    }
-  }
-
-  return facesInRing;
-}
-
-Faces CreateExternalFacesInRing(bool preferTriangles, int circleSize, int ringSize, int ringSize2)
-{
-  Faces facesInRing;
-
-  for (int ringIndex = 0; ringIndex < ringSize2; ++ringIndex)
-  {
-    Faces faces;
-
-    const bool ringIsClosed = ringSize == ringSize2;
-    const bool lastElementInRing = ringIsClosed && (ringIndex == (ringSize - 1));
-
-    faces = CreateFacesInCircle(preferTriangles, ringIndex, circleSize, circleSize/2, circleSize/2, lastElementInRing);
-
-    for (const auto& face : faces)
-    {
-      facesInRing.push_back(face);
-    }
-  }
-
-  return facesInRing;
-}
-
 } // namespace
 
 Vertices Thorus::CreateCircleVertices()
@@ -186,6 +143,26 @@ Vertices Thorus::CreateRingVertices(Vertices circle)
   }
 
   return vertices;
+}
+
+Faces Thorus::CreateFacesInRing(int begin, int count)
+{
+  const bool ringIsClosed = mRingAmount == mRingAmount2;
+
+  Faces facesInRing;
+  for (int ringIndex = 0; ringIndex < mRingAmount2; ++ringIndex)
+  {
+    const bool lastElementInRing = ringIsClosed && (ringIndex == (mRingAmount - 1));
+    
+    Faces faces = CreateFacesInCircle(mPreferTriangles, ringIndex, mCircleAmount, begin, count, lastElementInRing);
+
+    for (const auto& f : faces)
+    {
+      facesInRing.push_back(f);
+    }
+  }
+
+  return facesInRing;
 }
 
 Vertices Thorus::ApplySinusToCircle(const Vertices& vertices, int index)
@@ -351,25 +328,36 @@ void Thorus::Generate()
 
   Vertices circle { CreateCircleVertices() };
 
-
   mVertices = ApplySinusToRing(CreateRingVertices(circle));
   
   /// --- Faces ---
-
-  auto internalFaces = CreateInternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount, mRingAmount2);
-
-  for (auto face : internalFaces)
+  
+  if (mCircleAmount == 3)
   {
-    mFaces.push_back(face);
+    auto faces = CreateFacesInRing(0, mCircleAmount);
+
+    for (const auto& face : faces)
+    {
+      mFaces.push_back(face);
+    }
   }
-
-  auto externalFaces = CreateExternalFacesInRing(mPreferTriangles, mCircleAmount, mRingAmount, mRingAmount2);
-
-  for (auto face : externalFaces)
+  else if (mCircleAmount > 3)
   {
-    mFaces.push_back(face);
-  }
+    auto internalFaces = CreateFacesInRing(0, mCircleAmount/2);
 
+    for (const auto& face : internalFaces)
+    {
+      mFaces.push_back(face);
+    }
+
+    auto externalFaces = CreateFacesInRing(mCircleAmount/2, mCircleAmount/2);
+    
+    for (const auto& face : externalFaces)
+    {
+      mFaces.push_back(face);
+    }
+  }
+  
   // optional add closing faces 
   if (mRingAmount != mRingAmount2)
   {

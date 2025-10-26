@@ -69,7 +69,8 @@ private:
 
   Vertices CreateCircleVertices();
   Vertices CreateRingVertices(Vertices circle);
-
+  Faces CreateFacesInRing(int begin, int count);
+  
   Vertices ApplySinusToRing(const Vertices& vertices);
   Vertices ApplySinusToCircle(const Vertices& vertices, int index);
 

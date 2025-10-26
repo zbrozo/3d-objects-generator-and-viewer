@@ -14,7 +14,7 @@ bool IntValidator(int param, std::optional<int> valueMin, std::optional<int> val
   
   if (valueMax.has_value())
   {
-    if (param >= valueMax.value())
+    if (param > valueMax.value())
     {
       throw std::out_of_range("Too big value");
     }
