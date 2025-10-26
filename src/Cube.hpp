@@ -10,7 +10,7 @@ class Cube : public Object3D, public IGenerator
   
 public:
 
-  Cube(const char* name, int size = 50) :
+  explicit Cube(const char* name, int size = 50) :
     Object3D(name), mSize(size)
   {
   }

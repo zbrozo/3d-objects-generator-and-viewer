@@ -33,7 +33,7 @@ class Thorus : public Object3D, public IGenerator
 
 public:
 
-  Thorus(
+  explicit Thorus(
     const char* name,
     std::optional<int> circleAmount,
     std::optional<int> ringAmount,

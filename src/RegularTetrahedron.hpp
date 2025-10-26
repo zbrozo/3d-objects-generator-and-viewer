@@ -10,7 +10,7 @@ class RegularTetrahedron : public Object3D, public IGenerator
 
 public:
 
-  RegularTetrahedron(const char* name, int radius = 50) :
+  explicit RegularTetrahedron(const char* name, int radius = 50) :
     Object3D(name), mRadius(radius)
   {
   }

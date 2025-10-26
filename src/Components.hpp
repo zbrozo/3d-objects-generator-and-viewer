@@ -18,12 +18,9 @@ class Square : public Object3D, public IGenerator
 public:
 
   explicit Square(std::optional<int> size) :
-    Object3D("")
+    Object3D("Square")
   {
-    if (size.has_value())
-    {
-      mSize = size.value();
-    }
+    SetParam<int>(mSize, size);
   }
 
   void Generate() override;
@@ -45,18 +42,10 @@ class Rectangle : public Object3D, public IGenerator
 public:
 
   explicit Rectangle(std::optional<int> sizeX, std::optional<int> sizeY) :
-    Object3D("")
+    Object3D("Rectangle")
   {
-    if (sizeX.has_value())
-    {
-      mSizeX = sizeX.value();
-    }
-
-    if (sizeY.has_value())
-    {
-      mSizeY = sizeY.value();
-    }
-
+    SetParam<int>(mSizeX, sizeX);
+    SetParam<int>(mSizeY, sizeY);
   }
 
   void Generate() override;
@@ -78,22 +67,11 @@ class Trapeze : public Object3D, public IGenerator
 public:
 
   explicit Trapeze(std::optional<int> top, std::optional<int> bottom, std::optional<int> height) :
-    Object3D("")
+    Object3D("Trapeze")
   {
-    if (top.has_value())
-    {
-      mTop = top.value();
-    }
-
-    if (bottom.has_value())
-    {
-      mBottom = bottom.value();
-    }
-
-    if (height.has_value())
-    {
-      mHeight = height.value();
-    }
+    SetParam<int>(mTop, top);
+    SetParam<int>(mBottom, bottom);
+    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -117,17 +95,10 @@ public:
     const std::optional<int>& size1,
     const std::optional<int>& size2
     ) :
-    Object3D("")
+    Object3D("Pyramid")
   {
-    if (size1.has_value())
-    {
-      mSize1 = size1.value();
-    }
-
-    if (size2.has_value())
-    {
-      mSize2 = size2.value();
-    }
+    SetParam<int>(mSize1, size1);
+    SetParam<int>(mSize2, size2);
   }
 
   void Generate() override;
@@ -154,22 +125,11 @@ public:
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
     ) :
-    Object3D("")
+    Object3D("Cone")
   {
-    if (circleAmount.has_value())
-    {
-      mCircleAmount = circleAmount.value();
-    }
-
-    if (circleRadius.has_value())
-    {
-      mCircleRadius = circleRadius.value();
-    }
-
-    if (height.has_value())
-    {
-      mHeight = height.value();
-    }
+    SetParam<int>(mCircleAmount, circleAmount);
+    SetParam<int>(mCircleRadius, circleRadius);
+    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -195,22 +155,11 @@ public:
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
     ) :
-    Object3D("")
+    Object3D("Cylinder")
   {
-    if (circleAmount.has_value())
-    {
-      mCircleAmount = circleAmount.value();
-    }
-
-    if (circleRadius.has_value())
-    {
-      mCircleRadius = circleRadius.value();
-    }
-
-    if (height.has_value())
-    {
-      mHeight = height.value();
-    }
+    SetParam<int>(mCircleAmount, circleAmount);
+    SetParam<int>(mCircleRadius, circleRadius);
+    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -237,22 +186,11 @@ public:
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
     ) :
-    Object3D("")
+    Object3D("TriangulatedCylinder")
   {
-    if (circleAmount.has_value())
-    {
-      mCircleAmount = circleAmount.value();
-    }
-
-    if (circleRadius.has_value())
-    {
-      mCircleRadius = circleRadius.value();
-    }
-
-    if (height.has_value())
-    {
-      mHeight = height.value();
-    }
+    SetParam<int>(mCircleAmount, circleAmount);
+    SetParam<int>(mCircleRadius, circleRadius);
+    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -276,7 +214,7 @@ public:
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius
     ) :
-    Object3D("")
+    Object3D("Star")
   {
     SetParam<int>(mCircleAmount, circleAmount);
     SetParam<int>(mCircleRadius, circleRadius);

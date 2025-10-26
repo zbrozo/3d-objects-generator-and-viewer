@@ -9,7 +9,7 @@ class Pentagram : public Object3D, public IGenerator
 
 public:
 
-  Pentagram(const char* name, int distance = 0) :
+  explicit Pentagram(const char* name, int distance = 0) :
     Object3D(name), mDistance(distance)
   {
   }

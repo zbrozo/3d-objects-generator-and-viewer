@@ -10,7 +10,7 @@ class FractalTetrahedron : public Object3D, public IGenerator
 
 public:
 
-  FractalTetrahedron(const char* name, int radius = 50) :
+  explicit FractalTetrahedron(const char* name, int radius = 50) :
     Object3D(name), mRadius(radius)
   {
   }

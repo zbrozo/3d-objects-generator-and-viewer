@@ -15,7 +15,7 @@ class CubeExt : public Cube
   
 public:
 
-  CubeExt(const char* name, std::unique_ptr<ComponentsWithParamsVector> objects) :
+  explicit CubeExt(const char* name, std::unique_ptr<ComponentsWithParamsVector> objects) :
     Cube(name),
     mObjects(std::move(objects))
   {

@@ -16,7 +16,7 @@ void Composite::Generate()
     auto params = object.first.first;
     auto cmds = object.first.second;
 
-    auto& components = *object.second;
+    const auto& components = *object.second;
 
     Faces objectFaces;
     Vertices objectVertices;
