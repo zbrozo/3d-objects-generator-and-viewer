@@ -8,14 +8,19 @@ template<class T>
 void SetParam(
   T& destParam,
   const std::optional<T>& srcParam,
-  std::function<bool(T)>(validator))
+  std::function<void(T)>(validator) = nullptr)
 {
-  if (srcParam.has_value() && validator(srcParam.value()))
+  if (srcParam.has_value())
   {
+    if (validator != nullptr)
+    {
+      validator(srcParam.value());
+    }
+    
     destParam = srcParam.value();
   }
 };
 
-bool IntValidator(int param, std::optional<int> valueMin, std::optional<int> valueMax);
+void IntValidator(int param, std::optional<int> valueMin, std::optional<int> valueMax);
 
 #endif

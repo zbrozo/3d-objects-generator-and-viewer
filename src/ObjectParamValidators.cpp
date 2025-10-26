@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-bool IntValidator(int param, std::optional<int> valueMin, std::optional<int> valueMax)
+void IntValidator(int param, std::optional<int> valueMin, std::optional<int> valueMax)
 {
   if (valueMin.has_value())
   {
@@ -19,6 +19,4 @@ bool IntValidator(int param, std::optional<int> valueMin, std::optional<int> val
       throw std::out_of_range("Too big value");
     }
   }
-  
-  return true;
 };

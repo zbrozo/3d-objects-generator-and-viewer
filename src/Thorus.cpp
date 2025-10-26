@@ -263,7 +263,7 @@ Thorus::Thorus(
   SetParam<int>(mCircleOffset, circleOffset, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
   SetParam<int>(mRingAmount2, ringAmount2, std::bind(IntValidator, std::placeholders::_1, 0, mRingAmount));
   SetParam<int>(mCircleRotStartDeg, circleRotStartDeg, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
-  SetParam<int>(mCircleRotStepDeg, circleRotStepDeg, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
+  SetParam<int>(mCircleRotStepDeg, circleRotStepDeg);
 
   // Sinus transformation parameters
   if (circleSinusStepX.has_value())
