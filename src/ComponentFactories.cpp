@@ -120,19 +120,6 @@ std::unique_ptr<Object3D> TriangulatedCylinderFactory::FactoryMethod(
   return std::make_unique<Components::TriangulatedCylinder>(param1, param2, param3);
 }
 
-std::unique_ptr<Object3D> CSignFactory::FactoryMethod(
-  const std::string& /*name*/,
-  const ParamsVector& params) const
-{
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  std::optional<int> param4 = getParam(params, 3);
-  std::optional<int> param5 = getParam(params, 4);
-  std::optional<int> param6 = getParam(params, 5);
-  return std::make_unique<Components::CSign>(param1, param2, param3, param4, param5, param6);
-}
-
 std::unique_ptr<Object3D> StarFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const

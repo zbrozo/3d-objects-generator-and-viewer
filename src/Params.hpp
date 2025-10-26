@@ -25,7 +25,6 @@ enum class ObjectId {
   Cone,
   Cylinder,
   TriangulatedCylinder,
-  CSign,
   Star,
   Pentagram,
 };

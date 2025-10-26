@@ -34,13 +34,10 @@ std::map<std::string, ObjectId> ComponentIdMap {
   {"square", ObjectId::Square},
   {"rectangle", ObjectId::Rectangle},
   {"trapeze", ObjectId::Trapeze},
-  //{"squareholepart1", ObjectId::SquareHolePart1},
-  //{"squareholepart2", ObjectId::SquareHolePart2},
   {"pyramid", ObjectId::Pyramid},
   {"cone", ObjectId::Cone},
   {"cylinder", ObjectId::Cylinder},
   {"triangulatedcylinder", ObjectId::TriangulatedCylinder},
-  {"csign", ObjectId::CSign},
   {"star", ObjectId::Star},
 };
 

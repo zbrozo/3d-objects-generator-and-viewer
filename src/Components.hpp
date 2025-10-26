@@ -340,68 +340,6 @@ public:
   TriangulatedCylinder& operator=(TriangulatedCylinder&&) = delete;
 };
 
-class CSign : public Object3D, public IGenerator
-{
-  int mCircleAmount = 3;
-  int mCircle1Radius = 50;
-  int mCircle2Radius = 50;
-  int mCircle1Offset = 0;
-  int mCircle2Offset = 0;
-  int mWidth = 10;
-
-public:
-
-  CSign(
-    const std::optional<int>& circleAmount,
-    const std::optional<int>& circle1Radius,
-    const std::optional<int>& circle2Radius,
-    const std::optional<int>& circle1Offset,
-    const std::optional<int>& circle2Offset,
-    const std::optional<int>& width
-    ) :
-    Object3D("")
-  {
-    if (circleAmount.has_value())
-    {
-      mCircleAmount = circleAmount.value();
-    }
-
-    if (circle1Radius.has_value())
-    {
-      mCircle1Radius = circle1Radius.value();
-    }
-
-    if (circle2Radius.has_value())
-    {
-      mCircle2Radius = circle2Radius.value();
-    }
-
-    if (circle1Offset.has_value())
-    {
-      mCircle1Offset = circle1Offset.value();
-    }
-
-    if (circle2Offset.has_value())
-    {
-      mCircle2Offset = circle2Offset.value();
-    }
-
-    if (width.has_value())
-    {
-      mWidth = width.value();
-    }
-  }
-
-  void Generate() override;
-
-  virtual ~CSign() = default;
-
-  CSign(const CSign&) = delete;
-  CSign(CSign&&) = delete;
-  CSign& operator=(const CSign&) = delete;
-  CSign& operator=(CSign &&) = delete;
-};
-
 class Star : public Object3D, public IGenerator
 {
   int mCircleAmount = 5;
