@@ -1,7 +1,9 @@
-#pragma once
+#ifndef _COMPONENTS_HPP_
+#define _COMPONENTS_HPP_
 
 #include "IGenerator.hpp"
 #include "Object3D.hpp"
+#include "ObjectParamValidators.hpp"
 
 #include <optional>
 #include <iostream>
@@ -15,7 +17,7 @@ class Square : public Object3D, public IGenerator
 
 public:
 
-  Square(std::optional<int> size) :
+  explicit Square(std::optional<int> size) :
     Object3D("")
   {
     if (size.has_value())
@@ -42,7 +44,7 @@ class Rectangle : public Object3D, public IGenerator
 
 public:
 
-  Rectangle(std::optional<int> sizeX, std::optional<int> sizeY) :
+  explicit Rectangle(std::optional<int> sizeX, std::optional<int> sizeY) :
     Object3D("")
   {
     if (sizeX.has_value())
@@ -75,7 +77,7 @@ class Trapeze : public Object3D, public IGenerator
 
 public:
 
-  Trapeze(std::optional<int> top, std::optional<int> bottom, std::optional<int> height) :
+  explicit Trapeze(std::optional<int> top, std::optional<int> bottom, std::optional<int> height) :
     Object3D("")
   {
     if (top.has_value())
@@ -104,83 +106,6 @@ public:
   Trapeze& operator=(Trapeze &&) = delete;
 };
 
-class SquareWithHolePart1 : public Object3D, public IGenerator
-{
-  int mSize1 = 50;
-  int mSize2 = 20;
-  int mSize3 = 20;
-
-public:
-
-  SquareWithHolePart1(
-    const std::optional<int>& size1,
-    const std::optional<int>& size2,
-    const std::optional<int>& size3
-    ) :
-    Object3D("")
-  {
-    if (size1.has_value())
-    {
-      mSize1 = size1.value();
-    }
-
-    if (size2.has_value())
-    {
-      mSize2 = size2.value();
-    }
-
-    if (size3.has_value())
-    {
-      mSize3 = size3.value();
-    }
-  }
-
-  void Generate() override;
-
-  virtual ~SquareWithHolePart1() = default;
-
-  SquareWithHolePart1(SquareWithHolePart1 const &) = delete;
-  SquareWithHolePart1(SquareWithHolePart1 &&) = delete;
-  SquareWithHolePart1& operator=(const SquareWithHolePart1&) = delete;
-  SquareWithHolePart1& operator=(SquareWithHolePart1 &&) = delete;
-
-};
-
-class SquareWithHolePart2 : public Object3D, public IGenerator
-{
-  int mSize1 = 50;
-  int mSize2 = 20;
-
-public:
-
-  SquareWithHolePart2(
-    const std::optional<int>& size1,
-    const std::optional<int>& size2
-    ) :
-    Object3D("")
-  {
-    if (size1.has_value())
-    {
-      mSize1 = size1.value();
-    }
-
-    if (size2.has_value())
-    {
-      mSize2 = size2.value();
-    }
-  }
-
-  void Generate() override;
-
-  virtual ~SquareWithHolePart2() = default;
-
-  SquareWithHolePart2(SquareWithHolePart2 const &) = delete;
-  SquareWithHolePart2(SquareWithHolePart2 &&) = delete;
-  SquareWithHolePart2& operator=(const SquareWithHolePart2&) = delete;
-  SquareWithHolePart2& operator=(SquareWithHolePart2 &&) = delete;
-
-};
-
 class Pyramid : public Object3D, public IGenerator
 {
   int mSize1 = 50;
@@ -188,7 +113,7 @@ class Pyramid : public Object3D, public IGenerator
 
 public:
 
-  Pyramid(
+  explicit Pyramid(
     const std::optional<int>& size1,
     const std::optional<int>& size2
     ) :
@@ -224,7 +149,7 @@ class Cone : public Object3D, public IGenerator
 
 public:
 
-  Cone(
+  explicit Cone(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -265,7 +190,7 @@ class Cylinder : public Object3D, public IGenerator
 
 public:
 
-  Cylinder(
+  explicit Cylinder(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -307,7 +232,7 @@ class TriangulatedCylinder : public Object3D, public IGenerator
 
 public:
 
-  TriangulatedCylinder(
+  explicit TriangulatedCylinder(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius,
     const std::optional<int>& height
@@ -347,21 +272,14 @@ class Star : public Object3D, public IGenerator
 
 public:
 
-  Star(
+  explicit Star(
     const std::optional<int>& circleAmount,
     const std::optional<int>& circleRadius
     ) :
     Object3D("")
   {
-    if (circleAmount.has_value())
-    {
-      mCircleAmount = circleAmount.value();
-    }
-
-    if (circleRadius.has_value())
-    {
-      mCircleRadius = circleRadius.value();
-    }
+    SetParam<int>(mCircleAmount, circleAmount);
+    SetParam<int>(mCircleRadius, circleRadius);
   }
 
   void Generate() override;
@@ -375,3 +293,5 @@ public:
 };
 
 } // namespace Components
+
+#endif

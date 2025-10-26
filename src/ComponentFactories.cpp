@@ -61,26 +61,6 @@ std::unique_ptr<Object3D> TrapezeFactory::FactoryMethod(
   return std::make_unique<Components::Trapeze>(top, bottom, height);
 }
 
-std::unique_ptr<Object3D> SquareWithHolePart1Factory::FactoryMethod(
-  const std::string& /*name*/,
-  const ParamsVector& params) const
-{
-
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  return std::make_unique<Components::SquareWithHolePart1>(param1, param2, param3);
-}
-
-std::unique_ptr<Object3D> SquareWithHolePart2Factory::FactoryMethod(
-  const std::string& /*name*/,
-  const ParamsVector& params) const
-{
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  return std::make_unique<Components::SquareWithHolePart2>(param1, param2);
-}
-
 std::unique_ptr<Object3D> PyramidFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
