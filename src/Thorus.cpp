@@ -262,61 +262,22 @@ Thorus::Thorus(
   SetParam<int>(mCircleRadius, circleRadius, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
   SetParam<int>(mCircleOffset, circleOffset, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
   SetParam<int>(mRingAmount2, ringAmount2, std::bind(IntValidator, std::placeholders::_1, 0, mRingAmount));
-  SetParam<int>(mCircleRotStartDeg, circleRotStartDeg, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
+  SetParam<int>(mCircleRotStartDeg, circleRotStartDeg);
   SetParam<int>(mCircleRotStepDeg, circleRotStepDeg);
 
   // Sinus transformation parameters
-  if (circleSinusStepX.has_value())
-  {
-    mCircleSinusStepX = circleSinusStepX.value();
-  }
-  if (circleSinusStepY.has_value())
-  {
-    mCircleSinusStepY = circleSinusStepY.value();
-  }
-  if (circleSinusStepZ.has_value())
-  {
-    mCircleSinusStepZ = circleSinusStepZ.value();
-  }
-
-  if (circleSinusAmpX.has_value())
-  {
-    mCircleSinusAmpX = circleSinusAmpX.value();
-  }
-  if (circleSinusAmpY.has_value())
-  {
-    mCircleSinusAmpY = circleSinusAmpY.value();
-  }
-  if (circleSinusAmpZ.has_value())
-  {
-    mCircleSinusAmpZ = circleSinusAmpZ.value();
-  }
-
-  if (ringSinusStepX.has_value())
-  {
-    mRingSinusStepX = ringSinusStepX.value();
-  }
-  if (ringSinusStepY.has_value())
-  {
-    mRingSinusStepY = ringSinusStepY.value();
-  }
-  if (ringSinusStepZ.has_value())
-  {
-    mRingSinusStepZ = ringSinusStepZ.value();
-  }
-
-  if (ringSinusAmpX.has_value())
-  {
-    mRingSinusAmpX = ringSinusAmpX.value();
-  }
-  if (ringSinusAmpY.has_value())
-  {
-    mRingSinusAmpY = ringSinusAmpY.value();
-  }
-  if (ringSinusAmpZ.has_value())
-  {
-    mRingSinusAmpZ = ringSinusAmpZ.value();
-  }
+  SetParam<double>(mCircleSinusStepX, circleSinusStepX);
+  SetParam<double>(mCircleSinusStepY, circleSinusStepY);
+  SetParam<double>(mCircleSinusStepZ, circleSinusStepZ);
+  SetParam<double>(mCircleSinusAmpX, circleSinusAmpX);
+  SetParam<double>(mCircleSinusAmpY, circleSinusAmpY);
+  SetParam<double>(mCircleSinusAmpZ, circleSinusAmpZ);
+  SetParam<double>(mRingSinusStepX, ringSinusStepX);
+  SetParam<double>(mRingSinusStepY, ringSinusStepY);
+  SetParam<double>(mRingSinusStepZ, ringSinusStepZ);
+  SetParam<double>(mRingSinusAmpX, ringSinusAmpX);
+  SetParam<double>(mRingSinusAmpY, ringSinusAmpY);
+  SetParam<double>(mRingSinusAmpZ, ringSinusAmpZ);
 }
 
 void Thorus::Generate()

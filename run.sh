@@ -92,7 +92,6 @@ cd ./objects
 ../generator --o tmp2 --n thorus 4 10 15 90
 ../generator --l 60 --o scoopex --c0 tmp1 --c1 tmp2
 
-
 cd ..
 echo "Start viewer"
 ./viewer objects thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

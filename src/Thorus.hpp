@@ -28,6 +28,7 @@ class Thorus : public Object3D, public IGenerator
   double mRingSinusAmpY = 0.0;
   double mRingSinusStepZ = 0.0;
   double mRingSinusAmpZ = 0.0;
+  
   bool mPreferTriangles = false;
 
 public:
