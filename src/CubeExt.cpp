@@ -11,9 +11,9 @@ void CubeExt::Generate()
   {
     const auto& params = pair.first.first;
 
-    auto translationX = getObligatorySignedParam(params, 0);
-    auto translationY = getObligatorySignedParam(params, 1);
-    auto translationZ = getObligatorySignedParam(params, 2);
+    auto translationX = GetObligatoryInt(params, 0);
+    auto translationY = GetObligatoryInt(params, 1);
+    auto translationZ = GetObligatoryInt(params, 2);
 
     BOOST_LOG_TRIVIAL(debug) << "Component vertices translation: " << translationX << " "  << translationY << " " << translationZ << std::endl;
 

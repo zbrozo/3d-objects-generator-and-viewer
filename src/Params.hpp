@@ -7,6 +7,8 @@
 #include <memory>
 #include <variant>
 #include <optional>
+#include <type_traits>
+#include <stdexcept>
 
 #include "Types.hpp"
 
@@ -77,9 +79,10 @@ using ComponentTransformParamsPair = std::pair<ParamsVector, StringVector>;
 using ComponentsWithParamsPair = std::pair<ComponentTransformParamsPair, std::unique_ptr<ComponentsVector>>;
 using ComponentsWithParamsVector = std::vector<ComponentsWithParamsPair>;
 
-size_t getObligatoryUnsignedParam(std::vector<int> values, unsigned int index);
-int getObligatorySignedParam(std::vector<int> values, unsigned int index);
-std::optional<int> getOptionalParam(ParamsVector values, unsigned int index);
-std::optional<double> getOptionalParam(const SinusParamsVector& values, unsigned int index);
+int GetObligatoryInt(ParamsVector values, uint32_t index);
+uint16_t GetObligatoryUnsignedInt(ParamsVector values, uint32_t index);
+std::optional<int> GetOptionalInt(ParamsVector values, uint32_t index);
+std::optional<uint16_t> GetOptionalUnsignedInt(ParamsVector values, uint32_t index);
+std::optional<double> GetOptionalDouble(SinusParamsVector values, uint32_t index);
 
 #endif

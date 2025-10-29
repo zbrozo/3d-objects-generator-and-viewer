@@ -1,48 +1,56 @@
 #include "Params.hpp"
 
-#include <stdexcept>
-
-size_t getObligatoryUnsignedParam(ParamsVector values, unsigned int index)
+template<typename R, typename T>
+R GetObligatory(std::vector<T> values, uint32_t index)
 {
   if (values.size() <= index)
   {
     throw std::out_of_range("Parameter not exists");
   }
 
-  if (0 > values[index])
+  if (std::is_unsigned_v<R>)
   {
-    throw std::out_of_range("Parameter is negative");
+    if (0 > values[index])
+    {
+      throw std::out_of_range("Parameter is negative");
+    }
   }
-
+  
   return values[index];
 }
 
-int getObligatorySignedParam(ParamsVector values, unsigned int index)
-{
-  if (values.size() <= index)
-  {
-    throw std::out_of_range("Parameter not exists");
-  }
-
-  return values[index];
-}
-
-std::optional<int> getOptionalParam(ParamsVector values, unsigned int index)
+template<typename R, typename T>
+std::optional<R> GetOptional(std::vector<T> values, uint32_t index)
 {
   if (values.size() > index)
   {
-    return std::optional<int>{values[index]};
+    return std::optional<R>{values[index]};
   }
 
-  return std::optional<int>();
+  return std::optional<R>();
 }
 
-std::optional<double> getOptionalParam(const SinusParamsVector& values, unsigned int index)
+int GetObligatoryInt(ParamsVector values, uint32_t index)
 {
-  if (values.size() > index)
-  {
-    return std::optional<double>{values[index]};
-  }
+  return GetObligatory<int, int>(values, index);
+}
 
-  return std::optional<double>();
+uint16_t GetObligatoryUnsignedInt(ParamsVector values, uint32_t index)
+{
+  return GetObligatory<uint16_t, int>(values, index);
+}
+
+std::optional<int> GetOptionalInt(ParamsVector values, uint32_t index)
+{
+  return GetOptional<int, int>(values, index);
+}
+
+std::optional<uint16_t> GetOptionalUnsignedInt(ParamsVector values, uint32_t index)
+{
+  return GetOptional<uint16_t, int>(values, index);
+}
+
+std::optional<double> GetOptionalDouble(SinusParamsVector values, uint32_t index)
+{
+  return GetOptional<double, double>(values, index);
 }
