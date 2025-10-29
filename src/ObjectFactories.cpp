@@ -47,26 +47,6 @@ auto findParamsVector = [](const ParamsPair& params,  ParamsId id)
   return params.first == id;
 };
 
-auto getParam(const ParamsVector& values, unsigned int index)
-{
-  if (values.size() > index)
-  {
-    return std::optional<int>{values[index]};
-  }
-
-  return std::optional<int>();
-}
-
-auto getParam(const SinusParamsVector& values, unsigned int index)
-{
-  if (values.size() > index)
-  {
-    return std::optional<double>{values[index]};
-  }
-
-  return std::optional<double>();
-}
-
 } // namespace
 
 std::unique_ptr<Object3D> CubeFactory::FactoryMethod(
@@ -160,26 +140,26 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
 
   return std::make_unique<Thorus>(
     CreateFullName(name, params).c_str(),
-    getParam(foundParams, 0),
-    getParam(foundParams, 1),
-    getParam(foundParams, 2),
-    getParam(foundParams, 3),
-    getParam(foundParams, 4),
-    getParam(foundParams, 5),
-    getParam(foundParams, 6),
+    getObligatorySignedParam(foundParams, 0),
+    getObligatorySignedParam(foundParams, 1),
+    getObligatorySignedParam(foundParams, 2),
+    getObligatorySignedParam(foundParams, 3),
+    getOptionalParam(foundParams, 4),
+    getOptionalParam(foundParams, 5),
+    getOptionalParam(foundParams, 6),
 
-    getParam(foundSinusParams, 0),
-    getParam(foundSinusParams, 1),
-    getParam(foundSinusParams, 2),
-    getParam(foundSinusParams, 3),
-    getParam(foundSinusParams, 4),
-    getParam(foundSinusParams, 5),
-    getParam(foundSinusParams, 6),
-    getParam(foundSinusParams, 7),
-    getParam(foundSinusParams, 8),
-    getParam(foundSinusParams, 9),
-    getParam(foundSinusParams, 10),
-    getParam(foundSinusParams, 11),
+    getOptionalParam(foundSinusParams, 0),
+    getOptionalParam(foundSinusParams, 1),
+    getOptionalParam(foundSinusParams, 2),
+    getOptionalParam(foundSinusParams, 3),
+    getOptionalParam(foundSinusParams, 4),
+    getOptionalParam(foundSinusParams, 5),
+    getOptionalParam(foundSinusParams, 6),
+    getOptionalParam(foundSinusParams, 7),
+    getOptionalParam(foundSinusParams, 8),
+    getOptionalParam(foundSinusParams, 9),
+    getOptionalParam(foundSinusParams, 10),
+    getOptionalParam(foundSinusParams, 11),
     preferTriangles);
 }
 

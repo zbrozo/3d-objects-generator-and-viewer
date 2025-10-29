@@ -27,23 +27,19 @@ Please look into run.sh file to see how they are defined.
 ### Main object types that can be created:
 
 1. Cube
-- params (--a): size (default 50)
-
-_--a option can be avoided and values can be written immediately after type name_
+- params: size
 
 2. CubeExt - cube made of component objects located on each face 
 - component name used on each face (--c)
 - component params (--p): _depends on used component_
-- face params (--f): translation-x translation-y translation-z (default 0 0 0)
+- face params (--t): translation-x translation-y translation-z (default 0 0 0)
 
-_Value in f and p can be negative_
+_Value in p and t can be negative_
 
 3. Thorus 
-- params (--a): circle-amount ring-amount circle-radius circle-offset circle-amount2 circle-rotation-start-degree circle-rotation-step-degree
+- params: circle-amount ring-amount circle-radius circle-offset [circle-amount2] [circle-rotation-start-degree] [circle-rotation-step-degree]
 
-_--a option can be avoided and values can be written immediately after type name_
-
-- sinus params (--s): circle-step-x circle-amp-x circle-step-y circle-amp-y circle-step-z circle-amp-z ring-step-x ring-amp-x ring step-y ring-amp-y ring-step-z ring-amp-z
+- sinus params (--s): [circle-step-x] [circle-amp-x] [circle-step-y] [circle-amp-y] [circle-step-z] [circle-amp-z] [ring-step-x] [ring-amp-x] [ring step-y] [ring-amp-y] [ring-step-z] [ring-amp-z]
 
 - prefer triangle faces over rectanges or other kind (--3): no values
 
@@ -56,38 +52,34 @@ _--s contains value of double type_
     - rotation degrees (rx, ry, rz)
     - translation (tx, ty, tz)
 
-_Value in f and p can be negative_
+_Values in p and t can be negative_
 
 5. Tetrahedron
-- params (--a): circle-radius height
-
-_--a option can be avoided and values can be written immediately after type name_
+- params: circle-radius height
 
 6. RegularTetrahedron
-- params (--a): circle-radius
-
-_--a option can be avoided and values can be written immediately after type name_
+- params: circle-radius
 
 7. FractalTetrahedron 
-- params (--a): circle-radius
-
-_--a option can be avoided and values can be written immediately after type name_
+- params: circle-radius
 
 ### Components which can be used in CubeExt and Composite:
 1. Square, name: square
---p size (default: 50)
+--p side-length
 2. Rectangle, name: rectangle
---p size-x size-y (default: 50 50)
-3. Pyramid, name: pyramid
---p size height (default: 50 20)
-4. Taper, name: taper
---p circle-amount circle-radius height (default: 3 50 50)
-5. Cylinder made of squares, name: cylinder
---p circle-amount cirlce-radius height (default: 3 50 50)
-6. Cylinder made of triangles, name: cylindertriangles
---p circle-amount cirlce-radius height (default: 3 50 50)
-7. CSign made of half of a circle, name: csign
---p number-of-points circle1-radius circle2-radius circle1-x-offset circle2-x-offset width (default: 3 50 50 0 0 10)
+--p side1-length side2-length
+3. Trapeze, name: trapeze
+--p top-length bottom-length height
+4. Pyramid, name: pyramid
+--p side-length height
+5. Cone, name: cone
+--p amount radius height
+6. Cylinder made of squares, name: cylinder
+--p circle-amount circle-radius height
+7. Cylinder made of triangles, name: triangledcylinder
+--p circle-amount cirlce-radius height
+8. Star, name: star
+--p amount radius
 
 ### Build on MS Windows
 Install MSYS2, use MSYS2 UCRT64 shell:

@@ -126,8 +126,8 @@ Vertices Thorus::CreateRingVertices(Vertices circle)
     Vertices transformedCircle = circle;
 
     std::transform(transformedCircle.cbegin(), transformedCircle.cend(), transformedCircle.begin(),
-      [&](const Vertex& vertex){ 
-        Vertex v = rotation.rotateX(vertex, mCircleRotStartDeg + mCircleRotStepDeg * i); 
+      [&](const Vertex& vertex){
+        Vertex v = rotation.rotateX(vertex, mCircleRotStartDeg + mCircleRotStepDeg * i);
         v = v + Vertex(0, mCircleOffset, 0);
         return v;
       });
@@ -153,7 +153,7 @@ Faces Thorus::CreateFacesInRing(int begin, int count)
   for (int ringIndex = 0; ringIndex < mRingAmount2; ++ringIndex)
   {
     const bool lastElementInRing = ringIsClosed && (ringIndex == (mRingAmount - 1));
-    
+
     Faces faces = CreateFacesInCircle(mPreferTriangles, ringIndex, mCircleAmount, begin, count, lastElementInRing);
 
     for (const auto& f : faces)
@@ -233,11 +233,11 @@ Vertices Thorus::ApplySinusToRing(const Vertices& vertices)
 
 Thorus::Thorus(
   const char* name,
-  std::optional<int> circleAmount,
-  std::optional<int> ringAmount,
-  std::optional<int> circleRadius,
-  std::optional<int> circleOffset,
-  std::optional<int> ringAmount2,
+  uint16_t circleAmount,
+  uint16_t ringAmount,
+  int circleRadius,
+  int circleOffset,
+  std::optional<uint16_t> ringAmount2,
   std::optional<int> circleRotStartDeg,
   std::optional<int> circleRotStepDeg,
   std::optional<double> circleSinusStepX,
@@ -255,13 +255,13 @@ Thorus::Thorus(
   bool preferTriangles
   ) :
   Object3D(name),
+  mCircleAmount(circleAmount),
+  mRingAmount(ringAmount),
+  mCircleRadius(circleRadius),
+  mCircleOffset(circleOffset),
   mPreferTriangles(preferTriangles)
 {
-  SetParam<int>(mCircleAmount, circleAmount, std::bind(IntValidator, std::placeholders::_1, 3, std::nullopt));
-  SetParam<int>(mRingAmount, ringAmount, std::bind(IntValidator, std::placeholders::_1, 3, std::nullopt));
-  SetParam<int>(mCircleRadius, circleRadius, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
-  SetParam<int>(mCircleOffset, circleOffset, std::bind(IntValidator, std::placeholders::_1, std::nullopt, std::nullopt));
-  SetParam<int>(mRingAmount2, ringAmount2, std::bind(IntValidator, std::placeholders::_1, 0, mRingAmount));
+  SetParam<uint16_t>(mRingAmount2, ringAmount2, std::bind(Validator<uint16_t>, std::placeholders::_1, 0, mRingAmount));
   SetParam<int>(mCircleRotStartDeg, circleRotStartDeg);
   SetParam<int>(mCircleRotStepDeg, circleRotStepDeg);
 
@@ -290,9 +290,9 @@ void Thorus::Generate()
   Vertices circle { CreateCircleVertices() };
 
   mVertices = ApplySinusToRing(CreateRingVertices(circle));
-  
+
   /// --- Faces ---
-  
+
   if (mCircleAmount == 3)
   {
     auto faces = CreateFacesInRing(0, mCircleAmount);
@@ -312,14 +312,14 @@ void Thorus::Generate()
     }
 
     auto externalFaces = CreateFacesInRing(mCircleAmount/2, mCircleAmount/2);
-    
+
     for (const auto& face : externalFaces)
     {
       mFaces.push_back(face);
     }
   }
-  
-  // optional add closing faces 
+
+  // optional add closing faces
   if (mRingAmount != mRingAmount2)
   {
     Face face1;

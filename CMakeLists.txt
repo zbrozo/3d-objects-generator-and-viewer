@@ -42,6 +42,7 @@ set(FactoriesSRC
   src/Pentagram.cpp
   src/FileLoader.cpp
   src/ObjectParamValidators.cpp
+  src/Params.cpp
 )
 
 set(GeneratorSRC

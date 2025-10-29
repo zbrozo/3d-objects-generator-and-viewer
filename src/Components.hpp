@@ -1,11 +1,11 @@
 #ifndef _COMPONENTS_HPP_
 #define _COMPONENTS_HPP_
 
-#include "IGenerator.hpp"
-#include "Object3D.hpp"
-#include "ObjectParamValidators.hpp"
-
 #include <cstdint>
+
+#include "IGenerator.hpp"
+#include "ObjectParamValidators.hpp"
+#include "Object3D.hpp"
 
 namespace Components
 {

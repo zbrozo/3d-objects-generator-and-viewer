@@ -3,16 +3,18 @@
 
 #include "Object3D.hpp"
 #include "IGenerator.hpp"
+
+#include <cstdint>
 #include <optional>
 
 class Thorus : public Object3D, public IGenerator
 {
-  int mCircleAmount = 0;
-  int mRingAmount = 0;
-  int mCircleRadius = 0;
-  int mCircleOffset = 0;
+  const uint16_t mCircleAmount;
+  const uint16_t mRingAmount;
+  const int mCircleRadius;
+  const int mCircleOffset;
 
-  int mRingAmount2 = 0;
+  uint16_t mRingAmount2 = 0;
   int mCircleRotStartDeg = 0;
   int mCircleRotStepDeg = 0;
 
@@ -28,18 +30,18 @@ class Thorus : public Object3D, public IGenerator
   double mRingSinusAmpY = 0.0;
   double mRingSinusStepZ = 0.0;
   double mRingSinusAmpZ = 0.0;
-  
+
   bool mPreferTriangles = false;
 
 public:
 
   explicit Thorus(
     const char* name,
-    std::optional<int> circleAmount,
-    std::optional<int> ringAmount,
-    std::optional<int> circleRadius,
-    std::optional<int> circleOffset,
-    std::optional<int> ringAmount2,
+    uint16_t circleAmount,
+    uint16_t ringAmount,
+    int circleRadius,
+    int circleOffset,
+    std::optional<uint16_t> ringAmount2,
     std::optional<int> circleRotStartDeg,
     std::optional<int> circleRotStepDeg,
     std::optional<double> circleSinusStepX,
@@ -71,7 +73,7 @@ private:
   Vertices CreateCircleVertices();
   Vertices CreateRingVertices(Vertices circle);
   Faces CreateFacesInRing(int begin, int count);
-  
+
   Vertices ApplySinusToRing(const Vertices& vertices);
   Vertices ApplySinusToCircle(const Vertices& vertices, int index);
 

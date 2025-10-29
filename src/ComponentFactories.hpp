@@ -1,7 +1,7 @@
 #include "ComponentFactoryBase.hpp"
 #include "Components.hpp"
-
-class Object3D;
+#include "Params.hpp"
+#include "Object3D.hpp"
 
 namespace Components
 {

@@ -6,6 +6,7 @@
 #include <map>
 #include <memory>
 #include <variant>
+#include <optional>
 
 #include "Types.hpp"
 
@@ -75,5 +76,10 @@ using ComponentsVector = std::vector<std::unique_ptr<Object3D>>;
 using ComponentTransformParamsPair = std::pair<ParamsVector, StringVector>;
 using ComponentsWithParamsPair = std::pair<ComponentTransformParamsPair, std::unique_ptr<ComponentsVector>>;
 using ComponentsWithParamsVector = std::vector<ComponentsWithParamsPair>;
+
+size_t getObligatoryUnsignedParam(std::vector<int> values, unsigned int index);
+int getObligatorySignedParam(std::vector<int> values, unsigned int index);
+std::optional<int> getOptionalParam(ParamsVector values, unsigned int index);
+std::optional<double> getOptionalParam(const SinusParamsVector& values, unsigned int index);
 
 #endif

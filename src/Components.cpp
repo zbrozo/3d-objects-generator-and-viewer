@@ -1,6 +1,7 @@
 #include "Components.hpp"
 #include "Rotation.hpp"
 #include "Tools.hpp"
+#include "Object3D.hpp"
 
 #include <cmath>
 #include <algorithm>
