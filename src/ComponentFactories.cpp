@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include <boost/log/trivial.hpp>
+#include <stdexcept>
 
 using namespace std::placeholders;
 
@@ -18,6 +19,31 @@ auto findParamsVector = [](const std::pair<ParamsId, ParamsVector> &params, Para
 {
   return params.first == id;
 };
+
+size_t getObligatoryUnsignedParam(std::vector<int> values, unsigned int index)
+{
+  if (values.size() <= index)
+  {
+    throw std::out_of_range("Parameter not exists");
+  }
+
+  if (0 > values[index])
+  {
+    throw std::out_of_range("Parameter is negative");
+  }
+
+  return values[index];
+}
+
+int getObligatorySignedParam(std::vector<int> values, unsigned int index)
+{
+  if (values.size() <= index)
+  {
+    throw std::out_of_range("Parameter not exists");
+  }
+
+  return values[index];
+}
 
 auto getParam(std::vector<int> values, unsigned int index)
 {
@@ -38,26 +64,26 @@ std::unique_ptr<Object3D> SquareFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> size = getParam(params, 0);
-  return std::make_unique<Components::Square>(size);
+  const auto side = getObligatorySignedParam(params, 0);
+  return std::make_unique<Components::Square>(side);
 }
 
 std::unique_ptr<Object3D> RectangleFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> sizeX = getParam(params, 0);
-  std::optional<int> sizeY = getParam(params, 1);
-  return std::make_unique<Components::Rectangle>(sizeX, sizeY);
+  const auto sideX = getObligatorySignedParam(params, 0);
+  const auto sideY = getObligatorySignedParam(params, 1);
+  return std::make_unique<Components::Rectangle>(sideX, sideY);
 }
 
 std::unique_ptr<Object3D> TrapezeFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> top = getParam(params, 0);
-  std::optional<int> bottom = getParam(params, 1);
-  std::optional<int> height = getParam(params, 2);
+  const auto top = getObligatorySignedParam(params, 0);
+  const auto bottom = getObligatorySignedParam(params, 1);
+  const auto height = getObligatorySignedParam(params, 2);
   return std::make_unique<Components::Trapeze>(top, bottom, height);
 }
 
@@ -65,48 +91,48 @@ std::unique_ptr<Object3D> PyramidFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  return std::make_unique<Components::Pyramid>(param1, param2);
+  const auto param0 = getObligatorySignedParam(params, 0);
+  const auto param1 = getObligatorySignedParam(params, 1);
+  return std::make_unique<Components::Pyramid>(param0, param1);
 }
 
 std::unique_ptr<Object3D> ConeFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  return std::make_unique<Components::Cone>(param1, param2, param3);
+  const auto param0 = getObligatoryUnsignedParam(params, 0);
+  const auto param1 = getObligatorySignedParam(params, 1);
+  const auto param2 = getObligatorySignedParam(params, 2);
+  return std::make_unique<Components::Cone>(param0, param1, param2);
 }
 
 std::unique_ptr<Object3D> CylinderFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  return std::make_unique<Components::Cylinder>(param1, param2, param3);
+  const auto param0 = getObligatoryUnsignedParam(params, 0);
+  const auto param1 = getObligatorySignedParam(params, 1);
+  const auto param2 = getObligatorySignedParam(params, 2);
+  return std::make_unique<Components::Cylinder>(param0, param1, param2);
 }
 
 std::unique_ptr<Object3D> TriangulatedCylinderFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  std::optional<int> param3 = getParam(params, 2);
-  return std::make_unique<Components::TriangulatedCylinder>(param1, param2, param3);
+  const auto param0 = getObligatoryUnsignedParam(params, 0);
+  const auto param1 = getObligatorySignedParam(params, 1);
+  const auto param2 = getObligatorySignedParam(params, 2);
+  return std::make_unique<Components::TriangulatedCylinder>(param0, param1, param2);
 }
 
 std::unique_ptr<Object3D> StarFactory::FactoryMethod(
   const std::string& /*name*/,
   const ParamsVector& params) const
 {
-  std::optional<int> param1 = getParam(params, 0);
-  std::optional<int> param2 = getParam(params, 1);
-  return std::make_unique<Components::Star>(param1, param2);
+  const auto param0 = getObligatoryUnsignedParam(params, 0);
+  const auto param1 = getObligatorySignedParam(params, 1);
+  return std::make_unique<Components::Star>(param0, param1);
 }
 
 } // namespace Components

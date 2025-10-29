@@ -21,6 +21,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <memory>
+#include <iostream>
 
 #include <boost/log/trivial.hpp>
 #include <boost/algorithm/string.hpp>
@@ -87,13 +88,10 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
   const std::string& name,
   const ParamsMap& params) const
 {
-  auto components = std::make_unique<ComponentsVector>();
-  auto componentsWithParamsVector = std::make_unique<ComponentsWithParamsVector>();
-
-  const auto& names =  std::get<ComponentNamesVector>(params.at(ParamsId::ComponentsList));
-
   ParamsVector paramsVector;
   ParamsVector componentParamsVector;
+
+  // find parameters
 
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::ComponentsParams)); it != params.end())
@@ -107,7 +105,12 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
     paramsVector = std::get<ParamsVector>(it->second);
   }
 
-  for (auto name : names)
+  // create all the listed components
+
+  auto components = std::make_unique<ComponentsVector>();
+  const auto& componentNames =  std::get<ComponentNamesVector>(params.at(ParamsId::ComponentsList));
+
+  for (auto name : componentNames)
   {
     boost::algorithm::to_lower(name);
     const auto id = ComponentIdMap[name];
@@ -115,7 +118,11 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
     components->push_back(std::move(GetComponentFactories().at(id)->Create(name, componentParamsVector)));
   }
 
+  // join parameters with the components
+
   StringVector cmds;
+  auto componentsWithParamsVector = std::make_unique<ComponentsWithParamsVector>();
+
   componentsWithParamsVector->push_back(
     ComponentsWithParamsPair(std::make_pair(paramsVector, cmds), std::move(components)));
 

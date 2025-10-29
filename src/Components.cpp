@@ -2,16 +2,15 @@
 #include "Rotation.hpp"
 #include "Tools.hpp"
 
+#include <cmath>
 #include <algorithm>
 #include <exception>
-#include <cstdint>
-#include <boost/log/trivial.hpp>
-#include <cmath>
 #include <stdexcept>
+#include <boost/log/trivial.hpp>
 
 namespace
 {
-
+/*
 auto CreateSideVertices(Vertices& vertices)
 {
   std::vector<Vertices> allVertices;
@@ -26,6 +25,7 @@ auto CreateSideVertices(Vertices& vertices)
 
   return allVertices;
 }
+
 
 auto CreateSideFaces(const std::vector<Vertices>& allVertices)
 {
@@ -42,8 +42,9 @@ auto CreateSideFaces(const std::vector<Vertices>& allVertices)
 
   return std::make_pair(faces, vertices);
 }
+*/
 
-Vertices CreateCircleVerticesExt(int count, int amount, int radius, int degree = 0)
+Vertices CreateCircleVerticesExt(size_t count, size_t amount, int radius, int degree = 0)
 {
   Vertex vertex(0, radius, 0);
   VertexRotation rotation;
@@ -52,7 +53,7 @@ Vertices CreateCircleVerticesExt(int count, int amount, int radius, int degree =
 
   Vertices circle;
 
-  for (int i = 0; i < count; i++)
+  for (size_t i = 0; i < count; i++)
   {
     constexpr int scaleValue = 10;
 
@@ -65,7 +66,7 @@ Vertices CreateCircleVerticesExt(int count, int amount, int radius, int degree =
   return circle;
 }
 
-Vertices CreateCircleVertices(int amount, int radius, int degree = 0) {
+Vertices CreateCircleVertices(size_t amount, int radius, int degree = 0) {
   return CreateCircleVerticesExt(amount, amount , radius, degree);
 }
 
@@ -86,7 +87,7 @@ void Square::Generate()
   std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
     [&](const Vertex& vertex)
     {
-      return vertex * mSize / 2;
+      return vertex * mSide / 2;
     });
 
   mFaces.push_back({0,1,2,3});
@@ -106,8 +107,8 @@ void Rectangle::Generate()
     [&](const Vertex& vertex)
     {
       return Vertex(
-        vertex.getX() * mSizeX / 2,
-        vertex.getY() * mSizeY / 2,
+        vertex.getX() * mSideX / 2,
+        vertex.getY() * mSideY / 2,
         vertex.getZ());
     });
 
@@ -146,13 +147,13 @@ void Pyramid::Generate()
   std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
     [&](const Vertex& vertex)
     {
-      return vertex * mSize1;
+      return vertex * mSide;
     });
 
   vertices[4] = Vertex(
     vertices[4].getX(),
     vertices[4].getY(),
-    vertices[4].getZ() + mSize2
+    vertices[4].getZ() + mHeight
     );
 
   mVertices = vertices;
@@ -170,8 +171,8 @@ void Cone::Generate()
 
   mVertices.push_back(Vertex(0, 0, mHeight));
 
-  unsigned short last = mVertices.size() - 1;
-  unsigned short nr = 0;
+  const uint16_t last = mVertices.size() - 1;
+  uint16_t nr = 0;
 
   if (mHeight >= 0)
   {
@@ -207,7 +208,7 @@ void Cylinder::Generate()
 
   const auto size = vertices.size();
 
-  unsigned short nr = 0;
+  uint16_t nr = 0;
   for (; nr < size - 1; ++nr)
   {
     mFaces.push_back(
@@ -245,7 +246,7 @@ void TriangulatedCylinder::Generate()
 
   const auto size = vertices.size();
 
-  unsigned short nr = 0;
+  uint16_t nr = 0;
 
   for (; nr < size - 1; ++nr)
   {
@@ -315,18 +316,20 @@ void Star::Generate()
 
   mVertices = CreateCircleVerticesExt(mCircleAmount, mCircleAmount, mCircleRadius);
 
-  for (int i = 0; i < mCircleAmount; i++)
+  for (size_t i = 0; i < mCircleAmount; i++)
   {
-    auto p1s = (i - 1 < 0) ? (i - 1 + mCircleAmount) : (i - 1);
-    auto p1e = (i + 1 >= mCircleAmount) ? (i + 1 - mCircleAmount) : (i + 1);
-    auto p2s = i;
-    auto p2e = (i + 2 >= mCircleAmount) ? (i + 2 - mCircleAmount) : (i + 2);
+    const int nr = static_cast<int>(i);
 
-    auto v = FindIntersectionPoint(mVertices[p1s], mVertices[p1e], mVertices[p2s], mVertices[p2e]);
+    auto p1s = (nr - 1 < 0) ? (nr - 1 + mCircleAmount) : (nr - 1);
+    auto p1e = (nr + 1 >= mCircleAmount) ? (nr + 1 - mCircleAmount) : (nr + 1);
+    auto p2s = nr;
+    auto p2e = (nr + 2 >= mCircleAmount) ? (nr + 2 - mCircleAmount) : (nr + 2);
+
+    const auto v = FindIntersectionPoint(mVertices[p1s], mVertices[p1e], mVertices[p2s], mVertices[p2e]);
     mVertices.push_back(v);
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(mCircleAmount); i++)
+  for (size_t i = 0; i < mCircleAmount; i++)
   {
     if (i == 0)
     {

@@ -42,7 +42,7 @@ cd ./objects
 ../generator --l 80 --o cube2_3 --c0 tmp1 --c1 tmp2
 
 ### 
-../generator --l 64 --o cube3 --n cube-ext --c Pyramid --p 70 --t 0 0 70
+../generator --l 64 --o cube3 --n cube-ext --c Pyramid --p 70 30 --t 0 0 70
 ../generator --l 80 --o cube4 --n cube-ext --c Pyramid --p 40 70 --t 0 0 40
 
 ### cube with one hole
@@ -94,5 +94,5 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer objects thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer objects cube3 cube1 thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3

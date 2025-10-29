@@ -5,22 +5,20 @@
 #include "Object3D.hpp"
 #include "ObjectParamValidators.hpp"
 
-#include <optional>
-#include <iostream>
+#include <cstdint>
 
 namespace Components
 {
 
 class Square : public Object3D, public IGenerator
 {
-  int mSize = 50;
+  const int mSide;
 
 public:
 
-  explicit Square(std::optional<int> size) :
-    Object3D("Square")
+  explicit Square(int side) :
+    Object3D("Square"), mSide(side)
   {
-    SetParam<int>(mSize, size);
   }
 
   void Generate() override;
@@ -31,21 +29,18 @@ public:
   Square(Square &&) = delete;
   Square& operator=(const Square&) = delete;
   Square& operator=(Square &&) = delete;
-
 };
 
 class Rectangle : public Object3D, public IGenerator
 {
-  int mSizeX = 50;
-  int mSizeY = 50;
+  const int mSideX;
+  const int mSideY;
 
 public:
 
-  explicit Rectangle(std::optional<int> sizeX, std::optional<int> sizeY) :
-    Object3D("Rectangle")
+  explicit Rectangle(int sideX, int sideY) :
+    Object3D("Rectangle"), mSideX(sideX), mSideY(sideY)
   {
-    SetParam<int>(mSizeX, sizeX);
-    SetParam<int>(mSizeY, sizeY);
   }
 
   void Generate() override;
@@ -60,18 +55,15 @@ public:
 
 class Trapeze : public Object3D, public IGenerator
 {
-  int mTop = 50;
-  int mBottom = 50;
-  int mHeight = 50;
+  const int mTop;
+  const int mBottom;
+  const int mHeight;
 
 public:
 
-  explicit Trapeze(std::optional<int> top, std::optional<int> bottom, std::optional<int> height) :
-    Object3D("Trapeze")
+  explicit Trapeze(int top, int bottom, int height) :
+    Object3D("Trapeze"), mTop(top), mBottom(bottom), mHeight(height)
   {
-    SetParam<int>(mTop, top);
-    SetParam<int>(mBottom, bottom);
-    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -86,19 +78,14 @@ public:
 
 class Pyramid : public Object3D, public IGenerator
 {
-  int mSize1 = 50;
-  int mSize2 = 20;
+  const int mSide;
+  const int mHeight;
 
 public:
 
-  explicit Pyramid(
-    const std::optional<int>& size1,
-    const std::optional<int>& size2
-    ) :
-    Object3D("Pyramid")
+  explicit Pyramid(int side, int height) :
+    Object3D("Pyramid"), mSide(side), mHeight(height)
   {
-    SetParam<int>(mSize1, size1);
-    SetParam<int>(mSize2, size2);
   }
 
   void Generate() override;
@@ -114,22 +101,15 @@ public:
 
 class Cone : public Object3D, public IGenerator
 {
-  int mCircleAmount = 3;
-  int mCircleRadius = 50;
-  int mHeight = 50;
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
+  const int mHeight;
 
 public:
 
-  explicit Cone(
-    const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius,
-    const std::optional<int>& height
-    ) :
-    Object3D("Cone")
+  explicit Cone(uint16_t circleAmount, int circleRadius, int height) :
+    Object3D("Cone"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
   {
-    SetParam<int>(mCircleAmount, circleAmount);
-    SetParam<int>(mCircleRadius, circleRadius);
-    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -144,22 +124,15 @@ public:
 
 class Cylinder : public Object3D, public IGenerator
 {
-  int mCircleAmount = 3;
-  int mCircleRadius = 50;
-  int mHeight = 50;
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
+  const int mHeight;
 
 public:
 
-  explicit Cylinder(
-    const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius,
-    const std::optional<int>& height
-    ) :
-    Object3D("Cylinder")
+  explicit Cylinder(uint16_t circleAmount, int circleRadius, int height) :
+    Object3D("Cylinder"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
   {
-    SetParam<int>(mCircleAmount, circleAmount);
-    SetParam<int>(mCircleRadius, circleRadius);
-    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -175,22 +148,15 @@ public:
 
 class TriangulatedCylinder : public Object3D, public IGenerator
 {
-  int mCircleAmount = 3;
-  int mCircleRadius = 50;
-  int mHeight = 50;
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
+  const int mHeight;
 
 public:
 
-  explicit TriangulatedCylinder(
-    const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius,
-    const std::optional<int>& height
-    ) :
-    Object3D("TriangulatedCylinder")
+  explicit TriangulatedCylinder(uint16_t circleAmount, int circleRadius, int height) :
+    Object3D("TriangulatedCylinder"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
   {
-    SetParam<int>(mCircleAmount, circleAmount);
-    SetParam<int>(mCircleRadius, circleRadius);
-    SetParam<int>(mHeight, height);
   }
 
   void Generate() override;
@@ -205,19 +171,14 @@ public:
 
 class Star : public Object3D, public IGenerator
 {
-  int mCircleAmount = 5;
-  int mCircleRadius = 50;
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
 
 public:
 
-  explicit Star(
-    const std::optional<int>& circleAmount,
-    const std::optional<int>& circleRadius
-    ) :
-    Object3D("Star")
+  explicit Star(uint16_t circleAmount, int circleRadius) :
+    Object3D("Star"), mCircleAmount(circleAmount), mCircleRadius(circleRadius)
   {
-    SetParam<int>(mCircleAmount, circleAmount);
-    SetParam<int>(mCircleRadius, circleRadius);
   }
 
   void Generate() override;

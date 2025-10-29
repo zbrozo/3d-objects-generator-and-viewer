@@ -33,13 +33,15 @@ void CubeExt::Generate()
 
     for (auto& object : *pair.second)
     {
-      Tools::Translate(mVertices, translationX, translationY, translationZ);
+      Vertices vertices = object->GetVertices();
 
-      const auto [faces, vertices] = CreateCube(
+      Tools::Translate(vertices, translationX, translationY, translationZ);
+
+      const auto [resultFaces, resultVertices] = CreateCube(
         object->GetFaces(),
-        object->GetVertices());
+        vertices);
 
-      Tools::Merge(mVertices, mFaces, vertices, faces);
+      Tools::Merge(mVertices, mFaces, resultVertices, resultFaces);
     }
   }
 }
