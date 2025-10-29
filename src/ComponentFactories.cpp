@@ -61,7 +61,6 @@ namespace Components
 {
 
 std::unique_ptr<Object3D> SquareFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto side = getObligatorySignedParam(params, 0);
@@ -69,7 +68,6 @@ std::unique_ptr<Object3D> SquareFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> RectangleFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto sideX = getObligatorySignedParam(params, 0);
@@ -78,7 +76,6 @@ std::unique_ptr<Object3D> RectangleFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> TrapezeFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto top = getObligatorySignedParam(params, 0);
@@ -88,7 +85,6 @@ std::unique_ptr<Object3D> TrapezeFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> PyramidFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto param0 = getObligatorySignedParam(params, 0);
@@ -97,7 +93,6 @@ std::unique_ptr<Object3D> PyramidFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> ConeFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto param0 = getObligatoryUnsignedParam(params, 0);
@@ -107,7 +102,6 @@ std::unique_ptr<Object3D> ConeFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> CylinderFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto param0 = getObligatoryUnsignedParam(params, 0);
@@ -117,7 +111,6 @@ std::unique_ptr<Object3D> CylinderFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> TriangulatedCylinderFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto param0 = getObligatoryUnsignedParam(params, 0);
@@ -127,7 +120,6 @@ std::unique_ptr<Object3D> TriangulatedCylinderFactory::FactoryMethod(
 }
 
 std::unique_ptr<Object3D> StarFactory::FactoryMethod(
-  const std::string& /*name*/,
   const ParamsVector& params) const
 {
   const auto param0 = getObligatoryUnsignedParam(params, 0);

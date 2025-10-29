@@ -3,10 +3,9 @@
 #include "Object3D.hpp"
 
 std::unique_ptr<Object3D> ComponentFactoryBase::Create(
-  const std::string& name,
   const ParamsVector& params) const
 {
-  auto object = FactoryMethod(name, params);
+  auto object = FactoryMethod(params);
   Generate(*object);
   return object;
 }

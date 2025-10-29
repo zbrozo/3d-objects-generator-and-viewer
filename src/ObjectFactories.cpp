@@ -115,7 +115,7 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
     boost::algorithm::to_lower(name);
     const auto id = ComponentIdMap[name];
     BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
-    components->push_back(std::move(GetComponentFactories().at(id)->Create(name, componentParamsVector)));
+    components->push_back(std::move(GetComponentFactories().at(id)->Create(componentParamsVector)));
   }
 
   // join parameters with the components
@@ -190,7 +190,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
   auto componentsWithParamsVector = std::make_unique<ComponentsWithParamsVector>();
 
   auto create = [&params, &componentsWithParamsVector, &name, this]
-    (ParamsId listId, ParamsId paramsId, ParamsId mainParamsId, ParamsId transfromCmdsId)
+    (ParamsId listId, ParamsId paramsId, ParamsId mainParamsId, ParamsId transformCmdsId)
   {
     auto components = std::make_unique<ComponentsVector>();
 
@@ -211,7 +211,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
     }
 
     if (auto it = std::find_if(params.begin(), params.end(),
-        std::bind(findParamsVector, _1,  transfromCmdsId)); it != params.end())
+        std::bind(findParamsVector, _1,  transformCmdsId)); it != params.end())
     {
       transformCmds = std::get<StringVector>(it->second);
     }
@@ -244,7 +244,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
             BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
 
             components->push_back(
-              std::move(GetComponentFactories().at(id)->Create(name, paramsVector)));
+              std::move(GetComponentFactories().at(id)->Create(paramsVector)));
         }
       }
     }
