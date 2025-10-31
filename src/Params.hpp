@@ -1,6 +1,7 @@
 #ifndef _PARAMS_HPP_
 #define _PARAMS_HPP_
 
+#include <cstdint>
 #include <vector>
 #include <string>
 #include <map>

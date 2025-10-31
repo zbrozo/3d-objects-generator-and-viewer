@@ -20,7 +20,8 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 
 ## Generator usage manual
 
-Objects can be created by defining main object type (using --t option) and additional component objects. Please look below for details.
+Objects can be created by defining main object type (using --n option) and component objects to process. 
+Default one is "composite" object. Please look below for details.
 
 Please look into run.sh file to see how they are defined.
 
@@ -33,8 +34,6 @@ Please look into run.sh file to see how they are defined.
 - component name used on each face (--c)
 - component params (--p): _depends on used component_
 - face params (--t): translation-x translation-y translation-z (default 0 0 0)
-
-_Value in p and t can be negative_
 
 3. Thorus 
 - params: circle-amount ring-amount circle-radius circle-offset [circle-amount2] [circle-rotation-start-degree] [circle-rotation-step-degree]
@@ -66,18 +65,25 @@ _Values in p and t can be negative_
 ### Components which can be used in CubeExt and Composite:
 1. Square, name: square
 --p side-length
+
 2. Rectangle, name: rectangle
 --p side1-length side2-length
+
 3. Trapeze, name: trapeze
 --p top-length bottom-length height
+
 4. Pyramid, name: pyramid
 --p side-length height
+
 5. Cone, name: cone
 --p amount radius height
+
 6. Cylinder made of squares, name: cylinder
 --p circle-amount circle-radius height
+
 7. Cylinder made of triangles, name: triangledcylinder
 --p circle-amount cirlce-radius height
+
 8. Star, name: star
 --p amount radius
 
