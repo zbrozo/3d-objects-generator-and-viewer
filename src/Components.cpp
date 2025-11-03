@@ -330,25 +330,14 @@ void Star::Generate()
     mVertices.push_back(v);
   }
 
+  Face face;
   for (size_t i = 0; i < mCircleAmount; i++)
   {
-    if (i == 0)
-    {
-      Face face;
-      face.push_back(i);
-      face.push_back(mCircleAmount);
-      face.push_back(2 * mCircleAmount - 1);
-      mFaces.push_back(face);
-    }
-    else
-    {
-      Face face;
-      face.push_back(i);
-      face.push_back(mCircleAmount + i);
-      face.push_back(mCircleAmount + i - 1);
-      mFaces.push_back(face);
-    }
+    face.push_back(i);
+    face.push_back(i+mCircleAmount);
   }
+
+  mFaces.push_back(face);
 }
 
 } // namespace

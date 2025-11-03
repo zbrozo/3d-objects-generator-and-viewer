@@ -6,7 +6,7 @@
 void Pentagram::Generate()
 {
   const size_t circleCornerCount = 5;
-  const size_t circleRadius = 72;
+  const size_t circleRadius = mRadius;
 
   auto Translate = [](Vertices& vertices, int x, int y, int z) {
     std::transform(vertices.cbegin(), vertices.cend(), vertices.begin(),
@@ -19,21 +19,42 @@ void Pentagram::Generate()
   Components::Star star(circleCornerCount, circleRadius);
   star.Generate();
 
-  for (Face f : star.GetFaces())
+  Faces faces;
+
+  // front faces
+  for (size_t i = 0; i < circleCornerCount; i++)
+  {
+    if (i == 0)
+    {
+      Face face;
+      face.push_back(i);
+      face.push_back(2 * circleCornerCount - 1);
+      face.push_back(circleCornerCount);
+      faces.push_back(face);
+    }
+    else
+    {
+      Face face;
+      face.push_back(i);
+      face.push_back(circleCornerCount + i - 1);
+      face.push_back(circleCornerCount + i);
+      faces.push_back(face);
+    }
+  }
+  mFaces = faces;
+
+  // back faces
+  for (Face f : faces)
   {
     std::reverse(f.begin(), f.end());
-    mFaces.push_back(f);
-  }
-
-  for (Face f : star.GetFaces())
-  {
     for (auto& value : f)
     {
-      value += 2 * circleCornerCount;
+       value += 2 * circleCornerCount;
     }
     mFaces.push_back(f);
   }
 
+  // external faces
   for (size_t i = 0; i < circleCornerCount; i++)
   {
     if (i == 0)
@@ -63,6 +84,7 @@ void Pentagram::Generate()
     mFaces.push_back(face);
   }
 
+  // internal faces
   for (size_t i = 0; i < circleCornerCount - 1; i++)
   {
     if (i == 0)
@@ -83,6 +105,7 @@ void Pentagram::Generate()
     mFaces.push_back(face);
   }
 
+  // back vertices
   Vertices tmp = star.GetVertices();
   Translate(tmp, 0, 0, -mDistance/2);
   mVertices = tmp;

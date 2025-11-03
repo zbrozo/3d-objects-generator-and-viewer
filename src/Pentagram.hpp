@@ -5,12 +5,12 @@
 
 class Pentagram : public Object3D, public IGenerator
 {
-  int mDistance = 0;
-
+  const int mDistance;
+  const int mRadius;
 public:
 
-  explicit Pentagram(const char* name, int distance = 0) :
-    Object3D(name), mDistance(distance)
+  explicit Pentagram(const char* name, int distance, int radius) :
+    Object3D(name), mDistance(distance), mRadius(radius)
   {
   }
 

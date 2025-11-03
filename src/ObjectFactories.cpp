@@ -310,9 +310,10 @@ std::unique_ptr<Object3D> PentagramFactory::FactoryMethod(
   {
     return std::make_unique<Pentagram>(
       nameExt.c_str(),
-      std::get<ParamsVector>(it->second).at(0)
+      std::get<ParamsVector>(it->second).at(0),
+      std::get<ParamsVector>(it->second).at(1)
       );
   }
 
-  return std::make_unique<Pentagram>(nameExt.c_str());
+  throw std::out_of_range("Parameter not found");
 }
