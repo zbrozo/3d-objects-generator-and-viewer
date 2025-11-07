@@ -6,6 +6,7 @@
 #include "Tetrahedron.hpp"
 #include "Thorus.hpp"
 #include "Pentagram.hpp"
+#include "Star.hpp"
 #include "ObjectFactories.hpp"
 #include "ComponentFactories.hpp"
 #include "FileSaver.hpp"
@@ -35,7 +36,8 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"tetrahedron", ObjectId::Tetrahedron},
   {"regulartetrahedron", ObjectId::RegularTetrahedron},
   {"fractaltetrahedron", ObjectId::FractalTetrahedron},
-  {"pentagram", ObjectId::Pentagram}
+  {"pentagram", ObjectId::Pentagram},
+  {"star", ObjectId::Star}
 };
 
 using ObjectFactoryMap = std::map<ObjectId, std::unique_ptr<ObjectFactoryBase>>;
@@ -50,6 +52,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
   objectFactoryMap[ObjectId::RegularTetrahedron] = std::make_unique<RegularTetrahedronFactory>();
   objectFactoryMap[ObjectId::FractalTetrahedron] = std::make_unique<FractalTetrahedronFactory>();
   objectFactoryMap[ObjectId::Pentagram] = std::make_unique<PentagramFactory>();
+  objectFactoryMap[ObjectId::Star] = std::make_unique<StarFactory>();
 }
 
 void InitComponentFactoryMap(ComponentFactories& componentFactories)

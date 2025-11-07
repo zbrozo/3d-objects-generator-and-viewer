@@ -317,3 +317,22 @@ std::unique_ptr<Object3D> PentagramFactory::FactoryMethod(
 
   throw std::out_of_range("Parameter not found");
 }
+
+std::unique_ptr<Object3D> StarFactory::FactoryMethod(
+  const std::string& name,
+  const ParamsMap& params) const
+{
+  const auto nameExt = CreateFullName(name, params);
+
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
+  {
+    return std::make_unique<Pentagram>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0),
+      std::get<ParamsVector>(it->second).at(1)
+      );
+  }
+
+  throw std::out_of_range("Parameter not found");
+}

@@ -40,6 +40,7 @@ set(FactoriesSRC
   src/RegularTetrahedron.cpp
   src/FractalTetrahedron.cpp  
   src/Pentagram.cpp
+  src/Star.cpp
   src/FileLoader.cpp
   src/ObjectParamValidators.cpp
   src/Params.cpp

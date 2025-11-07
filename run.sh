@@ -87,6 +87,9 @@ cd ./objects
 ../generator --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
 ../generator --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
+../generator --l 64 --o star1 --c0 star 5 70 --c1 star 5 70 --t1 ry=180
+../generator --l 64 --o star2 --n star 14 70
+
 # scoopex sign :)
 ../generator --o tmp1 --n pentagram 14 70
 ../generator --o tmp2 --n thorus 4 10 15 90
