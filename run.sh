@@ -97,9 +97,9 @@ cd ./objects
 
 # objects for spacecut effect
 ../generator --o sc_cube --n cube 50
-../generator --o sc_square --c0 square --p0 200 --c1 square --p1 200 --t1 rx=180
+../generator --l 80 --o sc_square --c0 square --p0 200 --c1 square --p1 200 --t1 rx=180
 
 cd ..
 echo "Start viewer"
-./viewer objects thorus2 cube1 thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer objects sc_square thorus2 cube1 thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
 #thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
