@@ -51,6 +51,7 @@ set(GeneratorSRC
   src/FileLoader.cpp
   src/FileSaver.cpp
   src/FileFormatConverter.cpp
+  src/Exception.cpp
 )
 
 set(ViewerSRC

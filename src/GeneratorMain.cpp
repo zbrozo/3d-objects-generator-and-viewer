@@ -1,3 +1,4 @@
+#include "Exception.hpp"
 #include "IGenerator.hpp"
 #include "Face.hpp"
 #include "Object3D.hpp"
@@ -269,6 +270,9 @@ int main(int argc, char* argv[])
     BOOST_LOG_TRIVIAL(error) << ex.what();
     return 1;
   } catch (const std::bad_cast& ex) {
+    BOOST_LOG_TRIVIAL(error) << ex.what();
+    return 1;
+  } catch (const Exception& ex) {
     BOOST_LOG_TRIVIAL(error) << ex.what();
     return 1;
   }
