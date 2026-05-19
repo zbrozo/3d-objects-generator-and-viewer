@@ -20,7 +20,7 @@ public:
     const ParamsMap& params) const override;
 };
 
-class ThorusFactory : public ObjectFactoryBase
+class TorusFactory : public ObjectFactoryBase
 {
 public:
   std::unique_ptr<Object3D> FactoryMethod(

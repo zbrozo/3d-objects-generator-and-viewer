@@ -52,17 +52,17 @@ cd ./objects
 ../gen3d --o tmp3 --c0 tmp3 --t0 ry=90 tx=50 --c1 tmp3 --t1 ry=-90 tx=-50
 ../gen3d --l 80 --o cube5 --c0 tmp1 --c1 tmp2 --c2 tmp2 --t2 ry=180 --c3 tmp3 --c4 tmp3 --t4 rz=90
 
-### thorus
-../gen3d --l 80 --o thorus1 --n thorus 4 3 50 70
-../gen3d --l 80 --o thorus2 --n thorus 4 4 50 70
-../gen3d --l 80 --o thorus3 --n thorus 6 8 40 50
+### torus
+../gen3d --l 80 --o torus1 --n torus 4 3 50 70
+../gen3d --l 80 --o torus2 --n torus 4 4 50 70
+../gen3d --l 80 --o torus3 --n torus 6 8 40 50
 
-../gen3d --l 60 --o thorus4 --n thorus 6 12 30 70 --s 0 0 3 15 2 15
-../gen3d --l 60 --o thorus5 --n thorus 6 16 30 70 --s 0 0 4 15 4 15
-../gen3d --l 80 --3 --o thorus6 --n thorus 6 12 30 70 --s 0 0 3 10 2 10
-../gen3d --l 80 --3 --o thorus7 --n thorus 6 16 30 70 --s 0 0 4 10 4 10
-../gen3d --l 80 --3 --o thorus8 --n thorus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
-../gen3d --l 60 --o thorus9 --n thorus 3 6 50 70 6 33 0
+../gen3d --l 60 --o torus4 --n torus 6 12 30 70 --s 0 0 3 15 2 15
+../gen3d --l 60 --o torus5 --n torus 6 16 30 70 --s 0 0 4 15 4 15
+../gen3d --l 80 --3 --o torus6 --n torus 6 12 30 70 --s 0 0 3 10 2 10
+../gen3d --l 80 --3 --o torus7 --n torus 6 16 30 70 --s 0 0 4 10 4 10
+../gen3d --l 80 --3 --o torus8 --n torus 6 16 20 80 --s 0 0 0 0 0 0 0 0 16 10 16 10
+../gen3d --l 60 --o torus9 --n torus 3 6 50 70 6 33 0
 
 ###
 ../gen3d --l 80 --o cone1 --c0 Cone --p0 3 80 80 --c1 Cone --p1 3 80 -80
@@ -81,10 +81,10 @@ cd ./objects
 ../gen3d --l 80 --o composite4 --c0 Cone --p0 6 50 30 --t0 tz=25 --c1 Cone --p1 6 50 -30 --t1 tz=-25 rz=30 --c2 TriangulatedCylinder --p2 6 50 50 --t2 tz=25
 
 ../gen3d --o tmp --n cube 40
-../gen3d --o tmp1 --n thorus 3 6 15 95 3 45 0
+../gen3d --o tmp1 --n torus 3 6 15 95 3 45 0
 ../gen3d --l 80 --o composite6 --c0 tmp1 --t0 tx=-10 --c1 tmp1 --t1 ry=180 tx=10 --c2 tmp1 --t2 ry=90 tz=10 --c3 tmp1 --t3 ry=-90 tz=-10 --c4 tmp
 
-../gen3d --3 --o tmp1 --n thorus 4 8 20 70 6 0 15
+../gen3d --3 --o tmp1 --n torus 4 8 20 70 6 0 15
 ../gen3d --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
 ../gen3d --l 64 --o star1 --c0 star 5 70 --c1 star 5 70 --t1 ry=180
@@ -92,14 +92,9 @@ cd ./objects
 
 # scoopex sign :)
 ../gen3d --o tmp1 --n pentagram 14 70
-../gen3d --o tmp2 --n thorus 4 10 15 90
+../gen3d --o tmp2 --n torus 4 10 15 90
 ../gen3d --l 60 --o scoopex --c0 tmp1 --c1 tmp2
-
-# objects for spacecut effect
-../gen3d --l 64 --o sc_cube --n cube 50
-../gen3d --l 64 --o sc_square --c0 square --p0 200 --c1 square --p1 200 --t1 rx=180
 
 cd ..
 echo "Start viewer"
-./viewer3d objects sc_square thorus2 cube1 thorus9 composite7 thorus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
-#thorus4 thorus5 thorus6 thorus7 composite4 tetrahedron1 tetrahedron3
+./viewer3d objects torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

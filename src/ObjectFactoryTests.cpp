@@ -18,18 +18,18 @@ BOOST_AUTO_TEST_CASE(cube_factory_test)
   BOOST_CHECK_EQUAL(6, object->GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(thorus_factory_test)
+BOOST_AUTO_TEST_CASE(torus_factory_test)
 {
   ParamsMap paramsMap;
-  ThorusFactory factory;
+  TorusFactory factory;
   ComponentFactories componentFactories;
 
   paramsMap[ParamsId::AdditionalParams] = ParamsVector{6, 8};
 
   factory.Init(componentFactories);
-  auto object = factory.Create("thorus", paramsMap);
+  auto object = factory.Create("torus", paramsMap);
 
-  BOOST_CHECK_EQUAL("thorus_6_8", object->GetName());
+  BOOST_CHECK_EQUAL("torus_6_8", object->GetName());
   BOOST_CHECK_EQUAL(48, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }

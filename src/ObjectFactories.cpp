@@ -3,7 +3,7 @@
 #include "CubeExt.hpp"
 #include "Object3D.hpp"
 #include "Tetrahedron.hpp"
-#include "Thorus.hpp"
+#include "Torus.hpp"
 #include "Composite.hpp"
 #include "Tetrahedron.hpp"
 #include "RegularTetrahedron.hpp"
@@ -111,7 +111,7 @@ std::unique_ptr<Object3D> CubeExtFactory::FactoryMethod(
     std::move(componentsWithParamsVector));
 }
 
-std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
+std::unique_ptr<Object3D> TorusFactory::FactoryMethod(
   const std::string& name,
   const ParamsMap& params) const
 {
@@ -138,7 +138,7 @@ std::unique_ptr<Object3D> ThorusFactory::FactoryMethod(
     preferTriangles =  std::get<int>(preferTrianglesIt->second);
   }
 
-  return std::make_unique<Thorus>(
+  return std::make_unique<Torus>(
     CreateFullName(name, params).c_str(),
     GetObligatoryUnsignedInt(foundParams, 0),
     GetObligatoryUnsignedInt(foundParams, 1),

@@ -5,7 +5,7 @@
 #include "Cube.hpp"
 #include "CubeExt.hpp"
 #include "Tetrahedron.hpp"
-#include "Thorus.hpp"
+#include "Torus.hpp"
 #include "Pentagram.hpp"
 #include "Star.hpp"
 #include "ObjectFactories.hpp"
@@ -32,7 +32,7 @@ namespace po = boost::program_options;
 std::map<std::string, ObjectId> ObjectIdMap {
   {"cube", ObjectId::Cube},
   {"cube-ext", ObjectId::CubeExt},
-  {"thorus", ObjectId::Thorus},
+  {"torus", ObjectId::Torus},
   {"composite", ObjectId::Composite},
   {"tetrahedron", ObjectId::Tetrahedron},
   {"regulartetrahedron", ObjectId::RegularTetrahedron},
@@ -47,7 +47,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
 {
   objectFactoryMap[ObjectId::Cube] = std::make_unique<CubeFactory>();
   objectFactoryMap[ObjectId::CubeExt] = std::make_unique<CubeExtFactory>();
-  objectFactoryMap[ObjectId::Thorus] = std::make_unique<ThorusFactory>();
+  objectFactoryMap[ObjectId::Torus] = std::make_unique<TorusFactory>();
   objectFactoryMap[ObjectId::Composite] = std::make_unique<CompositeFactory>();
   objectFactoryMap[ObjectId::Tetrahedron] = std::make_unique<TetrahedronFactory>();
   objectFactoryMap[ObjectId::RegularTetrahedron] = std::make_unique<RegularTetrahedronFactory>();

@@ -1,7 +1,7 @@
 #include "Params.hpp"
 #include "Types.hpp"
 #include "Rotation.hpp"
-#include "Thorus.hpp"
+#include "Torus.hpp"
 #include "ObjectParamValidators.hpp"
 
 #include <algorithm>
@@ -90,7 +90,7 @@ Faces CreateFacesInCircle(
 
 } // namespace
 
-Vertices Thorus::CreateCircleVertices()
+Vertices Torus::CreateCircleVertices()
 {
   Vertex vertex(0, 0, mCircleRadius);
   VertexRotation rotation;
@@ -111,7 +111,7 @@ Vertices Thorus::CreateCircleVertices()
   return circle;
 }
 
-Vertices Thorus::CreateRingVertices(Vertices circle)
+Vertices Torus::CreateRingVertices(Vertices circle)
 {
   Vertices vertices;
   VertexRotation rotation;
@@ -145,7 +145,7 @@ Vertices Thorus::CreateRingVertices(Vertices circle)
   return vertices;
 }
 
-Faces Thorus::CreateFacesInRing(int begin, int count)
+Faces Torus::CreateFacesInRing(int begin, int count)
 {
   const bool ringIsClosed = mRingAmount == mRingAmount2;
 
@@ -165,7 +165,7 @@ Faces Thorus::CreateFacesInRing(int begin, int count)
   return facesInRing;
 }
 
-Vertices Thorus::ApplySinusToCircle(const Vertices& vertices, int index)
+Vertices Torus::ApplySinusToCircle(const Vertices& vertices, int index)
 {
   Vertices resultVertices;
 
@@ -191,7 +191,7 @@ Vertices Thorus::ApplySinusToCircle(const Vertices& vertices, int index)
   return resultVertices;
 }
 
-Vertices Thorus::ApplySinusToRing(const Vertices& vertices)
+Vertices Torus::ApplySinusToRing(const Vertices& vertices)
 {
   Vertices resultVertices;
 
@@ -231,7 +231,7 @@ Vertices Thorus::ApplySinusToRing(const Vertices& vertices)
   return resultVertices;
 }
 
-Thorus::Thorus(
+Torus::Torus(
   const char* name,
   uint16_t circleAmount,
   uint16_t ringAmount,
@@ -280,7 +280,7 @@ Thorus::Thorus(
   SetParam<double>(mRingSinusAmpZ, ringSinusAmpZ);
 }
 
-void Thorus::Generate()
+void Torus::Generate()
 {
   if (0 == mRingAmount2)
   {

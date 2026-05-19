@@ -17,7 +17,7 @@ enum class ObjectId {
   None = 0,
   Cube,
   CubeExt,
-  Thorus,
+  Torus,
   Tetrahedron,
   RegularTetrahedron,
   FractalTetrahedron,

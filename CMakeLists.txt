@@ -34,7 +34,7 @@ set(FactoriesSRC
   src/Components.cpp
   src/Cube.cpp
   src/CubeExt.cpp
-  src/Thorus.cpp
+  src/Torus.cpp
   src/Composite.cpp
   src/Tetrahedron.cpp
   src/RegularTetrahedron.cpp

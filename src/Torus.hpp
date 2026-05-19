@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <optional>
 
-class Thorus : public Object3D, public IGenerator
+class Torus : public Object3D, public IGenerator
 {
   const uint16_t mCircleAmount;
   const uint16_t mRingAmount;
@@ -35,7 +35,7 @@ class Thorus : public Object3D, public IGenerator
 
 public:
 
-  explicit Thorus(
+  explicit Torus(
     const char* name,
     uint16_t circleAmount,
     uint16_t ringAmount,
@@ -59,12 +59,12 @@ public:
     bool preferTriangles
     );
 
-  virtual ~Thorus() = default;
+  virtual ~Torus() = default;
 
-  Thorus(Thorus const &) = delete;
-  Thorus(Thorus &&) = delete;
-  Thorus& operator=(const Thorus& v) = delete;
-  Thorus& operator=(Thorus &&) = delete;
+  Torus(Torus const &) = delete;
+  Torus(Torus &&) = delete;
+  Torus& operator=(const Torus& v) = delete;
+  Torus& operator=(Torus &&) = delete;
 
   virtual void Generate() override;
 
