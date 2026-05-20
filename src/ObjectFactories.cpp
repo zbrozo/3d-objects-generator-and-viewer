@@ -2,6 +2,7 @@
 #include "Cube.hpp"
 #include "CubeExt.hpp"
 #include "Object3D.hpp"
+#include "RegularIcosahedron.hpp"
 #include "Tetrahedron.hpp"
 #include "Torus.hpp"
 #include "Composite.hpp"
@@ -352,11 +353,11 @@ std::unique_ptr<Object3D> RegularIcosahedronFactory::FactoryMethod(
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {
-    return std::make_unique<RegularTetrahedron>(
+    return std::make_unique<RegularIcosahedron>(
       nameExt.c_str(),
       std::get<ParamsVector>(it->second).at(0)
       );
   }
 
-  return std::make_unique<RegularTetrahedron>(nameExt.c_str());
+  return std::make_unique<RegularIcosahedron>(nameExt.c_str());
 }

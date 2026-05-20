@@ -31,6 +31,7 @@ void RegularIcosahedron::Generate()
   int height = (std::sqrt(3.0)/2.0) * len;
 
   Components::Cylinder cylinder(5, mRadius, height/2);
+  cylinder.SetTraingulated();
   cylinder.Generate();
 
   mVertices = cylinder.GetVertices();
