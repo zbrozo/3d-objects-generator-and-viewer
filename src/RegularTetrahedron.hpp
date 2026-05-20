@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _REGULARTETRAHEDRON_HPP_
+#define _REGULARTETRAHEDRON_HPP_
 
 #include "Object3D.hpp"
 #include "IGenerator.hpp"
@@ -25,3 +26,5 @@ public:
   virtual void Generate() override;
 
 };
+
+#endif

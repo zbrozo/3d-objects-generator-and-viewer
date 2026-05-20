@@ -1,7 +1,7 @@
-#include "RegularTetrahedron.hpp"
-#include "Components.hpp"
 #include <cmath>
 #include <algorithm>
+#include "RegularTetrahedron.hpp"
+#include "Components.hpp"
 
 void RegularTetrahedron::Generate()
 {

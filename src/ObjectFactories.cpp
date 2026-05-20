@@ -342,3 +342,21 @@ std::unique_ptr<Object3D> StarFactory::FactoryMethod(
 
   throw std::out_of_range("Parameter not found");
 }
+
+std::unique_ptr<Object3D> RegularIcosahedronFactory::FactoryMethod(
+  const std::string& name,
+  const ParamsMap& params) const
+{
+  const auto nameExt = CreateFullName(name, params);
+
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
+  {
+    return std::make_unique<RegularTetrahedron>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0)
+      );
+  }
+
+  return std::make_unique<RegularTetrahedron>(nameExt.c_str());
+}

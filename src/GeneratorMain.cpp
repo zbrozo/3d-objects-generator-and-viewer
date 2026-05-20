@@ -37,6 +37,7 @@ std::map<std::string, ObjectId> ObjectIdMap {
   {"tetrahedron", ObjectId::Tetrahedron},
   {"regulartetrahedron", ObjectId::RegularTetrahedron},
   {"fractaltetrahedron", ObjectId::FractalTetrahedron},
+  {"regularicosahedron", ObjectId::RegularIcosahedron},
   {"pentagram", ObjectId::Pentagram},
   {"star", ObjectId::Star}
 };
@@ -52,6 +53,7 @@ void InitObjectFactoryMap(ObjectFactoryMap& objectFactoryMap)
   objectFactoryMap[ObjectId::Tetrahedron] = std::make_unique<TetrahedronFactory>();
   objectFactoryMap[ObjectId::RegularTetrahedron] = std::make_unique<RegularTetrahedronFactory>();
   objectFactoryMap[ObjectId::FractalTetrahedron] = std::make_unique<FractalTetrahedronFactory>();
+  objectFactoryMap[ObjectId::RegularIcosahedron] = std::make_unique<RegularIcosahedronFactory>();
   objectFactoryMap[ObjectId::Pentagram] = std::make_unique<PentagramFactory>();
   objectFactoryMap[ObjectId::Star] = std::make_unique<StarFactory>();
 }

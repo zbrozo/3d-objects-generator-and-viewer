@@ -11,6 +11,7 @@
 #include <type_traits>
 #include <stdexcept>
 
+#include "RegularIcosahedron.hpp"
 #include "Types.hpp"
 
 enum class ObjectId {
@@ -22,6 +23,7 @@ enum class ObjectId {
   RegularTetrahedron,
   FractalTetrahedron,
   Composite,
+  RegularIcosahedron,
   // components
   Square,
   Rectangle,
