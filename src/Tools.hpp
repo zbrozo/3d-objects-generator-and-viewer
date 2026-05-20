@@ -9,8 +9,7 @@ Object3D CreateNormalVectors(const Object3D& object, int normalLength);
 
 void Translate(Vertices& vertices, int x, int y, int z);
 
-void Transform(Vertices& vertices,
-                   StringVector& commands);
+void Transform(Vertices& vertices, const StringVector& commands);
 
 void Merge(Vertices& destVertices,
            Faces& destFaces,

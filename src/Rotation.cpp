@@ -7,9 +7,9 @@ namespace
 template <typename T> constexpr T pi = T(3.14159265);
 template <typename T> constexpr T radian = T(pi<T> / 180.0);
 
-auto getRadian(int degree)
+double getRadian(int degree)
 {
-  return degree * radian<double>;
+  return radian<double> * degree;
 }
 
 } // namespace

@@ -18,12 +18,13 @@ public:
   ComponentFactoryBase& operator=(ComponentFactoryBase&&) = delete;
 
   std::unique_ptr<Object3D> Create(
-    const ParamsVector& params) const;
+    const ParamsVector& params,
+    bool triangulated = false) const;
 
 protected:
 
   virtual std::unique_ptr<Object3D> FactoryMethod(
     const ParamsVector& params) const = 0;
 
-  void Generate(Object3D& object) const;
+  void Generate(Object3D& object, bool triangulated) const;
 };

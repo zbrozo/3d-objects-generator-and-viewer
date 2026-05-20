@@ -48,13 +48,6 @@ public:
     const ParamsVector& params) const override;
 };
 
-class TriangulatedCylinderFactory : public ComponentFactoryBase
-{
-public:
-  std::unique_ptr<Object3D> FactoryMethod(
-    const ParamsVector& params) const override;
-};
-
 class StarFactory : public ComponentFactoryBase
 {
 public:

@@ -54,16 +54,6 @@ BOOST_AUTO_TEST_CASE(cylinder_generation_test)
   BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(triangulatedcylinder_generation_test)
-{
-  Components::TriangulatedCylinder object(10,50,50);
-  object.Generate();
-  
-  BOOST_CHECK_EQUAL("TriangulatedCylinder", object.GetName());
-  BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
-  BOOST_CHECK_EQUAL(20, object.GetFacesCount());
-}
-
 BOOST_AUTO_TEST_CASE(star_generation_test)
 {
   Components::Star object(5,100);

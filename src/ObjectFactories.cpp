@@ -38,7 +38,6 @@ std::map<std::string, ObjectId> ComponentIdMap {
   {"pyramid", ObjectId::Pyramid},
   {"cone", ObjectId::Cone},
   {"cylinder", ObjectId::Cylinder},
-  {"triangulatedcylinder", ObjectId::TriangulatedCylinder},
   {"star", ObjectId::Star},
 };
 
@@ -223,8 +222,15 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
 
             BOOST_LOG_TRIVIAL(trace) << "Found component: " << name << " " << std::to_string(static_cast<int>(id));
 
+            bool triangulated = false;
+            auto preferTrianglesIt = params.find(ParamsId::PreferTriangles);
+            if (preferTrianglesIt != params.end())
+            {
+              triangulated =  std::get<int>(preferTrianglesIt->second);
+            }
+            
             components->push_back(
-              std::move(GetComponentFactories().at(id)->Create(paramsVector)));
+              std::move(GetComponentFactories().at(id)->Create(paramsVector, triangulated)));
         }
       }
     }
@@ -232,7 +238,7 @@ std::unique_ptr<Object3D> CompositeFactory::FactoryMethod(
     componentsWithParamsVector->push_back(
       ComponentsWithParamsPair(std::make_pair(mainParamsVector, transformCmds), std::move(components)));
   };
-
+   
   create(ParamsId::ComponentsList0, ParamsId::ComponentsParams0, ParamsId::Params0, ParamsId::TransformCmds0);
   create(ParamsId::ComponentsList1, ParamsId::ComponentsParams1, ParamsId::Params1, ParamsId::TransformCmds1);
   create(ParamsId::ComponentsList2, ParamsId::ComponentsParams2, ParamsId::Params2, ParamsId::TransformCmds2);

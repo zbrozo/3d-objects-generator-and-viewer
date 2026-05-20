@@ -145,7 +145,7 @@ void Translate(Vertices& vertices,
 }
 
 void Transform(Vertices& vertices,
-               StringVector& commands)
+               const StringVector& commands)
 {
   for (const std::string& cmd : commands)
   {
@@ -217,7 +217,7 @@ std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
     int foundNr = 0;
 
     auto found = std::find_if(resultVertices.begin(), resultVertices.end(), [&](const Vertex& v){
-      const short vertexRange = 0;
+      const short vertexRange = 0U;
 
       if ((vertex.getX() >= v.getX() - vertexRange && vertex.getX() <= v.getX() + vertexRange)
         && (vertex.getY() >= v.getY() - vertexRange && vertex.getY() <= v.getY() + vertexRange)

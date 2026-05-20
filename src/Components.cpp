@@ -8,6 +8,7 @@
 #include <exception>
 #include <stdexcept>
 #include <boost/log/trivial.hpp>
+#include <iostream>
 
 namespace
 {
@@ -196,8 +197,17 @@ void Cone::Generate()
 void Cylinder::Generate()
 {
   Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
-  Vertices vertices2{vertices};
-
+  Vertices vertices2;
+  
+  if (mTriangulated)
+  {
+    vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
+  }
+  else
+  {
+    vertices2 = vertices;
+  }
+  
   std::transform(vertices2.cbegin(), vertices2.cend(), vertices2.begin(),
     [&](const Vertex& vertex)
     {
@@ -212,48 +222,39 @@ void Cylinder::Generate()
   uint16_t nr = 0;
   for (; nr < size - 1; ++nr)
   {
-    mFaces.push_back(
+    if (mTriangulated)
+    {
+      mFaces.push_back(
+      {
+        uint16_t(nr + 1),
+        uint16_t(nr),
+        uint16_t(nr + size),
+      });
+
+      mFaces.push_back(
+      {
+        uint16_t(nr + size),
+        uint16_t(nr + size + 1),
+        uint16_t(nr + 1),
+      });
+    }
+    else
+    {
+      mFaces.push_back(
       {
         nr,
         uint16_t(nr + size),
         uint16_t(nr + size + 1),
         uint16_t(nr + 1)
       });
+    }
   }
 
-  mFaces.push_back(
-    {
-      nr,
-      uint16_t(nr + size),
-      uint16_t(size),
-      uint16_t(0)
-    });
-
-}
-
-void TriangulatedCylinder::Generate()
-{
-  Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
-  Vertices vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
-
-  std::transform(vertices2.cbegin(), vertices2.cend(), vertices2.begin(),
-    [&](const Vertex& vertex)
-    {
-      return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
-    });
-
-  mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
-  mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
-
-  const auto size = vertices.size();
-
-  uint16_t nr = 0;
-
-  for (; nr < size - 1; ++nr)
+  if (mTriangulated)
   {
     mFaces.push_back(
       {
-        uint16_t(nr + 1),
+        uint16_t(0),
         uint16_t(nr),
         uint16_t(nr + size),
       });
@@ -261,24 +262,21 @@ void TriangulatedCylinder::Generate()
     mFaces.push_back(
       {
         uint16_t(nr + size),
-        uint16_t(nr + size + 1),
-        uint16_t(nr + 1),
+        uint16_t(size),
+        uint16_t(0),
       });
   }
-
-  mFaces.push_back(
+  else
+  {
+    mFaces.push_back(
     {
-      uint16_t(0),
-      uint16_t(nr),
-      uint16_t(nr + size),
-    });
-
-  mFaces.push_back(
-    {
+      nr,
       uint16_t(nr + size),
       uint16_t(size),
-      uint16_t(0),
+      uint16_t(0)
     });
+  }
+
 }
 
 void Star::Generate()

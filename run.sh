@@ -78,7 +78,7 @@ cd ./objects
 ../gen3d --l 80 --o composite1 --c0 Pyramid --p0 50 50 --c1 Pyramid --p1 50 50 --t1 ry=180
 ../gen3d --l 80 --o composite2 --c0 Pyramid --p0 50 50 --t0 tz=20 --c1 Pyramid --p1 50 50 --t1 tz=20 ry=180 --c2 Rectangle --p2 40 100 --t2 tz=50 ry=90 --c3 Rectangle --p3 40 100 --t3 tz=50 ry=270 --c4 Rectangle --p4 100 40 --t4 tz=50 rx=90 --c5 Rectangle --p5 100 40 --t5 tz=50 rx=270
 ../gen3d --l 80 --o composite3 --c0 Cone --p0 6 50 50 --t0 tz=25 --c1 Cone --p1 6 50 -50 --t1 tz=-25 --c2 Cylinder --p2 6 50 50 --t2 tz=25
-../gen3d --l 80 --o composite4 --c0 Cone --p0 6 50 30 --t0 tz=25 --c1 Cone --p1 6 50 -30 --t1 tz=-25 rz=30 --c2 TriangulatedCylinder --p2 6 50 50 --t2 tz=25
+../gen3d --3 --l 80 --o composite4 --c0 Cone --p0 5 100 30 --t0 tz=25 --c1 Cone --p1 5 100 -30 --t1 tz=-25 rz=36 --c2 Cylinder --p2 5 100 50 --t2 tz=25
 
 ../gen3d --o tmp --n cube 40
 ../gen3d --o tmp1 --n torus 3 6 15 95 3 45 0
@@ -97,4 +97,4 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer3d objects torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer3d objects composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

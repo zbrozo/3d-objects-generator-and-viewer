@@ -146,29 +146,6 @@ public:
 
 };
 
-class TriangulatedCylinder : public Object3D, public IGenerator
-{
-  const uint16_t mCircleAmount;
-  const int mCircleRadius;
-  const int mHeight;
-
-public:
-
-  explicit TriangulatedCylinder(uint16_t circleAmount, int circleRadius, int height) :
-    Object3D("TriangulatedCylinder"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
-  {
-  }
-
-  void Generate() override;
-
-  virtual ~TriangulatedCylinder() = default;
-
-  TriangulatedCylinder(const TriangulatedCylinder&) = delete;
-  TriangulatedCylinder(TriangulatedCylinder&&) = delete;
-  TriangulatedCylinder& operator=(const TriangulatedCylinder&) = delete;
-  TriangulatedCylinder& operator=(TriangulatedCylinder&&) = delete;
-};
-
 class Star : public Object3D, public IGenerator
 {
   const uint16_t mCircleAmount;

@@ -53,15 +53,6 @@ std::unique_ptr<Object3D> CylinderFactory::FactoryMethod(
   return std::make_unique<Components::Cylinder>(param0, param1, param2);
 }
 
-std::unique_ptr<Object3D> TriangulatedCylinderFactory::FactoryMethod(
-  const ParamsVector& params) const
-{
-  const auto param0 = GetObligatoryUnsignedInt(params, 0);
-  const auto param1 = GetObligatoryInt(params, 1);
-  const auto param2 = GetObligatoryInt(params, 2);
-  return std::make_unique<Components::TriangulatedCylinder>(param0, param1, param2);
-}
-
 std::unique_ptr<Object3D> StarFactory::FactoryMethod(
   const ParamsVector& params) const
 {

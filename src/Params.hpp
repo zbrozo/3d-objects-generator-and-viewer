@@ -22,13 +22,13 @@ enum class ObjectId {
   RegularTetrahedron,
   FractalTetrahedron,
   Composite,
+  // components
   Square,
   Rectangle,
   Trapeze,
   Pyramid,
   Cone,
   Cylinder,
-  TriangulatedCylinder,
   Star,
   Pentagram,
 };
