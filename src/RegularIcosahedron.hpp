@@ -4,24 +4,24 @@
 #include "Object3D.hpp"
 #include "IGenerator.hpp"
 
-class RegularIcosaHedron : public Object3D, public IGenerator
+class RegularIcosahedron : public Object3D, public IGenerator
 {
 
   int mRadius = 50;
 
 public:
 
-  explicit RegularIcosaHedron(const char* name, int radius = 50) :
+  explicit RegularIcosahedron(const char* name, int radius = 50) :
     Object3D(name), mRadius(radius)
   {
   }
 
-  virtual ~RegularIcosaHedron() = default;
+  virtual ~RegularIcosahedron() = default;
 
-  RegularIcosaHedron(RegularIcosaHedron const &) = delete;
-  RegularIcosaHedron(RegularIcosaHedron &&) = delete;
-  RegularIcosaHedron& operator=(const RegularIcosaHedron& v) = delete;
-  RegularIcosaHedron& operator=(RegularIcosaHedron &&) = delete;
+  RegularIcosahedron(RegularIcosahedron const &) = delete;
+  RegularIcosahedron(RegularIcosahedron &&) = delete;
+  RegularIcosahedron& operator=(const RegularIcosahedron& v) = delete;
+  RegularIcosahedron& operator=(RegularIcosahedron &&) = delete;
 
   virtual void Generate() override;
 
