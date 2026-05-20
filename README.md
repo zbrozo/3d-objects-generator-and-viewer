@@ -78,11 +78,8 @@ _Values in p and t can be negative_
 5. Cone, name: cone
 --p amount radius height
 
-6. Cylinder made of squares, name: cylinder
+6. Cylinder, name: cylinder
 --p circle-amount circle-radius height
-
-7. Cylinder made of triangles, name: triangledcylinder
---p circle-amount cirlce-radius height
 
 8. Star, name: star
 --p amount radius
