@@ -2,55 +2,43 @@
 #include <algorithm>
 #include "RegularIcosahedron.hpp"
 #include "Components.hpp"
+#include "Tools.hpp"
+#include "Rotation.hpp"
 
 void RegularIcosahedron::Generate()
 {
-  Components::Cone cone(5, mRadius, 0);
-  cone.Generate();
+  Components::Cone tmpCone(5, mRadius, 0);
+  tmpCone.Generate();
 
-  auto faces = cone.GetFaces();
-  auto vertices = cone.GetVertices();
+  auto faces = tmpCone.GetFaces();
+  auto vertices = tmpCone.GetVertices();
 
   auto v0 = faces[0][0];
   auto v1 = faces[0][1];
   
-  auto len = std::sqrt(
-    std::pow(
-      std::abs(vertices[v0].getX() - vertices[v1].getX()),
-      2)
-    + 
-    std::pow(
-      std::abs(vertices[v0].getY() - vertices[v1].getY()),
-      2)
-    +
-    std::pow(
-      std::abs(vertices[v0].getZ() - vertices[v1].getZ()),
-      2)
-    );
+  auto len = Tools::GetDistance(vertices[v0], vertices[v1]);
+  auto height = std::sqrt(3.0) * len / 2.0;
 
-  int height = (std::sqrt(3.0)/2.0) * len;
-
-  Components::Cylinder cylinder(5, mRadius, height/2);
+  Components::Cylinder cylinder(5, mRadius, height);
   cylinder.SetTraingulated();
   cylinder.Generate();
 
-  mVertices = cylinder.GetVertices();
+  Vertices vertices2 = cylinder.GetVertices();
+  Tools::Translate(vertices2, 0, 0, height/2);
+  
+  mVertices = vertices2;
   mFaces = cylinder.GetFaces();
-  
-   // auto vertices = cone.GetVertices();
-  // const auto xLen = std::abs(vertices[0].getX() - vertices[1].getX());
-  // const auto yLen = std::abs(vertices[0].getY() - vertices[1].getY());
-  // const auto len = std::sqrt(std::pow(xLen, 2) + std::pow(yLen, 2));
-  // const auto height = std::sqrt(6.0) * len / 3.0;
 
-  // Components::Cone tetrahedron(3, mRadius, height);
-  // tetrahedron.Generate();
-  
-  // mVertices = tetrahedron.GetVertices();
-  // mFaces = tetrahedron.GetFaces();
-
-  // std::transform(mVertices.cbegin(), mVertices.cend(), mVertices.begin(),
-  //   [&](const Vertex& vertex ){ return vertex + Vertex(0, 0, -height/2); });
-  
-  // mFaces.push_back(Face({0,2,1}));
+  Components::Cone cone1(5, mRadius, mRadius/2);
+  cone1.Generate();
+  vertices2 = cone1.GetVertices();
+  Tools::Translate(vertices2, 0, 0, height/2);
+  Tools::Merge(mVertices, mFaces, vertices2, cone1.GetFaces());
+    
+  Components::Cone cone2(5, mRadius, -mRadius/2);
+  cone2.Generate();
+  vertices2 = cone2.GetVertices();
+  Tools::Rotate(vertices2, 0, 0, 36);
+  Tools::Translate(vertices2, 0, 0, -height/2);
+  Tools::Merge(mVertices, mFaces, vertices2, cone2.GetFaces());
 }

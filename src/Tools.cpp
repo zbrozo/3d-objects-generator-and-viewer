@@ -2,6 +2,7 @@
 #include "Vectors.hpp"
 #include "Tools.hpp"
 #include "ObjectBuilder.hpp"
+#include "Rotation.hpp"
 
 #include <algorithm>
 #include <cmath>
@@ -183,6 +184,18 @@ void Transform(Vertices& vertices,
   }
 }
 
+void Rotate(Vertices& vertices, int degX, int degY, int degZ)
+{
+  VertexRotation rotate;
+
+  for (auto& vertex : vertices)
+  {
+    constexpr short scaleValue = 10;
+    const Vertex v = rotate.rotateZ(rotate.rotateY(rotate.rotateX(vertex * scaleValue, degX), degY), degZ) / scaleValue;
+    vertex = v; 
+  }
+}
+
 void Merge(Vertices& destVertices,
            Faces& destFaces,
            const Vertices& srcVertices,
@@ -217,7 +230,7 @@ std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
     int foundNr = 0;
 
     auto found = std::find_if(resultVertices.begin(), resultVertices.end(), [&](const Vertex& v){
-      const short vertexRange = 0U;
+      const short vertexRange = 2U;
 
       if ((vertex.getX() >= v.getX() - vertexRange && vertex.getX() <= v.getX() + vertexRange)
         && (vertex.getY() >= v.getY() - vertexRange && vertex.getY() <= v.getY() + vertexRange)
@@ -244,6 +257,23 @@ std::pair<Face, Vertices> Merge(const Vertices& objectVertices,
   }
 
   return std::make_pair(resultFace, resultVertices);
+}
+
+int GetDistance(Vertex v1, Vertex v2)
+{
+  return std::sqrt(
+    std::pow(
+      std::abs(v1.getX() - v2.getX()),
+      2)
+    + 
+    std::pow(
+      std::abs(v1.getY() - v2.getY()),
+      2)
+    +
+    std::pow(
+      std::abs(v1.getZ() - v2.getZ()),
+      2)
+    );
 }
 
 }
