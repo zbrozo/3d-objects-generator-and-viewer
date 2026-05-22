@@ -45,6 +45,7 @@ set(FactoriesSRC
   src/FileLoader.cpp
   src/ObjectParamValidators.cpp
   src/Params.cpp
+  src/Exception.cpp
 )
 
 set(GeneratorSRC
@@ -52,7 +53,6 @@ set(GeneratorSRC
   src/FileLoader.cpp
   src/FileSaver.cpp
   src/FileFormatConverter.cpp
-  src/Exception.cpp
 )
 
 set(ViewerSRC

@@ -1,7 +1,7 @@
 #include "Params.hpp"
 
 template<typename R, typename T>
-R GetObligatory(std::vector<T> values, uint32_t index)
+R GetObligatory(const std::vector<T>& values, uint32_t index)
 {
   if (values.size() <= index)
   {
@@ -20,7 +20,7 @@ R GetObligatory(std::vector<T> values, uint32_t index)
 }
 
 template<typename R, typename T>
-std::optional<R> GetOptional(std::vector<T> values, uint32_t index)
+std::optional<R> GetOptional(const std::vector<T>& values, uint32_t index)
 {
   if (values.size() > index)
   {

@@ -80,6 +80,8 @@ cd ./objects
 ../gen3d --l 80 --o composite3 --c0 Cone --p0 6 50 50 --t0 tz=25 --c1 Cone --p1 6 50 -50 --t1 tz=-25 --c2 Cylinder --p2 6 50 50 --t2 tz=25
 ../gen3d --3 --l 80 --o composite4 --c0 Cone --p0 5 100 30 --t0 tz=25 --c1 Cone --p1 5 100 -30 --t1 tz=-25 rz=36 --c2 Cylinder --p2 5 100 50 --t2 tz=25
 
+../gen3d --3 --l 80 --o icosahedron --n regularicosahedron 100
+
 ../gen3d --o tmp --n cube 40
 ../gen3d --o tmp1 --n torus 3 6 15 95 3 45 0
 ../gen3d --l 80 --o composite6 --c0 tmp1 --t0 tx=-10 --c1 tmp1 --t1 ry=180 tx=10 --c2 tmp1 --t2 ry=90 tz=10 --c3 tmp1 --t3 ry=-90 tz=-10 --c4 tmp
@@ -87,7 +89,7 @@ cd ./objects
 ../gen3d --3 --o tmp1 --n torus 4 8 20 70 6 0 15
 ../gen3d --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
-../gen3d --l 64 --o star1 --c0 star 5 70 --c1 star 5 70 --t1 ry=180
+#../gen3d --l 64 --o star1 --c0 star 5 70 --c1 star 5 70 --t1 ry=180
 ../gen3d --l 64 --o star2 --n star 14 70
 
 # scoopex sign :)
@@ -97,4 +99,4 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer3d objects composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer3d objects icosahedron composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

@@ -7,11 +7,11 @@
 class RegularIcosahedron : public Object3D, public IGenerator
 {
 
-  int mRadius = 50;
+  int mRadius = 0;
 
 public:
 
-  explicit RegularIcosahedron(const char* name, int radius = 50) :
+  explicit RegularIcosahedron(const char* name, int radius) :
     Object3D(name), mRadius(radius)
   {
   }

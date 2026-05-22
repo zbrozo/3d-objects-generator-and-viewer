@@ -2,6 +2,7 @@
 #include "Cube.hpp"
 #include "CubeExt.hpp"
 #include "Object3D.hpp"
+#include "RegularDodecahedron.hpp"
 #include "RegularIcosahedron.hpp"
 #include "Tetrahedron.hpp"
 #include "Torus.hpp"
@@ -16,6 +17,7 @@
 #include "FileLoader.hpp"
 #include "FileFormatConverter.hpp"
 #include "Types.hpp"
+#include "Exception.hpp"
 
 #include <cctype>
 #include <memory>
@@ -359,5 +361,23 @@ std::unique_ptr<Object3D> RegularIcosahedronFactory::FactoryMethod(
       );
   }
 
-  return std::make_unique<RegularIcosahedron>(nameExt.c_str());
+  throw Exception("no parameters defined", __FILE__, __LINE__);
+}
+
+std::unique_ptr<Object3D> RegularDodecahedronFactory::FactoryMethod(
+  const std::string& name,
+  const ParamsMap& params) const
+{
+  const auto nameExt = CreateFullName(name, params);
+
+  if (auto it = std::find_if(params.begin(), params.end(),
+      std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
+  {
+    return std::make_unique<RegularIcosahedron>(
+      nameExt.c_str(),
+      std::get<ParamsVector>(it->second).at(0)
+      );
+  }
+
+  throw Exception("no parameters defined", __FILE__, __LINE__);
 }

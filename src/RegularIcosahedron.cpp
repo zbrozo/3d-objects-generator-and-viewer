@@ -3,7 +3,6 @@
 #include "RegularIcosahedron.hpp"
 #include "Components.hpp"
 #include "Tools.hpp"
-#include "Rotation.hpp"
 
 void RegularIcosahedron::Generate()
 {

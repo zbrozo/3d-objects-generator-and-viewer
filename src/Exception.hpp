@@ -1,4 +1,6 @@
 #ifndef _EXCEPTION_HPP_
+#define _EXCEPTION_HPP_
+
 #include <exception>
 #include <string>
 

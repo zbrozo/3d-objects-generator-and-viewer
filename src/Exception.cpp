@@ -9,5 +9,4 @@ Exception::Exception(const std::string& description, const char* filename, int l
 const char* Exception::what() const noexcept
 {
   return mMsg.c_str();
-
 }
