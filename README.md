@@ -1,11 +1,15 @@
 # 3D objects generator
 
-I started this project to have 3d objects for my Amiga 500 vector graphics renderer.
+Programmed by >human being< only.
+
+I started this project to have 3d objects for my Amiga 500 vector graphics renderer. 
+
+I've used it for my Existenz demo: https://www.pouet.net/prod.php?which=104585
 
 There are two apps:
 
-- generator
-- viewer 
+- gen3d
+- viewer3d 
 
 run.sh is example script which generates several objects and show them in the viewer
 
@@ -56,10 +60,13 @@ _Values in p and t can be negative_
 5. Tetrahedron
 - params: circle-radius height
 
-6. RegularTetrahedron
+6. Regular Tetrahedron
 - params: circle-radius
 
-7. FractalTetrahedron 
+7. Fractal Tetrahedron 
+- params: circle-radius
+
+8. Regular Icosahedron
 - params: circle-radius
 
 ### Components which can be used in CubeExt and Composite:

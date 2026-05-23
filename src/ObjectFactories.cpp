@@ -1,4 +1,5 @@
 #include "ObjectFactories.hpp"
+
 #include "Cube.hpp"
 #include "CubeExt.hpp"
 #include "Object3D.hpp"
@@ -373,7 +374,7 @@ std::unique_ptr<Object3D> RegularDodecahedronFactory::FactoryMethod(
   if (auto it = std::find_if(params.begin(), params.end(),
       std::bind(findParamsVector, _1,  ParamsId::AdditionalParams)); it != params.end())
   {
-    return std::make_unique<RegularIcosahedron>(
+    return std::make_unique<RegularDodecahedron>(
       nameExt.c_str(),
       std::get<ParamsVector>(it->second).at(0)
       );

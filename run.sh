@@ -81,6 +81,7 @@ cd ./objects
 ../gen3d --3 --l 80 --o composite4 --c0 Cone --p0 5 100 30 --t0 tz=25 --c1 Cone --p1 5 100 -30 --t1 tz=-25 rz=36 --c2 Cylinder --p2 5 100 50 --t2 tz=25
 
 ../gen3d --3 --l 80 --o icosahedron --n regularicosahedron 100
+../gen3d --3 --l 80 --o dodecahedron --n regulardodecahedron 100
 
 ../gen3d --o tmp --n cube 40
 ../gen3d --o tmp1 --n torus 3 6 15 95 3 45 0
@@ -99,4 +100,4 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer3d objects icosahedron composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer3d objects dodecahedron icosahedron composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

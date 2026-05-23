@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _BINARYBUFFER_HPP_
+#define _BINARYBUFFER_HPP_
 
 #include <stdexcept>
 #include <ostream>
@@ -14,9 +15,9 @@ public:
 
   BinaryBuffer() = default;
 
-  BinaryBuffer(const std::vector<T>& data)
+  explicit BinaryBuffer(const std::vector<T>& data) :
+    buffer(data)
   {
-    buffer = data;
   }
   
   void Clear()
@@ -81,3 +82,6 @@ public:
   }
   
 };
+
+#endif
+
