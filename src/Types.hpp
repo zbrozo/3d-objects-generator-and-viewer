@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TYPES_HPP_
+#define _TYPES_HPP_
 
 #include "Vertex3D.hpp"
 #include "Vector3D.hpp"
@@ -11,3 +12,5 @@ using Vector = Vector3D<int>;
 
 using IntVector = std::vector<int>;
 using StringVector = std::vector<std::string>;
+
+#endif

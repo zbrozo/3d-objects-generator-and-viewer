@@ -3,6 +3,7 @@
 #include "Types.hpp"
 
 class Vertices;
+class Vectors;
 
 void RotateObject(int degx, int degy, int degz,
   const Vertices &vertices,

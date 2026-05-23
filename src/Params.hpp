@@ -11,8 +11,6 @@
 #include <type_traits>
 #include <stdexcept>
 
-#include "RegularDodecahedron.hpp"
-#include "RegularIcosahedron.hpp"
 #include "Types.hpp"
 
 enum class ObjectId {
