@@ -18,7 +18,7 @@
 #include "FileLoader.hpp"
 #include "FileFormatConverter.hpp"
 #include "Types.hpp"
-#include "Exception.hpp"
+#include "Exceptions.hpp"
 
 #include <cctype>
 #include <memory>
@@ -362,7 +362,7 @@ std::unique_ptr<Object3D> RegularIcosahedronFactory::FactoryMethod(
       );
   }
 
-  throw Exception("no parameters defined", __FILE__, __LINE__);
+  throw MissingParameterException(__FILE__, __LINE__);
 }
 
 std::unique_ptr<Object3D> RegularDodecahedronFactory::FactoryMethod(
@@ -380,5 +380,5 @@ std::unique_ptr<Object3D> RegularDodecahedronFactory::FactoryMethod(
       );
   }
 
-  throw Exception("no parameters defined", __FILE__, __LINE__);
+  throw MissingParameterException(__FILE__, __LINE__);
 }

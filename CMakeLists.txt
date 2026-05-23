@@ -47,6 +47,7 @@ set(FactoriesSRC
   src/ObjectParamValidators.cpp
   src/Params.cpp
   src/Exception.cpp
+  src/Exceptions.cpp
 )
 
 set(GeneratorSRC
