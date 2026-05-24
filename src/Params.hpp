@@ -30,7 +30,8 @@ enum class ObjectId {
   Trapeze,
   Pyramid,
   Cone,
-  Cylinder,
+  Prism,
+  Antiprism,
   Star,
   Pentagram,
 };

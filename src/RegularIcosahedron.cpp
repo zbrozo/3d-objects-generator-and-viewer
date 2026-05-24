@@ -18,8 +18,7 @@ void RegularIcosahedron::Generate()
   auto len = Tools::GetDistance(vertices[v0], vertices[v1]);
   auto height = std::sqrt(3.0) * len / 2.0;
 
-  Components::Cylinder cylinder(5, mRadius, height);
-  cylinder.SetTraingulated();
+  Components::Antiprism cylinder(5, mRadius, height);
   cylinder.Generate();
 
   Vertices vertices2 = cylinder.GetVertices();

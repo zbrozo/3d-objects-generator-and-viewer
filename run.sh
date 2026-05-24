@@ -77,11 +77,11 @@ cd ./objects
     
 ../gen3d --l 80 --o composite1 --c0 Pyramid --p0 50 50 --c1 Pyramid --p1 50 50 --t1 ry=180
 ../gen3d --l 80 --o composite2 --c0 Pyramid --p0 50 50 --t0 tz=20 --c1 Pyramid --p1 50 50 --t1 tz=20 ry=180 --c2 Rectangle --p2 40 100 --t2 tz=50 ry=90 --c3 Rectangle --p3 40 100 --t3 tz=50 ry=270 --c4 Rectangle --p4 100 40 --t4 tz=50 rx=90 --c5 Rectangle --p5 100 40 --t5 tz=50 rx=270
-../gen3d --l 80 --o composite3 --c0 Cone --p0 6 50 50 --t0 tz=25 --c1 Cone --p1 6 50 -50 --t1 tz=-25 --c2 Cylinder --p2 6 50 50 --t2 tz=25
-../gen3d --3 --l 80 --o composite4 --c0 Cone --p0 5 100 30 --t0 tz=25 --c1 Cone --p1 5 100 -30 --t1 tz=-25 rz=36 --c2 Cylinder --p2 5 100 50 --t2 tz=25
+../gen3d --l 80 --o composite3 --c0 Cone --p0 6 50 50 --t0 tz=25 --c1 Cone --p1 6 50 -50 --t1 tz=-25 --c2 Prism --p2 6 50 50 --t2 tz=25
+../gen3d --3 --l 80 --o composite4 --c0 Cone --p0 5 100 30 --t0 tz=25 --c1 Cone --p1 5 100 -30 --t1 tz=-25 rz=36 --c2 Antiprism --p2 5 100 50 --t2 tz=25
 
-../gen3d --3 --l 80 --o icosahedron --n regularicosahedron 100
-../gen3d --3 --l 80 --o dodecahedron --n regulardodecahedron 100
+../gen3d --l 80 --o icosahedron --n regularicosahedron 100
+../gen3d --l 80 --o dodecahedron --n regulardodecahedron 100
 
 ../gen3d --o tmp --n cube 40
 ../gen3d --o tmp1 --n torus 3 6 15 95 3 45 0
@@ -90,7 +90,7 @@ cd ./objects
 ../gen3d --3 --o tmp1 --n torus 4 8 20 70 6 0 15
 ../gen3d --l 80 --o composite7 --c0 tmp1 --t0 rz=-45 tx=20 --c1 tmp1 --t1 rz=130 rx=90 tx=-20
 
-#../gen3d --l 64 --o star1 --c0 star 5 70 --c1 star 5 70 --t1 ry=180
+../gen3d --l 64 --o star1 --c0 star --p0 5 70 --c1 star --p1 5 70 --t1 ry=180
 ../gen3d --l 64 --o star2 --n star 14 70
 
 # scoopex sign :)

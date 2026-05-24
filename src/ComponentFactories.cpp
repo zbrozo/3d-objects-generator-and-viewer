@@ -1,4 +1,5 @@
 #include "ComponentFactories.hpp"
+#include <iostream>
 
 namespace Components
 {
@@ -44,13 +45,22 @@ std::unique_ptr<Object3D> ConeFactory::FactoryMethod(
   return std::make_unique<Components::Cone>(param0, param1, param2);
 }
 
-std::unique_ptr<Object3D> CylinderFactory::FactoryMethod(
+std::unique_ptr<Object3D> PrismFactory::FactoryMethod(
   const ParamsVector& params) const
 {
   const auto param0 = GetObligatoryUnsignedInt(params, 0);
   const auto param1 = GetObligatoryInt(params, 1);
   const auto param2 = GetObligatoryInt(params, 2);
-  return std::make_unique<Components::Cylinder>(param0, param1, param2);
+  return std::make_unique<Components::Prism>(param0, param1, param2);
+}
+
+std::unique_ptr<Object3D> AntiprismFactory::FactoryMethod(
+  const ParamsVector& params) const
+{
+  const auto param0 = GetObligatoryUnsignedInt(params, 0);
+  const auto param1 = GetObligatoryInt(params, 1);
+  const auto param2 = GetObligatoryInt(params, 2);
+  return std::make_unique<Components::Antiprism>(param0, param1, param2);
 }
 
 std::unique_ptr<Object3D> StarFactory::FactoryMethod(

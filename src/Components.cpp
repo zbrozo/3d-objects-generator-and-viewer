@@ -12,39 +12,6 @@
 
 namespace
 {
-/*
-auto CreateSideVertices(Vertices& vertices)
-{
-  std::vector<Vertices> allVertices;
-
-  const size_t facesCount = 4;
-
-  for (size_t i = 0; i < facesCount; ++i)
-  {
-    const auto rotatedVertices = vertices.Rotate(0, 0, i * 90);
-    allVertices.push_back(rotatedVertices);
-  }
-
-  return allVertices;
-}
-
-
-auto CreateSideFaces(const std::vector<Vertices>& allVertices)
-{
-  Faces faces;
-  Vertices vertices;
-
-  for(const auto& tmpVertices : allVertices)
-  {
-    Face face{0,1,2,3};
-    const auto [resultFace, resultVertices] = Tools::Merge(vertices, face, tmpVertices);
-    vertices = resultVertices;
-    faces.push_back(resultFace);
-  }
-
-  return std::make_pair(faces, vertices);
-}
-*/
 
 Vertices CreateCircleVerticesExt(size_t count, size_t amount, int radius, int degree = 0)
 {
@@ -194,19 +161,10 @@ void Cone::Generate()
   }
 }
 
-void Cylinder::Generate()
+void Prism::Generate()
 {
-  Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
-  Vertices vertices2;
-  
-  if (mTriangulated)
-  {
-    vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
-  }
-  else
-  {
-    vertices2 = vertices;
-  }
+  Vertices vertices1 = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  Vertices vertices2 = vertices1;
   
   std::transform(vertices2.cbegin(), vertices2.cend(), vertices2.begin(),
     [&](const Vertex& vertex)
@@ -214,32 +172,14 @@ void Cylinder::Generate()
       return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
     });
 
-  mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
+  mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
   mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
-
-  const auto size = vertices.size();
+  
+  const auto size = vertices1.size();
 
   uint16_t nr = 0;
   for (; nr < size - 1; ++nr)
   {
-    if (mTriangulated)
-    {
-      mFaces.push_back(
-      {
-        uint16_t(nr + 1),
-        uint16_t(nr),
-        uint16_t(nr + size),
-      });
-
-      mFaces.push_back(
-      {
-        uint16_t(nr + size),
-        uint16_t(nr + size + 1),
-        uint16_t(nr + 1),
-      });
-    }
-    else
-    {
       mFaces.push_back(
       {
         nr,
@@ -247,27 +187,8 @@ void Cylinder::Generate()
         uint16_t(nr + size + 1),
         uint16_t(nr + 1)
       });
-    }
   }
 
-  if (mTriangulated)
-  {
-    mFaces.push_back(
-      {
-        uint16_t(0),
-        uint16_t(nr),
-        uint16_t(nr + size),
-      });
-
-    mFaces.push_back(
-      {
-        uint16_t(nr + size),
-        uint16_t(size),
-        uint16_t(0),
-      });
-  }
-  else
-  {
     mFaces.push_back(
     {
       nr,
@@ -275,8 +196,55 @@ void Cylinder::Generate()
       uint16_t(size),
       uint16_t(0)
     });
+}
+
+void Antiprism::Generate()
+{
+  Vertices vertices1 = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  Vertices vertices2 = CreateCircleVertices(mCircleAmount, mCircleRadius, 360 / mCircleAmount / 2);
+  
+  std::transform(vertices2.cbegin(), vertices2.cend(), vertices2.begin(),
+    [&](const Vertex& vertex)
+    {
+      return Vertex(vertex.getX(), vertex.getY(), vertex.getZ() - mHeight);
+    });
+
+  mVertices.insert(mVertices.end(), vertices1.cbegin(), vertices1.cend());
+  mVertices.insert(mVertices.end(), vertices2.cbegin(), vertices2.cend());
+
+  const auto size = vertices1.size();
+
+  uint16_t nr = 0;
+  for (; nr < size - 1; ++nr)
+  {
+    mFaces.push_back(
+      {
+        uint16_t(nr + 1),
+        uint16_t(nr),
+        uint16_t(nr + size),
+      });
+    
+    mFaces.push_back(
+      {
+        uint16_t(nr + size),
+        uint16_t(nr + size + 1),
+        uint16_t(nr + 1),
+      });
   }
 
+  mFaces.push_back(
+    {
+      uint16_t(0),
+      uint16_t(nr),
+      uint16_t(nr + size),
+    });
+  
+  mFaces.push_back(
+    {
+      uint16_t(nr + size),
+      uint16_t(size),
+      uint16_t(0),
+    });
 }
 
 void Star::Generate()

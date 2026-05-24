@@ -96,7 +96,6 @@ public:
   Pyramid(Pyramid &&) = delete;
   Pyramid& operator=(const Pyramid&) = delete;
   Pyramid& operator=(Pyramid &&) = delete;
-
 };
 
 class Cone : public Object3D, public IGenerator
@@ -122,7 +121,7 @@ public:
   Cone& operator=(Cone &&) = delete;
 };
 
-class Cylinder : public Object3D, public IGenerator
+class Prism : public Object3D, public IGenerator
 {
   const uint16_t mCircleAmount;
   const int mCircleRadius;
@@ -130,20 +129,42 @@ class Cylinder : public Object3D, public IGenerator
 
 public:
 
-  explicit Cylinder(uint16_t circleAmount, int circleRadius, int height) :
-    Object3D("Cylinder"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
+  explicit Prism(uint16_t circleAmount, int circleRadius, int height) :
+    Object3D("Prism"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
   {
   }
 
   void Generate() override;
 
-  virtual ~Cylinder() = default;
+  virtual ~Prism() = default;
 
-  Cylinder(const Cylinder&) = delete;
-  Cylinder(Cylinder&&) = delete;
-  Cylinder& operator=(const Cylinder&) = delete;
-  Cylinder& operator=(Cylinder &&) = delete;
+  Prism(const Prism&) = delete;
+  Prism(Prism&&) = delete;
+  Prism& operator=(const Prism&) = delete;
+  Prism& operator=(Prism &&) = delete;
+};
 
+class Antiprism : public Object3D, public IGenerator
+{
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
+  const int mHeight;
+
+public:
+
+  explicit Antiprism(uint16_t circleAmount, int circleRadius, int height) :
+    Object3D("Antiprism"), mCircleAmount(circleAmount), mCircleRadius(circleRadius), mHeight(height)
+  {
+  }
+
+  void Generate() override;
+
+  virtual ~Antiprism() = default;
+
+  Antiprism(const Antiprism&) = delete;
+  Antiprism(Antiprism&&) = delete;
+  Antiprism& operator=(const Antiprism&) = delete;
+  Antiprism& operator=(Antiprism &&) = delete;
 };
 
 class Star : public Object3D, public IGenerator

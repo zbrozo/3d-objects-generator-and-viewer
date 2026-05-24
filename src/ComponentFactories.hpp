@@ -41,7 +41,14 @@ public:
     const ParamsVector& params) const override;
 };
 
-class CylinderFactory : public ComponentFactoryBase
+class PrismFactory : public ComponentFactoryBase
+{
+public:
+  std::unique_ptr<Object3D> FactoryMethod(
+    const ParamsVector& params) const override;
+};
+
+class AntiprismFactory : public ComponentFactoryBase
 {
 public:
   std::unique_ptr<Object3D> FactoryMethod(

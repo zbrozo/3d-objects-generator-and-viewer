@@ -44,12 +44,22 @@ BOOST_AUTO_TEST_CASE(cone_generation_test)
   BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
 
-BOOST_AUTO_TEST_CASE(cylinder_generation_test)
+BOOST_AUTO_TEST_CASE(prism_generation_test)
 {
-  Components::Cylinder object(10,50,50);
+  Components::Prism object(10,50,50);
   object.Generate();
   
-  BOOST_CHECK_EQUAL("Cylinder", object.GetName());
+  BOOST_CHECK_EQUAL("Prism", object.GetName());
+  BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
+  BOOST_CHECK_EQUAL(10, object.GetFacesCount());
+}
+
+BOOST_AUTO_TEST_CASE(antiprism_generation_test)
+{
+  Components::Antiprism object(10,50,50);
+  object.Generate();
+  
+  BOOST_CHECK_EQUAL("Antiprism", object.GetName());
   BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
   BOOST_CHECK_EQUAL(10, object.GetFacesCount());
 }
