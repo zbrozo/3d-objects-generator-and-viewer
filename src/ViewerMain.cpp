@@ -131,7 +131,7 @@ void LoadObjects(int argc, char* argv[], std::vector<std::shared_ptr<Object3D>>&
     auto buffer = loader.Load();
 
     FileFormatConverter converter;
-    auto object = converter.ConvertToObject(buffer);
+    auto object = converter.Convert(buffer);
 
     objects.push_back(std::make_unique<Object3D>(object));
   }

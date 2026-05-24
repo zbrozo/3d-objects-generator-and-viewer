@@ -15,3 +15,14 @@ void FileSaver::Save(const BinaryBuffer<uint16_t>& buffer)
   mFile.write(reinterpret_cast<const char*>(buffer.GetData()), buffer.GetSizeInBytes());
 }
 
+void FileSaver::Save(const char* buffer, size_t size)
+{
+  if (!mFile)
+  {
+    BOOST_LOG_TRIVIAL(error) << "File is not opened (" << mName << ")";
+    return;
+  }
+  
+  mFile.write(reinterpret_cast<const char*>(buffer), size);
+}
+

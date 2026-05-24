@@ -3,6 +3,7 @@
 Programmed by >human being< only.
 
 I started this project to have 3d objects for my Amiga 500 vector graphics renderer. 
+I can't use Blender :)
 
 I've used it for my Existenz demo: https://www.pouet.net/prod.php?which=104585
 
@@ -21,6 +22,11 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 - boost (1.71)
 - cmake (3.16)
 - g++ (C++17)
+
+## Output formats
+
+- simple binary format I'm using 
+- Waveobj format which can be loaded to Blender
 
 ## Generator usage manual
 

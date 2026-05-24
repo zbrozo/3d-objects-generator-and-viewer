@@ -144,6 +144,29 @@ void SetLogging(bool verbose)
   boost::log::core::get()->set_filter(logFilter);
 }
 
+void SaveBinary(const std::string& outputName, const Object3D& object3d)
+{
+  FileFormatConverter converter;
+  auto buffer = converter.Convert(object3d);
+
+  const std::string fileName = outputName.empty() ? object3d.GetName() : outputName;
+  FileSaver file(fileName);
+  file.Save(buffer);
+}
+
+void SaveObj(const std::string& outputName, const Object3D& object3d)
+{
+  std::stringstream stringBuffer;
+  FileFormatConverter converter;
+  converter.Convert(stringBuffer, object3d);
+
+  std::string fileName = outputName.empty() ? object3d.GetName() : outputName;
+  fileName.append(std::string(".obj"));
+
+  FileSaver file(fileName);
+  file.Save(stringBuffer.str().c_str(), stringBuffer.str().size());
+}
+
 int main(int argc, char* argv[])
 {
   po::options_description optionsDesc("generator <options>\n");
@@ -260,14 +283,9 @@ int main(int argc, char* argv[])
 
     const auto object3d = factory->Create(name, paramsMap);
 
-    FileFormatConverter converter;
-    auto buffer = converter.ConvertFromObject(*object3d);
-
-    const std::string fileName = outputName.empty() ? object3d->GetName() : outputName;
-
-    FileSaver file(fileName);
-    file.Save(buffer);
-
+    SaveBinary(outputName, *object3d);
+    SaveObj(outputName, *object3d);
+    
     BOOST_LOG_TRIVIAL(debug) << *object3d;
 
   } catch (const std::out_of_range& ex) {

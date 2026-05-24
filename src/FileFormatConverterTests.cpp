@@ -24,8 +24,7 @@ BOOST_AUTO_TEST_CASE(file_format_convert_to_buffer_test)
   builder.SetNormalVectorsInFaces(normals);
 
   FileFormatConverter converter;
-
-  auto buffer = converter.ConvertFromObject(builder);
+  auto buffer = converter.Convert(builder);
   BOOST_CHECK_EQUAL(15, buffer.GetSize());
 
   BOOST_CHECK_EQUAL(1, swapBytes(buffer.ReadWord(0)));
@@ -63,7 +62,7 @@ BOOST_AUTO_TEST_CASE(file_format_convert_from_buffer_test)
   BinaryBuffer buffer(data);
 
   FileFormatConverter converter;
-  auto object = converter.ConvertToObject(buffer);
+  auto object = converter.Convert(buffer);
 
   auto vertices = object.GetVertices();
   auto faces = object.GetFaces();

@@ -100,4 +100,4 @@ cd ./objects
 
 cd ..
 echo "Start viewer"
-./viewer3d objects dodecahedron icosahedron composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7
+./viewer3d objects cone1 dodecahedron icosahedron composite4 torus2 cube1 torus9 composite7 torus7 cone1 cone2 scoopex cube2_1 cube2_2 cube2_3 composite4 composite7 tetrahedron3 composite6 composite7

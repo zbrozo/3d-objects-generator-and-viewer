@@ -4,12 +4,13 @@
 #include "ObjectBuilder.hpp"
 #include "SwapByteOrder.hpp"
 
-#include <boost/log/trivial.hpp>
-
 #include <algorithm>
 #include <type_traits>
+#include <ios>
+#include <iomanip>
+#include <boost/log/trivial.hpp>
 
-BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& object)
+BinaryBuffer<uint16_t> FileFormatConverter::Convert(const Object3D& object)
 {
   auto swapBytes = swapByteOrder<int, uint16_t>;
 
@@ -59,7 +60,58 @@ BinaryBuffer<uint16_t> FileFormatConverter::ConvertFromObject(const Object3D& ob
   return buffer;
 }
 
-Object3D FileFormatConverter::ConvertToObject(const BinaryBuffer<uint16_t>& buffer)
+void FileFormatConverter::Convert(std::stringstream& str, const Object3D& object)
+{
+  str << "o " << object.GetName() << std::endl;
+  str << std::endl;
+
+  constexpr float scale = 100.0;
+  
+  for (const auto& v : object.GetVertices())
+  {
+    str << "v " << std::fixed << std::setprecision(6)
+        << v.getX() / scale << " "
+        << v.getY() / scale << " "
+        << v.getZ() / scale << std::endl;
+  }
+
+  str << std::endl;
+  
+  for (const auto& v : object.GetNormalVectorsInVertices())
+  {
+    str << "vn " << std::fixed << std::setprecision(6)
+        << v.getX() / scale << " "
+        << v.getY() / scale << " "
+        << v.getZ() / scale << std::endl;
+  }
+
+  str << std::endl;
+  
+  for (const auto& face : object.GetFaces())
+  {
+    str << "f ";
+
+    int i = 0;
+
+    for (auto number : face)
+    {
+      if (i > 0)
+      {
+        str << " ";
+      }
+      
+      str << number + 1 << "//" << number + 1;
+
+      i++;
+    }
+    str << std::endl;
+  }
+
+  str << std::endl;
+  
+}
+
+Object3D FileFormatConverter::Convert(const BinaryBuffer<uint16_t>& buffer)
 {
   auto swapBytes = swapByteOrder<uint16_t, int>;
 
