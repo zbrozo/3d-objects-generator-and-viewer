@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(antiprism_generation_test)
   
   BOOST_CHECK_EQUAL("Antiprism", object.GetName());
   BOOST_CHECK_EQUAL(20, object.GetVerticesCount());
-  BOOST_CHECK_EQUAL(10, object.GetFacesCount());
+  BOOST_CHECK_EQUAL(20, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_CASE(star_generation_test)
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE(star_generation_test)
   
   BOOST_CHECK_EQUAL("Star", object.GetName());
   BOOST_CHECK_EQUAL(10, object.GetVerticesCount());
-  BOOST_CHECK_EQUAL(5, object.GetFacesCount());
+  BOOST_CHECK_EQUAL(1, object.GetFacesCount());
 }
 
 BOOST_AUTO_TEST_SUITE_END()

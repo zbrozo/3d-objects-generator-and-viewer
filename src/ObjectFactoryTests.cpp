@@ -24,12 +24,12 @@ BOOST_AUTO_TEST_CASE(torus_factory_test)
   TorusFactory factory;
   ComponentFactories componentFactories;
 
-  paramsMap[ParamsId::AdditionalParams] = ParamsVector{6, 8};
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{6, 8, 4, 10};
 
   factory.Init(componentFactories);
   auto object = factory.Create("torus", paramsMap);
 
-  BOOST_CHECK_EQUAL("torus_6_8", object->GetName());
+  BOOST_CHECK_EQUAL("torus_6_8_4_10", object->GetName());
   BOOST_CHECK_EQUAL(48, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(48, object->GetFacesCount());
 }
@@ -99,18 +99,50 @@ BOOST_AUTO_TEST_CASE(fractaltetrahedron_factory_test)
   BOOST_CHECK_EQUAL(16, object->GetFacesCount());
 }
 
+BOOST_AUTO_TEST_CASE(icosahedron_factory_test)
+{
+  ParamsMap paramsMap;
+  RegularIcosahedronFactory factory;
+  ComponentFactories componentFactories;
+
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{100};
+
+  factory.Init(componentFactories);
+  auto object = factory.Create("regularicosahedron", paramsMap);
+
+  BOOST_CHECK_EQUAL("regularicosahedron_100", object->GetName());
+  BOOST_CHECK_EQUAL(12, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(20, object->GetFacesCount());
+}
+
+BOOST_AUTO_TEST_CASE(dodecahedron_factory_test)
+{
+  ParamsMap paramsMap;
+  RegularDodecahedronFactory factory;
+  ComponentFactories componentFactories;
+
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{100};
+ 
+  factory.Init(componentFactories);
+  auto object = factory.Create("regulardodecahedron", paramsMap);
+
+  BOOST_CHECK_EQUAL("regulardodecahedron_100", object->GetName());
+  BOOST_CHECK_EQUAL(20, object->GetVerticesCount());
+  BOOST_CHECK_EQUAL(12, object->GetFacesCount());
+}
+
 BOOST_AUTO_TEST_CASE(pentagram_factory_test)
 {
   ParamsMap paramsMap;
   PentagramFactory factory;
   ComponentFactories componentFactories;
 
-  paramsMap[ParamsId::AdditionalParams] = ParamsVector{20};
+  paramsMap[ParamsId::AdditionalParams] = ParamsVector{20,10};
 
   factory.Init(componentFactories);
   auto object = factory.Create("pentagram", paramsMap);
 
-  BOOST_CHECK_EQUAL("pentagram_20", object->GetName());
+  BOOST_CHECK_EQUAL("pentagram_20_10", object->GetName());
   BOOST_CHECK_EQUAL(20, object->GetVerticesCount());
   BOOST_CHECK_EQUAL(25, object->GetFacesCount());
 }
