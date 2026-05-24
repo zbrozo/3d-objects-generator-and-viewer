@@ -25,8 +25,8 @@ Needed to build these libraries (in the brackets there are versions I've tested)
 
 ## Output formats
 
-- simple binary format I'm using 
-- Waveobj format which can be loaded to Blender
+1. simple binary format I'm using 
+2. Wavefront (.obj) format which can be imported to Blender
 
 ## Generator usage manual
 
@@ -76,25 +76,28 @@ _Values in p and t can be negative_
 - params: circle-radius
 
 ### Components which can be used in CubeExt and Composite:
-1. Square, name: square
+1. square
 --p side-length
 
-2. Rectangle, name: rectangle
+2. rectangle
 --p side1-length side2-length
 
-3. Trapeze, name: trapeze
+3. trapeze
 --p top-length bottom-length height
 
-4. Pyramid, name: pyramid
+4. pyramid
 --p side-length height
 
-5. Cone, name: cone
+5. cone
 --p amount radius height
 
-6. Cylinder, name: cylinder
+6. prism
 --p circle-amount circle-radius height
 
-8. Star, name: star
+7. antiprism
+--p circle-amount circle-radius height
+
+8. star
 --p amount radius
 
 ### Build on MS Windows
