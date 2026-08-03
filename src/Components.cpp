@@ -306,4 +306,20 @@ void Star::Generate()
   mFaces.push_back(face);
 }
 
+void Polygon::Generate()
+{
+  Vertices vertices = CreateCircleVertices(mCircleAmount, mCircleRadius);
+  mVertices.insert(mVertices.end(), vertices.cbegin(), vertices.cend());
+
+  const auto size = vertices.size();
+
+  Face face;
+  for (size_t i = 0; i < size; i++)
+  {
+    face.push_back(i);
+  }
+
+  mFaces.push_back(face);
+}
+
 } // namespace

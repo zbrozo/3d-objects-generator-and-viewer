@@ -71,4 +71,12 @@ std::unique_ptr<Object3D> StarFactory::FactoryMethod(
   return std::make_unique<Components::Star>(param0, param1);
 }
 
+std::unique_ptr<Object3D> PolygonFactory::FactoryMethod(
+  const ParamsVector& params) const
+{
+  const auto param0 = GetObligatoryUnsignedInt(params, 0);
+  const auto param1 = GetObligatoryInt(params, 1);
+  return std::make_unique<Components::Polygon>(param0, param1);
+}
+
 } // namespace Components

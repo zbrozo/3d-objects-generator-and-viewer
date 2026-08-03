@@ -70,6 +70,7 @@ void InitComponentFactoryMap(ComponentFactories& componentFactories)
   componentFactories[ObjectId::Prism] = std::make_unique<Components::PrismFactory>();
   componentFactories[ObjectId::Antiprism] = std::make_unique<Components::AntiprismFactory>();
   componentFactories[ObjectId::Star] = std::make_unique<Components::StarFactory>();
+  componentFactories[ObjectId::Polygon] = std::make_unique<Components::PolygonFactory>();
 }
 
 const auto& GetFactory(const std::string& name, const ObjectFactoryMap& objectFactoryMap)

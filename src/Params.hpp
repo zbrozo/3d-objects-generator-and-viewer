@@ -34,6 +34,7 @@ enum class ObjectId {
   Antiprism,
   Star,
   Pentagram,
+  Polygon
 };
 
 enum class ParamsId {

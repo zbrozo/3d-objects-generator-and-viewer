@@ -62,4 +62,11 @@ public:
     const ParamsVector& params) const override;
 };
 
+class PolygonFactory : public ComponentFactoryBase
+{
+public:
+  std::unique_ptr<Object3D> FactoryMethod(
+    const ParamsVector& params) const override;
+};
+
 } // namespace

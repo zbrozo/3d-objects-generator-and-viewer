@@ -189,6 +189,28 @@ public:
   Star& operator=(Star &&) = delete;
 };
 
+class Polygon : public Object3D, public IGenerator
+{
+  const uint16_t mCircleAmount;
+  const int mCircleRadius;
+
+public:
+
+  explicit Polygon(uint16_t circleAmount, int circleRadius) :
+    Object3D("Polygon"), mCircleAmount(circleAmount), mCircleRadius(circleRadius)
+  {
+  }
+
+  void Generate() override;
+
+  virtual ~Polygon() = default;
+
+  Polygon(const Polygon&) = delete;
+  Polygon(Polygon&&) = delete;
+  Polygon& operator=(const Polygon&) = delete;
+  Polygon& operator=(Polygon &&) = delete;
+};
+
 } // namespace Components
 
 #endif
